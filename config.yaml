@@ -1,0 +1,26 @@
+event:
+  name: "2026 OZ RS Nationals"
+  date: "2026-10-10"
+  venue: "TBA"
+
+natsoft:
+  # Validation source from the earlier Gauge King setup.
+  # Replace this with the 2026 OZ RS Nationals Natsoft result URL when published.
+  url: "http://racing.natsoft.com.au/684283107/object_466841.81y/View?1"
+  validation_mode: true
+  timeout_seconds: 30
+
+filters:
+  # A row is retained when it matches a selected participant OR one of these terms.
+  vehicle_terms:
+    - "renault"
+    - "renault sport"
+    - "clio"
+    - "megane"
+    - "rs"
+  participants: []
+
+site:
+  title: "Gauge King Track Results"
+  subtitle: "Live Renault Sport race results"
+  refresh_seconds: 300
