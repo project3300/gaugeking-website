@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-27T06:13:05.437524+00:00",
+  "generated_at": "2026-09-27T06:15:02.149444+00:00",
   "event": {
     "name": "2026 OZ RS Nationals",
     "date": "2026-10-10",
@@ -15,9 +15,10 @@
     "vehicle_terms": [
       "renault",
       "renault sport",
+      "rs clio",
+      "rs megane",
       "clio",
-      "megane",
-      "rs"
+      "megane"
     ],
     "participants": []
   },
