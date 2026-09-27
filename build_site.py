@@ -81,7 +81,7 @@ def main():
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="refresh" content="{refresh}">
 <title>{esc(site.get("title", "Gauge King Track Results"))}</title>
-<link rel="icon" href="assets/gauge-king-logo.svg" type="image/svg+xml">
+<link rel="icon" href="assets/gauge-king-logo.jpg" type="image/jpeg">
 <style>
 :root{{--bg:#090b0f;--panel:#12161d;--line:#282f39;--text:#f5f7fa;--muted:#9ca6b4;--gold:#d4af37;--red:#e53935;}}
 *{{box-sizing:border-box}}
@@ -131,7 +131,7 @@ footer{{margin-top:28px;color:#6f7987;font-size:11px;text-align:center}}
 <body>
 <main class="wrap">
 <div class="brand">
-  <img class="brand-logo" src="assets/gauge-king-logo.svg" alt="Gauge King">
+  <img class="brand-logo" src="assets/gauge-king-logo.jpg" alt="Gauge King">
   <div class="brand-copy"><strong>TRACK RESULTS</strong><small>LIVE MOTORSPORT TIMING</small></div>
 </div>
 <section class="hero">
