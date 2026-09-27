@@ -72,6 +72,12 @@ def row_matches(row: dict[str, str], vehicle_terms: list[str], participants: lis
     return participant_hit or vehicle_hit
 
 
+def comparable(payload: dict[str, Any]) -> dict[str, Any]:
+    copy = dict(payload)
+    copy.pop("generated_at", None)
+    return copy
+
+
 def scrape() -> dict[str, Any]:
     config = load_config()
     source_url = config["natsoft"]["url"]
@@ -116,7 +122,20 @@ def scrape() -> dict[str, Any]:
     }
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+    if OUTPUT_PATH.exists():
+        try:
+            previous = json.loads(OUTPUT_PATH.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            previous = None
+
+        if previous and comparable(previous) == comparable(payload):
+            print("Natsoft data unchanged; keeping existing snapshot.")
+            print(json.dumps(payload["diagnostics"], indent=2))
+            return previous
+
     OUTPUT_PATH.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+    print("Natsoft data changed; snapshot updated.")
     print(json.dumps(payload["diagnostics"], indent=2))
     return payload
 
