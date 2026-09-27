@@ -1,0 +1,60 @@
+name: Update race results
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/5 * * * *"
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: gaugeking-trackresults
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Scrape Natsoft
+        id: scrape
+        continue-on-error: true
+        run: python scrape_natsoft.py
+
+      - name: Build static site
+        run: python build_site.py
+
+      - name: Commit refreshed data
+        if: steps.scrape.outcome == 'success'
+        run: |
+          git config user.name "gaugeking-results-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/results.json docs/trackresults/index.html
+          git diff --cached --quiet || git commit -m "Refresh race results"
+          git push
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
