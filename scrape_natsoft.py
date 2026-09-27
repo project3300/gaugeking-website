@@ -35,6 +35,55 @@ def unique_headers(headers: list[str]) -> list[str]:
     return result
 
 
+def extract_fixed_width_rows(html: str) -> list[dict[str, str]]:
+    """Parse the legacy Natsoft fixed-width leaderboard into one row per competitor."""
+    soup = BeautifulSoup(html, "html.parser")
+    text = clean(soup.get_text(" ", strip=True))
+
+    # A Natsoft result row generally starts with: position, car number, competitor name.
+    # Car numbers in the validation event are 3 digits, which also lets us avoid
+    # accidentally splitting on lap-count / fastest-lap numeric pairs later in a row.
+    row_pattern = re.compile(
+        r"(?:^|\s)(?P<position>\d{1,3})\s+"
+        r"(?P<car>\d{2,4})\s+"
+        r"(?P<rest>.*?)"
+        r"(?=(?:\s+\d{1,3}\s+\d{2,4}\s+[A-Za-z])|(?:\s+Fastest Lap Av\.Speed)|(?:\s+Issue#)|$)",
+        re.IGNORECASE,
+    )
+
+    tail_pattern = re.compile(
+        r"^(?P<identity>.+?)\s+"
+        r"(?P<laps>\d+)\s+"
+        r"(?P<fastest_lap>\d+)\s+"
+        r"(?P<best_time>\d+:\d{2}\.\d+\*?)"
+        r"(?:\s+(?P<gap>\d+:\d{2}\.\d+))?$"
+    )
+
+    rows: list[dict[str, str]] = []
+    for match in row_pattern.finditer(text):
+        position = match.group("position")
+        car = match.group("car")
+        rest = clean(match.group("rest"))
+
+        tail = tail_pattern.match(rest)
+        if not tail:
+            continue
+
+        rows.append(
+            {
+                "Position": position,
+                "Car": car,
+                "Competitor / Vehicle": clean(tail.group("identity")),
+                "Laps": tail.group("laps"),
+                "Fastest Lap": tail.group("fastest_lap"),
+                "Best Time": tail.group("best_time").rstrip("*"),
+                "Gap": tail.group("gap") or "",
+            }
+        )
+
+    return rows
+
+
 def extract_tables(html: str) -> list[dict[str, Any]]:
     soup = BeautifulSoup(html, "html.parser")
     tables: list[dict[str, Any]] = []
@@ -61,6 +110,19 @@ def extract_tables(html: str) -> list[dict[str, Any]]:
 
         if rows:
             tables.append({"table_index": table_index, "headers": headers, "rows": rows})
+
+    # Legacy Natsoft pages sometimes expose the entire leaderboard as one HTML cell.
+    # In that case the fixed-width parser produces the real competitor rows.
+    fixed_rows = extract_fixed_width_rows(html)
+    normal_row_count = sum(len(t["rows"]) for t in tables)
+    if len(fixed_rows) > normal_row_count:
+        return [
+            {
+                "table_index": 1,
+                "headers": list(fixed_rows[0].keys()) if fixed_rows else [],
+                "rows": fixed_rows,
+            }
+        ]
 
     return tables
 
