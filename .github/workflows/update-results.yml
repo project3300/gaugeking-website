@@ -2,8 +2,6 @@ name: Update race results
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "*/5 * * * *"
   push:
     branches: [main]
     paths-ignore:
