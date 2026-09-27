@@ -6,6 +6,9 @@ on:
     - cron: "*/5 * * * *"
   push:
     branches: [main]
+    paths-ignore:
+      - "data/results.json"
+      - "docs/trackresults/**"
 
 permissions:
   contents: write
@@ -45,8 +48,13 @@ jobs:
           git config user.name "gaugeking-results-bot"
           git config user.email "actions@users.noreply.github.com"
           git add data/results.json docs/trackresults/index.html
-          git diff --cached --quiet || git commit -m "Refresh race results"
-          git push
+          if git diff --cached --quiet; then
+            echo "No race-result changes to commit."
+          else
+            git commit -m "Refresh race results"
+            git pull --rebase origin main
+            git push
+          fi
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
