@@ -12,12 +12,14 @@ natsoft:
 
 filters:
   # A row is retained when it matches a selected participant OR one of these terms.
+  # Avoid a bare "RS" match because Natsoft events can include cars such as Porsche GT4RS.
   vehicle_terms:
     - "renault"
     - "renault sport"
+    - "rs clio"
+    - "rs megane"
     - "clio"
     - "megane"
-    - "rs"
   participants: []
 
 site:
