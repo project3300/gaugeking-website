@@ -71,7 +71,6 @@ jobs:
                   raise SystemExit("Invalid Natsoft URL. Expected an http(s) URL from racing.natsoft.com.au")
 
               config.setdefault("natsoft", {})["event_url"] = url
-              # Keep the legacy direct-result key only as fallback/validation data.
               config["natsoft"]["validation_mode"] = False
               print(f"Saved Natsoft event/source URL: {url}")
 
@@ -115,7 +114,7 @@ jobs:
         run: |
           git config user.name "gaugeking-results-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add config.yaml data/results.json docs/trackresults/index.html
+          git add config.yaml data/results.json
           if git diff --cached --quiet; then
             echo "No race-result changes to commit."
           else
