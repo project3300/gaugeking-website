@@ -1,13 +1,14 @@
 from __future__ import annotations
 
 import hmac
+import json
 import os
 from urllib.parse import urlparse
 
 import requests
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 GITHUB_REPO = os.getenv("GITHUB_REPO", "project3300/gaugeking-website")
 GITHUB_WORKFLOW = os.getenv("GITHUB_WORKFLOW", "update-results.yml")
@@ -34,15 +35,40 @@ app.add_middleware(
 
 class UpdateRequest(BaseModel):
     pin: str
-    results_url: str
+    results_url: str = ""
+    participants: list[str] | None = Field(default=None, max_length=250)
 
 
 def validate_natsoft_url(value: str) -> str:
     value = value.strip()
+    if not value:
+        return ""
     parsed = urlparse(value)
     if parsed.scheme not in {"http", "https"} or parsed.hostname not in ALLOWED_NATSOFT_HOSTS:
         raise HTTPException(status_code=400, detail="Please provide a valid racing.natsoft.com.au results URL.")
     return value
+
+
+def normalise_participants(values: list[str] | None) -> list[str] | None:
+    if values is None:
+        return None
+
+    deduped: list[str] = []
+    seen: set[str] = set()
+    for value in values:
+        if not isinstance(value, str):
+            continue
+        name = " ".join(value.split()).strip()
+        if len(name) > 120:
+            raise HTTPException(status_code=400, detail="A driver name is too long.")
+        key = name.casefold()
+        if name and key not in seen:
+            seen.add(key)
+            deduped.append(name)
+
+    if not deduped:
+        raise HTTPException(status_code=400, detail="The uploaded driver list did not contain any names.")
+    return deduped
 
 
 @app.get("/health")
@@ -51,7 +77,7 @@ def health() -> dict[str, str]:
 
 
 @app.post("/api/race-results/update")
-def update_race_results(payload: UpdateRequest, request: Request) -> dict[str, str]:
+def update_race_results(payload: UpdateRequest) -> dict[str, object]:
     if not GITHUB_TOKEN or not RACE_CONTROL_PIN:
         raise HTTPException(status_code=503, detail="Race Control is not configured yet.")
 
@@ -59,6 +85,16 @@ def update_race_results(payload: UpdateRequest, request: Request) -> dict[str, s
         raise HTTPException(status_code=401, detail="Incorrect Race Control PIN.")
 
     results_url = validate_natsoft_url(payload.results_url)
+    participants = normalise_participants(payload.participants)
+
+    if not results_url and participants is None:
+        raise HTTPException(status_code=400, detail="Provide a Natsoft URL, a driver list, or both.")
+
+    inputs = {
+        "results_url": results_url,
+        "participants_json": json.dumps(participants, ensure_ascii=False) if participants is not None else "",
+    }
+
     endpoint = f"https://api.github.com/repos/{GITHUB_REPO}/actions/workflows/{GITHUB_WORKFLOW}/dispatches"
     response = requests.post(
         endpoint,
@@ -68,10 +104,7 @@ def update_race_results(payload: UpdateRequest, request: Request) -> dict[str, s
             "X-GitHub-Api-Version": "2022-11-28",
             "User-Agent": "GaugeKingRaceControl/1.0",
         },
-        json={
-            "ref": GITHUB_REF,
-            "inputs": {"results_url": results_url},
-        },
+        json={"ref": GITHUB_REF, "inputs": inputs},
         timeout=20,
     )
 
@@ -81,4 +114,5 @@ def update_race_results(payload: UpdateRequest, request: Request) -> dict[str, s
     return {
         "status": "started",
         "message": "Race results update started successfully.",
+        "tracked_driver_count": len(participants) if participants is not None else None,
     }
