@@ -21,7 +21,7 @@ on:
     paths-ignore:
       - "config.yaml"
       - "data/results.json"
-      - "docs/trackresults/**"
+      - "docs/trackresults/index.html"
 
 permissions:
   contents: write
