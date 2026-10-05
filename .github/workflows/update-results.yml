@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       results_url:
-        description: "Natsoft results URL (leave blank to refresh the saved event)"
+        description: "Natsoft event/results URL (leave blank to refresh the saved event)"
         required: false
         type: string
       participants_json:
@@ -68,12 +68,12 @@ jobs:
               parsed = urlparse(url)
               allowed_hosts = {"racing.natsoft.com.au", "www.racing.natsoft.com.au"}
               if parsed.scheme not in {"http", "https"} or parsed.hostname not in allowed_hosts:
-                  raise SystemExit(
-                      "Invalid results URL. Expected an http(s) URL from racing.natsoft.com.au"
-                  )
-              config["natsoft"]["url"] = url
+                  raise SystemExit("Invalid Natsoft URL. Expected an http(s) URL from racing.natsoft.com.au")
+
+              config.setdefault("natsoft", {})["event_url"] = url
+              # Keep the legacy direct-result key only as fallback/validation data.
               config["natsoft"]["validation_mode"] = False
-              print(f"Saved live Natsoft URL: {url}")
+              print(f"Saved Natsoft event/source URL: {url}")
 
           participants_raw = os.environ.get("PARTICIPANTS_JSON", "").strip()
           if participants_raw:
@@ -93,7 +93,6 @@ jobs:
                       deduped.append(name)
 
               config.setdefault("filters", {})["participants"] = deduped
-              # Uploaded driver lists are authoritative: do not broaden via vehicle terms.
               config["filters"]["vehicle_terms"] = []
               print(f"Saved {len(deduped)} tracked drivers.")
 
@@ -125,7 +124,6 @@ jobs:
             git push
           fi
 
-      # The entire docs folder is deployed, including /trackresults/admin/ race control.
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
