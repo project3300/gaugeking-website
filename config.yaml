@@ -1,28 +1,39 @@
 event:
   name: "2026 OZ RS Nationals"
-  date: "2026-10-10"
-  venue: "TBA"
+  date: "2026-10-18"
+  venue: "Winton Motor Raceway"
 
 natsoft:
   # Validation source from the earlier Gauge King setup.
-  # Replace this with the 2026 OZ RS Nationals Natsoft result URL when published.
+  # Race Control will replace this with the live 2026 Natsoft result URL on event day.
   url: "http://racing.natsoft.com.au/684283107/object_466841.81y/View?1"
   validation_mode: true
   timeout_seconds: 30
 
 filters:
-  # A row is retained when it matches a selected participant OR one of these terms.
-  # Avoid a bare "RS" match because Natsoft events can include cars such as Porsche GT4RS.
-  vehicle_terms:
-    - "renault"
-    - "renault sport"
-    - "rs clio"
-    - "rs megane"
-    - "clio"
-    - "megane"
-  participants: []
+  # Only rows matching one of these registered participants are retained.
+  # Vehicle terms are intentionally disabled so unrelated Renault competitors are excluded.
+  vehicle_terms: []
+  participants:
+    - "Luke Gray"
+    - "Chris Muyoma"
+    - "Jonathon (Jon) Harrison"
+    - "Matthew Tough"
+    - "Daniel Conacher"
+    - "Damien Hunter"
+    - "Robert Lee"
+    - "Craig simpson"
+    - "Tracy Hoven"
+    - "Riccardo Santilli"
+    - "Adam McInnes"
+    - "Ross Marett"
+    - "Choon Lim"
+    - "Jonathan Gray"
+    - "Alexander Gellings"
+    - "Anthony Musson"
+    - "Simon Ansell"
 
 site:
   title: "Gauge King Track Results"
-  subtitle: "Live Renault Sport race results"
+  subtitle: "Live OZ RenaultSport Nationals race results"
   refresh_seconds: 300
