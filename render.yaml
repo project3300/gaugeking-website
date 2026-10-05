@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: gaugeking-race-control
+    runtime: python
+    plan: free
+    buildCommand: pip install -r race_control_requirements.txt
+    startCommand: uvicorn race_control_api:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: GITHUB_REPO
+        value: project3300/gaugeking-website
+      - key: GITHUB_WORKFLOW
+        value: update-results.yml
+      - key: GITHUB_REF
+        value: main
+      - key: GITHUB_RACE_RESULTS_TOKEN
+        sync: false
+      - key: RACE_CONTROL_PIN
+        sync: false
