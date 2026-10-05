@@ -96,6 +96,7 @@ jobs:
             git push
           fi
 
+      # The entire docs folder is deployed, including /trackresults/admin/ race control.
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
