@@ -2,9 +2,20 @@ name: Update race results
 
 on:
   workflow_dispatch:
+    inputs:
+      results_url:
+        description: "Natsoft results URL (leave blank to refresh the saved event)"
+        required: false
+        type: string
+  # 2026 OZ RS Nationals race-day polling, Brisbane time (UTC+10).
+  # Covers roughly 08:00-19:00 AEST on 10 October 2026.
+  schedule:
+    - cron: "*/5 22-23 9 10 *"
+    - cron: "*/5 0-9 10 10 *"
   push:
     branches: [main]
     paths-ignore:
+      - "config.yaml"
       - "data/results.json"
       - "docs/trackresults/**"
 
@@ -32,6 +43,37 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Save supplied Natsoft URL
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.results_url != '' }}
+        env:
+          RESULTS_URL: ${{ inputs.results_url }}
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from urllib.parse import urlparse
+          import yaml
+
+          url = os.environ["RESULTS_URL"].strip()
+          parsed = urlparse(url)
+          allowed_hosts = {"racing.natsoft.com.au", "www.racing.natsoft.com.au"}
+
+          if parsed.scheme not in {"http", "https"} or parsed.hostname not in allowed_hosts:
+              raise SystemExit(
+                  "Invalid results URL. Expected an http(s) URL from racing.natsoft.com.au"
+              )
+
+          config_path = Path("config.yaml")
+          config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
+          config["natsoft"]["url"] = url
+          config["natsoft"]["validation_mode"] = False
+          config_path.write_text(
+              yaml.safe_dump(config, sort_keys=False, allow_unicode=True),
+              encoding="utf-8",
+          )
+          print(f"Saved live Natsoft URL: {url}")
+          PY
+
       - name: Scrape Natsoft
         id: scrape
         continue-on-error: true
@@ -45,7 +87,7 @@ jobs:
         run: |
           git config user.name "gaugeking-results-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/results.json docs/trackresults/index.html
+          git add config.yaml data/results.json docs/trackresults/index.html
           if git diff --cached --quiet; then
             echo "No race-result changes to commit."
           else
