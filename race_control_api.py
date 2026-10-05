@@ -22,6 +22,9 @@ ALLOWED_ORIGINS = [
     "https://project3300.github.io",
 ]
 ALLOWED_NATSOFT_HOSTS = {"racing.natsoft.com.au", "www.racing.natsoft.com.au"}
+NATSOFT_HEADERS = {
+    "User-Agent": "Mozilla/5.0 (compatible; GaugeKingRaceControl/1.0; +https://www.gaugeking.com.au/)"
+}
 
 app = FastAPI(title="Gauge King Race Control", docs_url=None, redoc_url=None)
 app.add_middleware(
@@ -47,6 +50,47 @@ def validate_natsoft_url(value: str) -> str:
     if parsed.scheme not in {"http", "https"} or parsed.hostname not in ALLOWED_NATSOFT_HOSTS:
         raise HTTPException(status_code=400, detail="Please provide a valid racing.natsoft.com.au results URL.")
     return value
+
+
+def verify_natsoft_url(value: str) -> None:
+    """Check a supplied Natsoft result link before saving it as the live source."""
+    if not value:
+        return
+
+    try:
+        response = requests.get(
+            value,
+            headers=NATSOFT_HEADERS,
+            timeout=15,
+            allow_redirects=True,
+            stream=True,
+        )
+    except requests.RequestException:
+        raise HTTPException(
+            status_code=502,
+            detail="Race Control could not verify that Natsoft link. Check your connection and try again.",
+        )
+
+    try:
+        if response.status_code in {404, 410}:
+            raise HTTPException(
+                status_code=400,
+                detail="This Natsoft result link is no longer valid. Open the result again in Natsoft and paste the new URL.",
+            )
+        if response.status_code >= 400:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Natsoft returned HTTP {response.status_code} for that result link. Open the result again in Natsoft and paste the current URL.",
+            )
+
+        final_host = urlparse(response.url).hostname
+        if final_host not in ALLOWED_NATSOFT_HOSTS:
+            raise HTTPException(
+                status_code=400,
+                detail="That Natsoft link redirected somewhere unexpected. Open the result again in Natsoft and paste the current URL.",
+            )
+    finally:
+        response.close()
 
 
 def normalise_participants(values: list[str] | None) -> list[str] | None:
@@ -89,6 +133,9 @@ def update_race_results(payload: UpdateRequest) -> dict[str, object]:
 
     if not results_url and participants is None:
         raise HTTPException(status_code=400, detail="Provide a Natsoft URL, a driver list, or both.")
+
+    # Do not save/start polling a newly supplied Natsoft URL until it is confirmed reachable.
+    verify_natsoft_url(results_url)
 
     inputs = {
         "results_url": results_url,
