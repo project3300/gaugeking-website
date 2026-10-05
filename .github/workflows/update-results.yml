@@ -7,6 +7,10 @@ on:
         description: "Natsoft results URL (leave blank to refresh the saved event)"
         required: false
         type: string
+      participants_json:
+        description: "JSON array of tracked driver names (leave blank to keep current list)"
+        required: false
+        type: string
   # 2026 OZ RS Nationals race-day polling at Winton, Victoria.
   # 18 October 2026 is AEDT (UTC+11); covers roughly 08:00-19:55 local time.
   schedule:
@@ -43,35 +47,60 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Save supplied Natsoft URL
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.results_url != '' }}
+      - name: Save Race Control inputs
+        if: ${{ github.event_name == 'workflow_dispatch' }}
         env:
           RESULTS_URL: ${{ inputs.results_url }}
+          PARTICIPANTS_JSON: ${{ inputs.participants_json }}
         run: |
           python - <<'PY'
+          import json
           import os
           from pathlib import Path
           from urllib.parse import urlparse
           import yaml
 
-          url = os.environ["RESULTS_URL"].strip()
-          parsed = urlparse(url)
-          allowed_hosts = {"racing.natsoft.com.au", "www.racing.natsoft.com.au"}
-
-          if parsed.scheme not in {"http", "https"} or parsed.hostname not in allowed_hosts:
-              raise SystemExit(
-                  "Invalid results URL. Expected an http(s) URL from racing.natsoft.com.au"
-              )
-
           config_path = Path("config.yaml")
           config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
-          config["natsoft"]["url"] = url
-          config["natsoft"]["validation_mode"] = False
+
+          url = os.environ.get("RESULTS_URL", "").strip()
+          if url:
+              parsed = urlparse(url)
+              allowed_hosts = {"racing.natsoft.com.au", "www.racing.natsoft.com.au"}
+              if parsed.scheme not in {"http", "https"} or parsed.hostname not in allowed_hosts:
+                  raise SystemExit(
+                      "Invalid results URL. Expected an http(s) URL from racing.natsoft.com.au"
+                  )
+              config["natsoft"]["url"] = url
+              config["natsoft"]["validation_mode"] = False
+              print(f"Saved live Natsoft URL: {url}")
+
+          participants_raw = os.environ.get("PARTICIPANTS_JSON", "").strip()
+          if participants_raw:
+              participants = json.loads(participants_raw)
+              if not isinstance(participants, list):
+                  raise SystemExit("participants_json must be a JSON array")
+
+              deduped = []
+              seen = set()
+              for value in participants:
+                  if not isinstance(value, str):
+                      continue
+                  name = " ".join(value.split()).strip()
+                  key = name.casefold()
+                  if name and key not in seen:
+                      seen.add(key)
+                      deduped.append(name)
+
+              config.setdefault("filters", {})["participants"] = deduped
+              # Uploaded driver lists are authoritative: do not broaden via vehicle terms.
+              config["filters"]["vehicle_terms"] = []
+              print(f"Saved {len(deduped)} tracked drivers.")
+
           config_path.write_text(
               yaml.safe_dump(config, sort_keys=False, allow_unicode=True),
               encoding="utf-8",
           )
-          print(f"Saved live Natsoft URL: {url}")
           PY
 
       - name: Scrape Natsoft
