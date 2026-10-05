@@ -40,9 +40,6 @@ def extract_fixed_width_rows(html: str) -> list[dict[str, str]]:
     soup = BeautifulSoup(html, "html.parser")
     text = clean(soup.get_text(" ", strip=True))
 
-    # A Natsoft result row generally starts with: position, car number, competitor name.
-    # Car numbers in the validation event are 3 digits, which also lets us avoid
-    # accidentally splitting on lap-count / fastest-lap numeric pairs later in a row.
     row_pattern = re.compile(
         r"(?:^|\s)(?P<position>\d{1,3})\s+"
         r"(?P<car>\d{2,4})\s+"
@@ -111,8 +108,6 @@ def extract_tables(html: str) -> list[dict[str, Any]]:
         if rows:
             tables.append({"table_index": table_index, "headers": headers, "rows": rows})
 
-    # Legacy Natsoft pages sometimes expose the entire leaderboard as one HTML cell.
-    # In that case the fixed-width parser produces the real competitor rows.
     fixed_rows = extract_fixed_width_rows(html)
     normal_row_count = sum(len(t["rows"]) for t in tables)
     if len(fixed_rows) > normal_row_count:
@@ -127,10 +122,48 @@ def extract_tables(html: str) -> list[dict[str, Any]]:
     return tables
 
 
+def normalize_match_text(text: str) -> str:
+    """Normalize names/result text for case- and punctuation-insensitive matching."""
+    text = text.lower()
+    text = re.sub(r"[^a-z0-9]+", " ", text)
+    return clean(text)
+
+
+def participant_variants(participant: str) -> list[str]:
+    """Return sensible name variants, including aliases in parentheses.
+
+    Example: 'Jonathon (Jon) Harrison' matches both 'Jonathon Harrison'
+    and 'Jon Harrison' as Natsoft may publish either form.
+    """
+    participant = clean(participant)
+    if not participant:
+        return []
+
+    variants = {normalize_match_text(participant)}
+    match = re.match(r"^(.*?)\s*\(([^)]+)\)\s*(.*)$", participant)
+    if match:
+        before, alias, after = (clean(match.group(i)) for i in range(1, 4))
+        if before or after:
+            variants.add(normalize_match_text(f"{before} {after}"))
+        if alias or after:
+            variants.add(normalize_match_text(f"{alias} {after}"))
+
+    return [v for v in variants if v]
+
+
 def row_matches(row: dict[str, str], vehicle_terms: list[str], participants: list[str]) -> bool:
-    haystack = " ".join(row.values()).lower()
-    participant_hit = any(p.lower() in haystack for p in participants if p.strip())
-    vehicle_hit = any(term.lower() in haystack for term in vehicle_terms if term.strip())
+    haystack = normalize_match_text(" ".join(row.values()))
+
+    participant_hit = any(
+        variant in haystack
+        for participant in participants
+        for variant in participant_variants(participant)
+    )
+    vehicle_hit = any(
+        normalize_match_text(term) in haystack
+        for term in vehicle_terms
+        if term.strip()
+    )
     return participant_hit or vehicle_hit
 
 
