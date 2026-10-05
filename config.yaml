@@ -4,8 +4,10 @@ event:
   venue: "Winton Motor Raceway"
 
 natsoft:
-  # Validation source from the earlier Gauge King setup.
-  # Race Control will replace this with the live 2026 Natsoft result URL on event day.
+  # Race Control should normally store the stable event-level Natsoft page here.
+  # On each poll the scraper discovers the newest published Result link from that page.
+  event_url: ""
+  # Direct result URL retained only as a validation/fallback source until the live event page is supplied.
   url: "http://racing.natsoft.com.au/684283107/object_466841.81y/View?1"
   validation_mode: true
   timeout_seconds: 30
