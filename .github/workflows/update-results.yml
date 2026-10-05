@@ -7,11 +7,11 @@ on:
         description: "Natsoft results URL (leave blank to refresh the saved event)"
         required: false
         type: string
-  # 2026 OZ RS Nationals race-day polling, Brisbane time (UTC+10).
-  # Covers roughly 08:00-19:00 AEST on 10 October 2026.
+  # 2026 OZ RS Nationals race-day polling at Winton, Victoria.
+  # 18 October 2026 is AEDT (UTC+11); covers roughly 08:00-19:55 local time.
   schedule:
-    - cron: "*/5 22-23 9 10 *"
-    - cron: "*/5 0-9 10 10 *"
+    - cron: "*/5 21-23 17 10 *"
+    - cron: "*/5 0-8 18 10 *"
   push:
     branches: [main]
     paths-ignore:
