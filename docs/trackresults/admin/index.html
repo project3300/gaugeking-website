@@ -14,100 +14,36 @@
 <div class="eyebrow">GAUGE KING</div>
 <section class="card">
 <h1>Race Control</h1>
-<div class="sub">Update the Natsoft source, the tracked-driver list, or both. Gauge King will save the changes and start a fresh results update automatically.</div>
+<div class="sub">Paste the Natsoft <strong>event-level page</strong> once. Gauge King will automatically discover the newest published Result link on every poll, so you do not need to keep pasting changing Natsoft object URLs.</div>
 <label for="pin">Race Control PIN</label>
 <input id="pin" type="password" inputmode="numeric" autocomplete="off" placeholder="Enter PIN">
-<label for="url">Natsoft results URL <span style="text-transform:none;letter-spacing:0">(optional if only changing drivers)</span></label>
-<input id="url" type="url" inputmode="url" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="https://racing.natsoft.com.au/…">
+<label for="url">Natsoft event URL <span style="text-transform:none;letter-spacing:0">(optional if only changing drivers)</span></label>
+<input id="url" type="url" inputmode="url" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="http://racing.natsoft.com.au/results/#…">
+<div class="file-help">Use the page that lists the session rows and blue <strong>Result</strong> links. Gauge King will follow the latest published Result automatically. A direct result-object URL is still accepted as a fallback.</div>
 <label for="drivers">Tracked driver list <span style="text-transform:none;letter-spacing:0">(optional)</span></label>
 <input id="drivers" type="file" accept=".csv,.txt,text/csv,text/plain">
-<div class="file-help">Upload a CSV or TXT file to <strong>replace</strong> the current tracked-driver list. For registration exports, Race Control looks for columns such as <strong>Full Name</strong>, Driver, Participant or Competitor. Duplicate names are removed automatically.</div>
-<div class="driver-box" id="driverBox">
-  <div class="driver-head"><strong id="driverCount"></strong><button class="mini" id="clearDrivers" type="button">CLEAR FILE</button></div>
-  <div class="driver-list" id="driverList"></div>
-</div>
+<div class="file-help">Upload a CSV or TXT file to <strong>replace</strong> the current tracked-driver list. Race Control looks for columns such as <strong>Full Name</strong>, Driver, Participant or Competitor. Duplicate names are removed automatically.</div>
+<div class="driver-box" id="driverBox"><div class="driver-head"><strong id="driverCount"></strong><button class="mini" id="clearDrivers" type="button">CLEAR FILE</button></div><div class="driver-list" id="driverList"></div></div>
 <button class="primary" id="launch">SAVE &amp; UPDATE LIVE RESULTS</button>
 <a class="button secondary" href="../">VIEW LIVE RESULTS</a>
 <div class="status" id="status"></div>
-<div class="steps"><strong>Race-day flow</strong><br>1. Enter the Race Control PIN.<br>2. Paste a Natsoft result URL if it has changed.<br>3. Upload a revised driver CSV/TXT if the tracked list has changed.<br>4. Tap <strong>SAVE &amp; UPDATE LIVE RESULTS</strong>.<br><br>You can change only the URL, only the drivers, or both. An uploaded driver file replaces the existing list so late additions and withdrawals are easy to manage.</div>
-<div class="note">The GitHub credential is stored only in the secure Gauge King backend. Uploaded driver names are sent to that backend and saved into the race-results configuration; the source file itself is not stored.</div>
+<div class="steps"><strong>Race-day flow</strong><br>1. Enter the Race Control PIN.<br>2. Paste the Natsoft event page URL when setting/changing the event.<br>3. Upload a revised driver CSV/TXT if the tracked list changes.<br>4. Tap <strong>SAVE &amp; UPDATE LIVE RESULTS</strong>.<br><br>After that, automatic polling returns to the event page every 5 minutes, finds the newest published Result link, and keeps earlier captured sessions on the Gauge King results page.</div>
+<div class="note">The GitHub credential is stored only in the secure Gauge King backend. Uploaded driver names are saved into the race-results configuration; the source file itself is not stored.</div>
 </section>
 </main>
 <script>
 const API='https://gaugeking-race-control.onrender.com/api/race-results/update';
-const pin=document.getElementById('pin');
-const input=document.getElementById('url');
-const drivers=document.getElementById('drivers');
-const driverBox=document.getElementById('driverBox');
-const driverCount=document.getElementById('driverCount');
-const driverList=document.getElementById('driverList');
-const clearDrivers=document.getElementById('clearDrivers');
-const status=document.getElementById('status');
-const launch=document.getElementById('launch');
-let participantNames=null;
-
+const pin=document.getElementById('pin');const input=document.getElementById('url');const drivers=document.getElementById('drivers');const driverBox=document.getElementById('driverBox');const driverCount=document.getElementById('driverCount');const driverList=document.getElementById('driverList');const clearDrivers=document.getElementById('clearDrivers');const status=document.getElementById('status');const launch=document.getElementById('launch');let participantNames=null;
 function showStatus(message,type){status.className='status '+type;status.textContent=message;}
 function cleanName(value){return (value||'').replace(/^\uFEFF/,'').replace(/^['\"]|['\"]$/g,'').replace(/\s+/g,' ').trim();}
 function dedupe(values){const out=[];const seen=new Set();for(const raw of values){const name=cleanName(raw);const key=name.toLocaleLowerCase();if(name&&!seen.has(key)){seen.add(key);out.push(name)}}return out;}
 function splitCsvLine(line){const out=[];let cur='';let quoted=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'){if(quoted&&line[i+1]==='"'){cur+='"';i++;}else quoted=!quoted;}else if(ch===','&&!quoted){out.push(cur);cur='';}else cur+=ch;}out.push(cur);return out;}
-function parseDriverFile(text){
-  const normal=text.replace(/\r\n/g,'\n').replace(/\r/g,'\n').trim();
-  if(!normal)return [];
-  const lines=normal.split('\n').filter(l=>l.trim());
-  const rows=lines.map(splitCsvLine);
-  if(rows.length===1)return dedupe(rows[0]);
-  const header=rows[0].map(v=>cleanName(v).toLowerCase());
-  const candidates=['full name','driver','driver name','participant','participant name','competitor','competitor name','name'];
-  let idx=-1;
-  for(const c of candidates){idx=header.indexOf(c);if(idx>=0)break;}
-  if(idx<0){idx=header.findIndex(v=>v.includes('name')||v.includes('driver')||v.includes('participant')||v.includes('competitor'));}
-  if(idx>=0)return dedupe(rows.slice(1).map(r=>r[idx]||''));
-  // TXT or simple one-name-per-line CSV: use the first column and ignore common header words.
-  return dedupe(rows.map(r=>r[0]||'').filter(v=>!['name','driver','full name','participant','competitor'].includes(cleanName(v).toLowerCase())));
-}
-function renderDrivers(){
-  if(!participantNames){driverBox.className='driver-box';driverList.innerHTML='';driverCount.textContent='';return;}
-  driverBox.className='driver-box show';
-  driverCount.textContent=`${participantNames.length} unique driver${participantNames.length===1?'':'s'} will be tracked`;
-  driverList.innerHTML='';
-  participantNames.forEach(name=>{const d=document.createElement('div');d.textContent=name;driverList.appendChild(d);});
-}
-drivers.addEventListener('change',async()=>{
-  const file=drivers.files&&drivers.files[0];
-  if(!file){participantNames=null;renderDrivers();return;}
-  try{
-    const buffer=await file.arrayBuffer();
-    let text;
-    try{text=new TextDecoder('utf-8',{fatal:true}).decode(buffer);}catch(e){text=new TextDecoder('windows-1252').decode(buffer);}
-    participantNames=parseDriverFile(text);
-    if(!participantNames.length)throw new Error('No driver names could be found in that file.');
-    renderDrivers();
-    showStatus(`Loaded ${participantNames.length} unique drivers. Review the list above, then save the update.`,'ok');
-  }catch(error){participantNames=null;renderDrivers();drivers.value='';showStatus(error.message||'Could not read that driver file.','error');}
-});
+function parseDriverFile(text){const normal=text.replace(/\r\n/g,'\n').replace(/\r/g,'\n').trim();if(!normal)return [];const lines=normal.split('\n').filter(l=>l.trim());const rows=lines.map(splitCsvLine);if(rows.length===1)return dedupe(rows[0]);const header=rows[0].map(v=>cleanName(v).toLowerCase());const candidates=['full name','driver','driver name','participant','participant name','competitor','competitor name','name'];let idx=-1;for(const c of candidates){idx=header.indexOf(c);if(idx>=0)break;}if(idx<0){idx=header.findIndex(v=>v.includes('name')||v.includes('driver')||v.includes('participant')||v.includes('competitor'));}if(idx>=0)return dedupe(rows.slice(1).map(r=>r[idx]||''));return dedupe(rows.map(r=>r[0]||'').filter(v=>!['name','driver','full name','participant','competitor'].includes(cleanName(v).toLowerCase())));}
+function renderDrivers(){if(!participantNames){driverBox.className='driver-box';driverList.innerHTML='';driverCount.textContent='';return;}driverBox.className='driver-box show';driverCount.textContent=`${participantNames.length} unique driver${participantNames.length===1?'':'s'} will be tracked`;driverList.innerHTML='';participantNames.forEach(name=>{const d=document.createElement('div');d.textContent=name;driverList.appendChild(d);});}
+drivers.addEventListener('change',async()=>{const file=drivers.files&&drivers.files[0];if(!file){participantNames=null;renderDrivers();return;}try{const buffer=await file.arrayBuffer();let text;try{text=new TextDecoder('utf-8',{fatal:true}).decode(buffer);}catch(e){text=new TextDecoder('windows-1252').decode(buffer);}participantNames=parseDriverFile(text);if(!participantNames.length)throw new Error('No driver names could be found in that file.');renderDrivers();showStatus(`Loaded ${participantNames.length} unique drivers. Review the list above, then save the update.`,'ok');}catch(error){participantNames=null;renderDrivers();drivers.value='';showStatus(error.message||'Could not read that driver file.','error');}});
 clearDrivers.addEventListener('click',()=>{participantNames=null;drivers.value='';renderDrivers();showStatus('Driver upload cleared. The existing tracked list will be kept.','ok');});
-
-launch.addEventListener('click',async()=>{
-  const value=input.value.trim();
-  const racePin=pin.value.trim();
-  if(!racePin){showStatus('Enter the Race Control PIN.','error');return}
-  if(!value&&participantNames===null){showStatus('Paste a Natsoft URL, upload a driver list, or both.','error');return}
-  if(value){
-    let parsed;
-    try{parsed=new URL(value)}catch(e){showStatus('Paste a valid Natsoft results URL.','error');return}
-    if(!['racing.natsoft.com.au','www.racing.natsoft.com.au'].includes(parsed.hostname)){showStatus('The link must be from racing.natsoft.com.au.','error');return;}
-  }
-  launch.disabled=true;launch.textContent='SAVING & STARTING…';showStatus('Contacting Gauge King Race Control…','ok');
-  try{
-    const response=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pin:racePin,results_url:value,participants:participantNames})});
-    const data=await response.json().catch(()=>({}));
-    if(!response.ok)throw new Error(data.detail||'Could not start the update.');
-    const driverMessage=participantNames!==null?` ${participantNames.length} tracked drivers saved.`:'';
-    showStatus(`🏁 Update started successfully.${driverMessage} Gauge King is retrieving and publishing the latest results.`,'ok');
-    input.value='';participantNames=null;drivers.value='';renderDrivers();
-  }catch(error){showStatus(error.message||'Could not contact Race Control. Please try again.','error');}
-  finally{launch.disabled=false;launch.textContent='SAVE & UPDATE LIVE RESULTS';}
-});
+launch.addEventListener('click',async()=>{const value=input.value.trim();const racePin=pin.value.trim();if(!racePin){showStatus('Enter the Race Control PIN.','error');return}if(!value&&participantNames===null){showStatus('Paste a Natsoft event URL, upload a driver list, or both.','error');return}if(value){let parsed;try{parsed=new URL(value)}catch(e){showStatus('Paste a valid Natsoft event URL.','error');return}if(!['racing.natsoft.com.au','www.racing.natsoft.com.au'].includes(parsed.hostname)){showStatus('The link must be from racing.natsoft.com.au.','error');return;}}
+launch.disabled=true;launch.textContent='SAVING & STARTING…';showStatus('Contacting Gauge King Race Control…','ok');try{const response=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pin:racePin,results_url:value,participants:participantNames})});const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.detail||'Could not start the update.');const driverMessage=participantNames!==null?` ${participantNames.length} tracked drivers saved.`:'';showStatus(`🏁 Update started successfully.${driverMessage} Gauge King will discover and publish the latest Natsoft Result automatically.`,'ok');input.value='';participantNames=null;drivers.value='';renderDrivers();}catch(error){showStatus(error.message||'Could not contact Race Control. Please try again.','error');}finally{launch.disabled=false;launch.textContent='SAVE & UPDATE LIVE RESULTS';}});
 </script>
 </body>
 </html>
