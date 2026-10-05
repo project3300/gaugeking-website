@@ -6,7 +6,7 @@
 <title>Gauge King Race Control</title>
 <style>
 :root{--bg:#090b0f;--panel:#12161d;--line:#282f39;--text:#f5f7fa;--muted:#9ca6b4;--gold:#d4af37;--green:#6ee7a7;--red:#ff6b6b}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 15% 0,#1c222c 0,#090b0f 42%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{width:min(620px,calc(100% - 28px));margin:0 auto;padding:30px 0 60px}.eyebrow{color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.16em}.card{margin-top:16px;background:linear-gradient(135deg,rgba(255,255,255,.055),rgba(255,255,255,.015));border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0 20px 70px rgba(0,0,0,.28)}h1{font-size:clamp(34px,9vw,58px);line-height:.96;margin:10px 0 12px;letter-spacing:-.045em}.sub{color:var(--muted);line-height:1.5;margin-bottom:24px}label{display:block;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px}input{width:100%;background:#0e1218;border:1px solid var(--line);border-radius:12px;color:var(--text);font-size:16px;padding:15px;outline:none}input:focus{border-color:var(--gold)}button,a.button{display:block;width:100%;margin-top:12px;border:0;border-radius:12px;padding:15px 18px;font-weight:800;font-size:15px;text-align:center;text-decoration:none;cursor:pointer}.primary{background:var(--gold);color:#0a0b0d}.secondary{background:#171c24;color:var(--text);border:1px solid var(--line)!important}.status{display:none;margin-top:14px;padding:13px;border-radius:12px;background:#10251b;border:1px solid #236943;color:var(--green);font-size:13px;line-height:1.45}.note{margin-top:20px;color:var(--muted);font-size:12px;line-height:1.5}.steps{margin-top:18px;padding:16px;background:#0e1218;border:1px solid var(--line);border-radius:14px;color:var(--muted);font-size:13px;line-height:1.6}.steps strong{color:var(--text)}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 15% 0,#1c222c 0,#090b0f 42%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{width:min(620px,calc(100% - 28px));margin:0 auto;padding:30px 0 60px}.eyebrow{color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.16em}.card{margin-top:16px;background:linear-gradient(135deg,rgba(255,255,255,.055),rgba(255,255,255,.015));border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0 20px 70px rgba(0,0,0,.28)}h1{font-size:clamp(34px,9vw,58px);line-height:.96;margin:10px 0 12px;letter-spacing:-.045em}.sub{color:var(--muted);line-height:1.5;margin-bottom:24px}label{display:block;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin:16px 0 8px}input{width:100%;background:#0e1218;border:1px solid var(--line);border-radius:12px;color:var(--text);font-size:16px;padding:15px;outline:none}input:focus{border-color:var(--gold)}button,a.button{display:block;width:100%;margin-top:14px;border:0;border-radius:12px;padding:15px 18px;font-weight:800;font-size:15px;text-align:center;text-decoration:none;cursor:pointer}.primary{background:var(--gold);color:#0a0b0d}.primary:disabled{opacity:.55;cursor:wait}.secondary{background:#171c24;color:var(--text);border:1px solid var(--line)!important}.status{display:none;margin-top:14px;padding:13px;border-radius:12px;font-size:13px;line-height:1.45}.status.ok{display:block;background:#10251b;border:1px solid #236943;color:var(--green)}.status.error{display:block;background:#2b1517;border:1px solid #7d2c35;color:#ff9ca5}.note{margin-top:20px;color:var(--muted);font-size:12px;line-height:1.5}.steps{margin-top:18px;padding:16px;background:#0e1218;border:1px solid var(--line);border-radius:14px;color:var(--muted);font-size:13px;line-height:1.6}.steps strong{color:var(--text)}
 </style>
 </head>
 <body>
@@ -14,31 +14,61 @@
 <div class="eyebrow">GAUGE KING</div>
 <section class="card">
 <h1>Race Control</h1>
-<div class="sub">Paste the live Natsoft results URL here. This page will copy it for you and open the protected GitHub workflow where you can launch the update.</div>
+<div class="sub">Paste the live Natsoft results link and press the gold button. Gauge King will start the results update automatically.</div>
+<label for="pin">Race Control PIN</label>
+<input id="pin" type="password" inputmode="numeric" autocomplete="off" placeholder="Enter PIN">
 <label for="url">Natsoft results URL</label>
-<input id="url" type="url" inputmode="url" autocomplete="off" placeholder="https://racing.natsoft.com.au/…">
-<button class="primary" id="launch">COPY URL &amp; OPEN RACE CONTROL</button>
+<input id="url" type="url" inputmode="url" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="https://racing.natsoft.com.au/…">
+<button class="primary" id="launch">UPDATE LIVE RESULTS</button>
 <a class="button secondary" href="../">VIEW LIVE RESULTS</a>
-<div class="status" id="status">URL copied. In GitHub, tap <strong>Run workflow</strong>, paste into <strong>Natsoft results URL</strong>, then tap the green <strong>Run workflow</strong> button.</div>
-<div class="steps"><strong>Race-day flow</strong><br>1. Copy the current Natsoft result URL.<br>2. Paste it above.<br>3. Tap the gold button.<br>4. Paste into GitHub and run the workflow.<br><br>The URL is then saved and Gauge King will refresh the event results automatically every five minutes during the configured race-day window.</div>
-<div class="note">Security: the GitHub credential is never stored in this static page. GitHub itself authenticates you before allowing the workflow to run.</div>
+<div class="status" id="status"></div>
+<div class="steps"><strong>Race-day flow</strong><br>1. Open the current Natsoft result.<br>2. Copy its web address.<br>3. Paste it above.<br>4. Enter the Race Control PIN.<br>5. Tap <strong>UPDATE LIVE RESULTS</strong>.<br><br>That is all. Gauge King will save the live source, rebuild the results page and continue automatic updates during the configured event window.</div>
+<div class="note">The GitHub credential is stored only in the secure Gauge King backend. It is never included in this page or sent to the user.</div>
 </section>
 </main>
 <script>
+const API='https://gaugeking-race-control.onrender.com/api/race-results/update';
+const pin=document.getElementById('pin');
 const input=document.getElementById('url');
 const status=document.getElementById('status');
 const launch=document.getElementById('launch');
-const workflow='https://github.com/project3300/gaugeking-website/actions/workflows/update-results.yml';
+
+function showStatus(message,type){
+  status.className='status '+type;
+  status.textContent=message;
+}
+
 launch.addEventListener('click',async()=>{
   const value=input.value.trim();
+  const racePin=pin.value.trim();
+  if(!racePin){showStatus('Enter the Race Control PIN.','error');return}
+
   let parsed;
-  try{parsed=new URL(value)}catch(e){alert('Paste a valid Natsoft results URL first.');return}
+  try{parsed=new URL(value)}catch(e){showStatus('Paste a valid Natsoft results URL first.','error');return}
   if(!['racing.natsoft.com.au','www.racing.natsoft.com.au'].includes(parsed.hostname)){
-    alert('The URL must be from racing.natsoft.com.au');return;
+    showStatus('The link must be from racing.natsoft.com.au.','error');return;
   }
-  try{await navigator.clipboard.writeText(value)}catch(e){input.select();document.execCommand('copy')}
-  status.style.display='block';
-  window.open(workflow,'_blank','noopener');
+
+  launch.disabled=true;
+  launch.textContent='STARTING UPDATE…';
+  showStatus('Contacting Gauge King Race Control…','ok');
+
+  try{
+    const response=await fetch(API,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({pin:racePin,results_url:value})
+    });
+    const data=await response.json().catch(()=>({}));
+    if(!response.ok){throw new Error(data.detail||'Could not start the update.');}
+    showStatus('🏁 Update started successfully. Gauge King is retrieving and publishing the live results.','ok');
+    input.value='';
+  }catch(error){
+    showStatus(error.message||'Could not contact Race Control. Please try again.','error');
+  }finally{
+    launch.disabled=false;
+    launch.textContent='UPDATE LIVE RESULTS';
+  }
 });
 </script>
 </body>
