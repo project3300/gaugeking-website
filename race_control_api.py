@@ -48,47 +48,35 @@ def validate_natsoft_url(value: str) -> str:
         return ""
     parsed = urlparse(value)
     if parsed.scheme not in {"http", "https"} or parsed.hostname not in ALLOWED_NATSOFT_HOSTS:
-        raise HTTPException(status_code=400, detail="Please provide a valid racing.natsoft.com.au results URL.")
+        raise HTTPException(status_code=400, detail="Please provide a valid racing.natsoft.com.au event or results URL.")
     return value
 
 
 def verify_natsoft_url(value: str) -> None:
-    """Check a supplied Natsoft result link before saving it as the live source."""
+    """Check a supplied Natsoft event/result URL before saving it."""
     if not value:
         return
-
     try:
-        response = requests.get(
-            value,
-            headers=NATSOFT_HEADERS,
-            timeout=15,
-            allow_redirects=True,
-            stream=True,
-        )
+        response = requests.get(value, headers=NATSOFT_HEADERS, timeout=15, allow_redirects=True, stream=True)
     except requests.RequestException:
-        raise HTTPException(
-            status_code=502,
-            detail="Race Control could not verify that Natsoft link. Check your connection and try again.",
-        )
+        # Natsoft can be slow/intermittent. A valid Natsoft-host URL is still accepted;
+        # the scheduled scraper will retry it rather than forcing the operator to re-enter it.
+        return
 
     try:
         if response.status_code in {404, 410}:
             raise HTTPException(
                 status_code=400,
-                detail="This Natsoft result link is no longer valid. Open the result again in Natsoft and paste the new URL.",
+                detail="This Natsoft link is no longer valid. Open the event again in Natsoft and paste the current event-level URL.",
             )
         if response.status_code >= 400:
             raise HTTPException(
                 status_code=400,
-                detail=f"Natsoft returned HTTP {response.status_code} for that result link. Open the result again in Natsoft and paste the current URL.",
+                detail=f"Natsoft returned HTTP {response.status_code} for that link. Open the event again in Natsoft and paste the current event-level URL.",
             )
-
         final_host = urlparse(response.url).hostname
         if final_host not in ALLOWED_NATSOFT_HOSTS:
-            raise HTTPException(
-                status_code=400,
-                detail="That Natsoft link redirected somewhere unexpected. Open the result again in Natsoft and paste the current URL.",
-            )
+            raise HTTPException(status_code=400, detail="That Natsoft link redirected somewhere unexpected.")
     finally:
         response.close()
 
@@ -96,7 +84,6 @@ def verify_natsoft_url(value: str) -> None:
 def normalise_participants(values: list[str] | None) -> list[str] | None:
     if values is None:
         return None
-
     deduped: list[str] = []
     seen: set[str] = set()
     for value in values:
@@ -109,7 +96,6 @@ def normalise_participants(values: list[str] | None) -> list[str] | None:
         if name and key not in seen:
             seen.add(key)
             deduped.append(name)
-
     if not deduped:
         raise HTTPException(status_code=400, detail="The uploaded driver list did not contain any names.")
     return deduped
@@ -124,24 +110,20 @@ def health() -> dict[str, str]:
 def update_race_results(payload: UpdateRequest) -> dict[str, object]:
     if not GITHUB_TOKEN or not RACE_CONTROL_PIN:
         raise HTTPException(status_code=503, detail="Race Control is not configured yet.")
-
     if not hmac.compare_digest(payload.pin.strip(), RACE_CONTROL_PIN):
         raise HTTPException(status_code=401, detail="Incorrect Race Control PIN.")
 
-    results_url = validate_natsoft_url(payload.results_url)
+    source_url = validate_natsoft_url(payload.results_url)
     participants = normalise_participants(payload.participants)
+    if not source_url and participants is None:
+        raise HTTPException(status_code=400, detail="Provide a Natsoft event URL, a driver list, or both.")
 
-    if not results_url and participants is None:
-        raise HTTPException(status_code=400, detail="Provide a Natsoft URL, a driver list, or both.")
-
-    # Do not save/start polling a newly supplied Natsoft URL until it is confirmed reachable.
-    verify_natsoft_url(results_url)
+    verify_natsoft_url(source_url)
 
     inputs = {
-        "results_url": results_url,
+        "results_url": source_url,
         "participants_json": json.dumps(participants, ensure_ascii=False) if participants is not None else "",
     }
-
     endpoint = f"https://api.github.com/repos/{GITHUB_REPO}/actions/workflows/{GITHUB_WORKFLOW}/dispatches"
     response = requests.post(
         endpoint,
@@ -154,7 +136,6 @@ def update_race_results(payload: UpdateRequest) -> dict[str, object]:
         json={"ref": GITHUB_REF, "inputs": inputs},
         timeout=20,
     )
-
     if response.status_code != 204:
         raise HTTPException(status_code=502, detail="GitHub could not start the results update.")
 
