@@ -6,7 +6,7 @@
 <title>Gauge King Race Control</title>
 <style>
 :root{--bg:#090b0f;--panel:#12161d;--line:#282f39;--text:#f5f7fa;--muted:#9ca6b4;--gold:#d4af37;--green:#6ee7a7;--red:#ff6b6b}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 15% 0,#1c222c 0,#090b0f 42%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{width:min(620px,calc(100% - 28px));margin:0 auto;padding:30px 0 60px}.eyebrow{color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.16em}.card{margin-top:16px;background:linear-gradient(135deg,rgba(255,255,255,.055),rgba(255,255,255,.015));border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0 20px 70px rgba(0,0,0,.28)}h1{font-size:clamp(34px,9vw,58px);line-height:.96;margin:10px 0 12px;letter-spacing:-.045em}.sub{color:var(--muted);line-height:1.5;margin-bottom:24px}label{display:block;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin:16px 0 8px}input{width:100%;background:#0e1218;border:1px solid var(--line);border-radius:12px;color:var(--text);font-size:16px;padding:15px;outline:none}input:focus{border-color:var(--gold)}button,a.button{display:block;width:100%;margin-top:14px;border:0;border-radius:12px;padding:15px 18px;font-weight:800;font-size:15px;text-align:center;text-decoration:none;cursor:pointer}.primary{background:var(--gold);color:#0a0b0d}.primary:disabled{opacity:.55;cursor:wait}.secondary{background:#171c24;color:var(--text);border:1px solid var(--line)!important}.status{display:none;margin-top:14px;padding:13px;border-radius:12px;font-size:13px;line-height:1.45}.status.ok{display:block;background:#10251b;border:1px solid #236943;color:var(--green)}.status.error{display:block;background:#2b1517;border:1px solid #7d2c35;color:#ff9ca5}.note{margin-top:20px;color:var(--muted);font-size:12px;line-height:1.5}.steps{margin-top:18px;padding:16px;background:#0e1218;border:1px solid var(--line);border-radius:14px;color:var(--muted);font-size:13px;line-height:1.6}.steps strong{color:var(--text)}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 15% 0,#1c222c 0,#090b0f 42%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{width:min(680px,calc(100% - 28px));margin:0 auto;padding:30px 0 60px}.eyebrow{color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.16em}.card{margin-top:16px;background:linear-gradient(135deg,rgba(255,255,255,.055),rgba(255,255,255,.015));border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0 20px 70px rgba(0,0,0,.28)}h1{font-size:clamp(34px,9vw,58px);line-height:.96;margin:10px 0 12px;letter-spacing:-.045em}.sub{color:var(--muted);line-height:1.5;margin-bottom:24px}label{display:block;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin:16px 0 8px}input{width:100%;background:#0e1218;border:1px solid var(--line);border-radius:12px;color:var(--text);font-size:16px;padding:15px;outline:none}input:focus{border-color:var(--gold)}input[type=file]{font-size:14px}.file-help{color:var(--muted);font-size:12px;line-height:1.45;margin-top:7px}.driver-box{display:none;margin-top:10px;padding:14px;background:#0e1218;border:1px solid var(--line);border-radius:12px}.driver-box.show{display:block}.driver-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:8px}.driver-head strong{font-size:13px}.driver-head button{width:auto;margin:0;padding:7px 10px;font-size:11px}.driver-list{max-height:190px;overflow:auto;color:var(--muted);font-size:13px;line-height:1.55}.driver-list div{padding:3px 0;border-bottom:1px solid rgba(255,255,255,.05)}button,a.button{display:block;width:100%;margin-top:14px;border:0;border-radius:12px;padding:15px 18px;font-weight:800;font-size:15px;text-align:center;text-decoration:none;cursor:pointer}.primary{background:var(--gold);color:#0a0b0d}.primary:disabled{opacity:.55;cursor:wait}.secondary{background:#171c24;color:var(--text);border:1px solid var(--line)!important}.mini{background:#171c24;color:var(--text);border:1px solid var(--line)!important}.status{display:none;margin-top:14px;padding:13px;border-radius:12px;font-size:13px;line-height:1.45}.status.ok{display:block;background:#10251b;border:1px solid #236943;color:var(--green)}.status.error{display:block;background:#2b1517;border:1px solid #7d2c35;color:#ff9ca5}.note{margin-top:20px;color:var(--muted);font-size:12px;line-height:1.5}.steps{margin-top:18px;padding:16px;background:#0e1218;border:1px solid var(--line);border-radius:14px;color:var(--muted);font-size:13px;line-height:1.6}.steps strong{color:var(--text)}
 </style>
 </head>
 <body>
@@ -14,61 +14,99 @@
 <div class="eyebrow">GAUGE KING</div>
 <section class="card">
 <h1>Race Control</h1>
-<div class="sub">Paste the live Natsoft results link and press the gold button. Gauge King will start the results update automatically.</div>
+<div class="sub">Update the Natsoft source, the tracked-driver list, or both. Gauge King will save the changes and start a fresh results update automatically.</div>
 <label for="pin">Race Control PIN</label>
 <input id="pin" type="password" inputmode="numeric" autocomplete="off" placeholder="Enter PIN">
-<label for="url">Natsoft results URL</label>
+<label for="url">Natsoft results URL <span style="text-transform:none;letter-spacing:0">(optional if only changing drivers)</span></label>
 <input id="url" type="url" inputmode="url" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="https://racing.natsoft.com.au/…">
-<button class="primary" id="launch">UPDATE LIVE RESULTS</button>
+<label for="drivers">Tracked driver list <span style="text-transform:none;letter-spacing:0">(optional)</span></label>
+<input id="drivers" type="file" accept=".csv,.txt,text/csv,text/plain">
+<div class="file-help">Upload a CSV or TXT file to <strong>replace</strong> the current tracked-driver list. For registration exports, Race Control looks for columns such as <strong>Full Name</strong>, Driver, Participant or Competitor. Duplicate names are removed automatically.</div>
+<div class="driver-box" id="driverBox">
+  <div class="driver-head"><strong id="driverCount"></strong><button class="mini" id="clearDrivers" type="button">CLEAR FILE</button></div>
+  <div class="driver-list" id="driverList"></div>
+</div>
+<button class="primary" id="launch">SAVE &amp; UPDATE LIVE RESULTS</button>
 <a class="button secondary" href="../">VIEW LIVE RESULTS</a>
 <div class="status" id="status"></div>
-<div class="steps"><strong>Race-day flow</strong><br>1. Open the current Natsoft result.<br>2. Copy its web address.<br>3. Paste it above.<br>4. Enter the Race Control PIN.<br>5. Tap <strong>UPDATE LIVE RESULTS</strong>.<br><br>That is all. Gauge King will save the live source, rebuild the results page and continue automatic updates during the configured event window.</div>
-<div class="note">The GitHub credential is stored only in the secure Gauge King backend. It is never included in this page or sent to the user.</div>
+<div class="steps"><strong>Race-day flow</strong><br>1. Enter the Race Control PIN.<br>2. Paste a Natsoft result URL if it has changed.<br>3. Upload a revised driver CSV/TXT if the tracked list has changed.<br>4. Tap <strong>SAVE &amp; UPDATE LIVE RESULTS</strong>.<br><br>You can change only the URL, only the drivers, or both. An uploaded driver file replaces the existing list so late additions and withdrawals are easy to manage.</div>
+<div class="note">The GitHub credential is stored only in the secure Gauge King backend. Uploaded driver names are sent to that backend and saved into the race-results configuration; the source file itself is not stored.</div>
 </section>
 </main>
 <script>
 const API='https://gaugeking-race-control.onrender.com/api/race-results/update';
 const pin=document.getElementById('pin');
 const input=document.getElementById('url');
+const drivers=document.getElementById('drivers');
+const driverBox=document.getElementById('driverBox');
+const driverCount=document.getElementById('driverCount');
+const driverList=document.getElementById('driverList');
+const clearDrivers=document.getElementById('clearDrivers');
 const status=document.getElementById('status');
 const launch=document.getElementById('launch');
+let participantNames=null;
 
-function showStatus(message,type){
-  status.className='status '+type;
-  status.textContent=message;
+function showStatus(message,type){status.className='status '+type;status.textContent=message;}
+function cleanName(value){return (value||'').replace(/^\uFEFF/,'').replace(/^['\"]|['\"]$/g,'').replace(/\s+/g,' ').trim();}
+function dedupe(values){const out=[];const seen=new Set();for(const raw of values){const name=cleanName(raw);const key=name.toLocaleLowerCase();if(name&&!seen.has(key)){seen.add(key);out.push(name)}}return out;}
+function splitCsvLine(line){const out=[];let cur='';let quoted=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'){if(quoted&&line[i+1]==='"'){cur+='"';i++;}else quoted=!quoted;}else if(ch===','&&!quoted){out.push(cur);cur='';}else cur+=ch;}out.push(cur);return out;}
+function parseDriverFile(text){
+  const normal=text.replace(/\r\n/g,'\n').replace(/\r/g,'\n').trim();
+  if(!normal)return [];
+  const lines=normal.split('\n').filter(l=>l.trim());
+  const rows=lines.map(splitCsvLine);
+  if(rows.length===1)return dedupe(rows[0]);
+  const header=rows[0].map(v=>cleanName(v).toLowerCase());
+  const candidates=['full name','driver','driver name','participant','participant name','competitor','competitor name','name'];
+  let idx=-1;
+  for(const c of candidates){idx=header.indexOf(c);if(idx>=0)break;}
+  if(idx<0){idx=header.findIndex(v=>v.includes('name')||v.includes('driver')||v.includes('participant')||v.includes('competitor'));}
+  if(idx>=0)return dedupe(rows.slice(1).map(r=>r[idx]||''));
+  // TXT or simple one-name-per-line CSV: use the first column and ignore common header words.
+  return dedupe(rows.map(r=>r[0]||'').filter(v=>!['name','driver','full name','participant','competitor'].includes(cleanName(v).toLowerCase())));
 }
+function renderDrivers(){
+  if(!participantNames){driverBox.className='driver-box';driverList.innerHTML='';driverCount.textContent='';return;}
+  driverBox.className='driver-box show';
+  driverCount.textContent=`${participantNames.length} unique driver${participantNames.length===1?'':'s'} will be tracked`;
+  driverList.innerHTML='';
+  participantNames.forEach(name=>{const d=document.createElement('div');d.textContent=name;driverList.appendChild(d);});
+}
+drivers.addEventListener('change',async()=>{
+  const file=drivers.files&&drivers.files[0];
+  if(!file){participantNames=null;renderDrivers();return;}
+  try{
+    const buffer=await file.arrayBuffer();
+    let text;
+    try{text=new TextDecoder('utf-8',{fatal:true}).decode(buffer);}catch(e){text=new TextDecoder('windows-1252').decode(buffer);}
+    participantNames=parseDriverFile(text);
+    if(!participantNames.length)throw new Error('No driver names could be found in that file.');
+    renderDrivers();
+    showStatus(`Loaded ${participantNames.length} unique drivers. Review the list above, then save the update.`,'ok');
+  }catch(error){participantNames=null;renderDrivers();drivers.value='';showStatus(error.message||'Could not read that driver file.','error');}
+});
+clearDrivers.addEventListener('click',()=>{participantNames=null;drivers.value='';renderDrivers();showStatus('Driver upload cleared. The existing tracked list will be kept.','ok');});
 
 launch.addEventListener('click',async()=>{
   const value=input.value.trim();
   const racePin=pin.value.trim();
   if(!racePin){showStatus('Enter the Race Control PIN.','error');return}
-
-  let parsed;
-  try{parsed=new URL(value)}catch(e){showStatus('Paste a valid Natsoft results URL first.','error');return}
-  if(!['racing.natsoft.com.au','www.racing.natsoft.com.au'].includes(parsed.hostname)){
-    showStatus('The link must be from racing.natsoft.com.au.','error');return;
+  if(!value&&participantNames===null){showStatus('Paste a Natsoft URL, upload a driver list, or both.','error');return}
+  if(value){
+    let parsed;
+    try{parsed=new URL(value)}catch(e){showStatus('Paste a valid Natsoft results URL.','error');return}
+    if(!['racing.natsoft.com.au','www.racing.natsoft.com.au'].includes(parsed.hostname)){showStatus('The link must be from racing.natsoft.com.au.','error');return;}
   }
-
-  launch.disabled=true;
-  launch.textContent='STARTING UPDATE…';
-  showStatus('Contacting Gauge King Race Control…','ok');
-
+  launch.disabled=true;launch.textContent='SAVING & STARTING…';showStatus('Contacting Gauge King Race Control…','ok');
   try{
-    const response=await fetch(API,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({pin:racePin,results_url:value})
-    });
+    const response=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pin:racePin,results_url:value,participants:participantNames})});
     const data=await response.json().catch(()=>({}));
-    if(!response.ok){throw new Error(data.detail||'Could not start the update.');}
-    showStatus('🏁 Update started successfully. Gauge King is retrieving and publishing the live results.','ok');
-    input.value='';
-  }catch(error){
-    showStatus(error.message||'Could not contact Race Control. Please try again.','error');
-  }finally{
-    launch.disabled=false;
-    launch.textContent='UPDATE LIVE RESULTS';
-  }
+    if(!response.ok)throw new Error(data.detail||'Could not start the update.');
+    const driverMessage=participantNames!==null?` ${participantNames.length} tracked drivers saved.`:'';
+    showStatus(`🏁 Update started successfully.${driverMessage} Gauge King is retrieving and publishing the latest results.`,'ok');
+    input.value='';participantNames=null;drivers.value='';renderDrivers();
+  }catch(error){showStatus(error.message||'Could not contact Race Control. Please try again.','error');}
+  finally{launch.disabled=false;launch.textContent='SAVE & UPDATE LIVE RESULTS';}
 });
 </script>
 </body>
