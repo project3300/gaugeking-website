@@ -51,3 +51,21 @@
   .showcase-media{min-height:300px}.showcase-wide{width:94%;top:4%}.showcase-phone{width:29%;min-width:105px}
   .gallery-grid{grid-template-columns:1fr}.gallery-grid img:nth-child(1),.gallery-grid img:nth-child(3),.gallery-grid img:nth-child(4){grid-column:auto;grid-row:auto}
 }
+
+/* Android coming soon */
+.gk-badge--android{color:#d8ffe9;border-color:rgba(124,255,182,.24);background:rgba(124,255,182,.07)}
+.android-coming{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:34px;align-items:center;border-color:rgba(124,255,182,.2);background:linear-gradient(125deg,rgba(8,30,27,.62),rgba(7,16,24,.82))}
+.android-coming:before{content:"";position:absolute;width:430px;height:430px;border-radius:50%;right:-180px;top:-210px;background:rgba(124,255,182,.09);filter:blur(30px);pointer-events:none}
+.android-copy,.android-preview{position:relative;z-index:1}
+.android-copy h2{margin:8px 0 12px;color:#f4fbff;font-family:"Space Grotesk",sans-serif;font-size:clamp(30px,4vw,46px);line-height:1.04}
+.android-copy p{margin:0;color:#b7c7ce;line-height:1.75;font-size:16px}
+.android-status{display:inline-flex;align-items:center;gap:10px;margin-top:20px;padding:10px 14px;border:1px solid rgba(124,255,182,.18);border-radius:999px;background:rgba(124,255,182,.07);color:#d8ffe9;font-size:13px}
+.android-dot{width:9px;height:9px;border-radius:50%;background:#7cffb6;box-shadow:0 0 16px rgba(124,255,182,.7)}
+.android-preview{min-height:370px}
+.android-screen{position:absolute;margin:0;border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.11);background:#020507;box-shadow:0 28px 80px rgba(0,0,0,.46)}
+.android-screen img{display:block;width:100%;height:auto}
+.android-screen--rear{width:86%;right:0;top:5%;transform:rotate(2.4deg);opacity:.68}
+.android-screen--front{width:90%;left:0;bottom:1%;transform:rotate(-1.5deg)}
+.android-screen figcaption{position:absolute;left:14px;bottom:12px;padding:8px 11px;border-radius:999px;background:rgba(3,8,12,.8);backdrop-filter:blur(10px);font-size:11px;font-weight:800;color:#d8ffe9}
+@media(max-width:880px){.android-coming{grid-template-columns:1fr}.android-preview{min-height:320px;margin-top:6px}}
+@media(max-width:720px){.android-preview{min-height:230px}.android-screen--rear{width:94%;right:-8%;top:8%}.android-screen--front{width:96%;left:-4%;bottom:0}}
