@@ -145,14 +145,18 @@ jobs:
       - name: Build static site
         run: python build_site.py
 
-      - name: Commit refreshed data
-        if: steps.scrape.outcome == 'success'
+      - name: Commit Race Control configuration and refreshed data
+        env:
+          SCRAPE_OUTCOME: ${{ steps.scrape.outcome }}
         run: |
           git config user.name "gaugeking-results-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add config.yaml data/results.json
+          git add config.yaml
+          if [ "$SCRAPE_OUTCOME" = "success" ]; then
+            git add data/results.json
+          fi
           if git diff --cached --quiet; then
-            echo "No race-result changes to commit."
+            echo "No race-result or Race Control changes to commit."
           else
             git commit -m "Refresh race results"
             git pull --rebase origin main
