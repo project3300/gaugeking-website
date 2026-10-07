@@ -11,6 +11,10 @@ on:
         description: "JSON array of tracked driver names (leave blank to keep current list)"
         required: false
         type: string
+      registrations_json:
+        description: "JSON array of registration records with name, class and group"
+        required: false
+        type: string
   # 2026 OZ RS Nationals race-day polling at Winton, Victoria.
   # 18 October 2026 is AEDT (UTC+11); covers roughly 08:00-19:55 local time.
   schedule:
@@ -52,6 +56,7 @@ jobs:
         env:
           RESULTS_URL: ${{ inputs.results_url }}
           PARTICIPANTS_JSON: ${{ inputs.participants_json }}
+          REGISTRATIONS_JSON: ${{ inputs.registrations_json }}
         run: |
           python - <<'PY'
           import json
@@ -74,8 +79,38 @@ jobs:
               config["natsoft"]["validation_mode"] = False
               print(f"Saved Natsoft event/source URL: {url}")
 
+          registrations_raw = os.environ.get("REGISTRATIONS_JSON", "").strip()
           participants_raw = os.environ.get("PARTICIPANTS_JSON", "").strip()
-          if participants_raw:
+
+          if registrations_raw:
+              registrations = json.loads(registrations_raw)
+              if not isinstance(registrations, list):
+                  raise SystemExit("registrations_json must be a JSON array")
+
+              cleaned = []
+              seen = set()
+              for item in registrations:
+                  if not isinstance(item, dict):
+                      continue
+                  name = " ".join(str(item.get("name", "")).split()).strip()
+                  key = name.casefold()
+                  if not name or key in seen:
+                      continue
+                  seen.add(key)
+                  cleaned.append({
+                      "name": name,
+                      "class": " ".join(str(item.get("class", "")).split()).strip(),
+                      "group": " ".join(str(item.get("group", "")).split()).strip(),
+                      "id": " ".join(str(item.get("id", "")).split()).strip(),
+                      "username": " ".join(str(item.get("username", "")).split()).strip(),
+                  })
+
+              config.setdefault("filters", {})["registrations"] = cleaned
+              config["filters"]["participants"] = [item["name"] for item in cleaned]
+              config["filters"]["vehicle_terms"] = []
+              print(f"Saved {len(cleaned)} registrations with class/team metadata.")
+
+          elif participants_raw:
               participants = json.loads(participants_raw)
               if not isinstance(participants, list):
                   raise SystemExit("participants_json must be a JSON array")
@@ -92,6 +127,7 @@ jobs:
                       deduped.append(name)
 
               config.setdefault("filters", {})["participants"] = deduped
+              config["filters"]["registrations"] = [{"name": name, "class": "", "group": ""} for name in deduped]
               config["filters"]["vehicle_terms"] = []
               print(f"Saved {len(deduped)} tracked drivers.")
 
