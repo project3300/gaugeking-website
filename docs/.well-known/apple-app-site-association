@@ -1,0 +1,17 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "1060408677.com.pocketaimechanic.gaugeking"
+        ],
+        "components": [
+          {
+            "/": "/meta*",
+            "comment": "Meta Wearables universal-link callback for Gauge King"
+          }
+        ]
+      }
+    ]
+  }
+}
