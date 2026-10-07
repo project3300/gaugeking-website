@@ -36,10 +36,21 @@ app.add_middleware(
 )
 
 
+class Registration(BaseModel):
+    name: str
+    class_name: str = Field(default="", alias="class")
+    group: str = ""
+    id: str = ""
+    username: str = ""
+
+    model_config = {"populate_by_name": True}
+
+
 class UpdateRequest(BaseModel):
     pin: str
     results_url: str = ""
     participants: list[str] | None = Field(default=None, max_length=250)
+    registrations: list[Registration] | None = Field(default=None, max_length=250)
 
 
 def validate_natsoft_url(value: str) -> str:
@@ -53,14 +64,11 @@ def validate_natsoft_url(value: str) -> str:
 
 
 def verify_natsoft_url(value: str) -> None:
-    """Check a supplied Natsoft event/result URL before saving it."""
     if not value:
         return
     try:
         response = requests.get(value, headers=NATSOFT_HEADERS, timeout=15, allow_redirects=True, stream=True)
     except requests.RequestException:
-        # Natsoft can be slow/intermittent. A valid Natsoft-host URL is still accepted;
-        # the scheduled scraper will retry it rather than forcing the operator to re-enter it.
         return
 
     try:
@@ -81,6 +89,13 @@ def verify_natsoft_url(value: str) -> None:
         response.close()
 
 
+def clean_text(value: str, max_length: int = 120) -> str:
+    value = " ".join(str(value or "").split()).strip()
+    if len(value) > max_length:
+        raise HTTPException(status_code=400, detail="An uploaded registration value is too long.")
+    return value
+
+
 def normalise_participants(values: list[str] | None) -> list[str] | None:
     if values is None:
         return None
@@ -89,9 +104,7 @@ def normalise_participants(values: list[str] | None) -> list[str] | None:
     for value in values:
         if not isinstance(value, str):
             continue
-        name = " ".join(value.split()).strip()
-        if len(name) > 120:
-            raise HTTPException(status_code=400, detail="A driver name is too long.")
+        name = clean_text(value)
         key = name.casefold()
         if name and key not in seen:
             seen.add(key)
@@ -99,6 +112,31 @@ def normalise_participants(values: list[str] | None) -> list[str] | None:
     if not deduped:
         raise HTTPException(status_code=400, detail="The uploaded driver list did not contain any names.")
     return deduped
+
+
+def normalise_registrations(values: list[Registration] | None) -> list[dict[str, str]] | None:
+    if values is None:
+        return None
+    output: list[dict[str, str]] = []
+    seen: set[str] = set()
+    for item in values:
+        name = clean_text(item.name)
+        if not name:
+            continue
+        key = name.casefold()
+        if key in seen:
+            continue
+        seen.add(key)
+        output.append({
+            "name": name,
+            "class": clean_text(item.class_name, 80),
+            "group": clean_text(item.group, 120),
+            "id": clean_text(item.id, 40),
+            "username": clean_text(item.username, 120),
+        })
+    if not output:
+        raise HTTPException(status_code=400, detail="The uploaded registration list did not contain any driver names.")
+    return output
 
 
 @app.get("/health")
@@ -114,15 +152,21 @@ def update_race_results(payload: UpdateRequest) -> dict[str, object]:
         raise HTTPException(status_code=401, detail="Incorrect Race Control PIN.")
 
     source_url = validate_natsoft_url(payload.results_url)
+    registrations = normalise_registrations(payload.registrations)
     participants = normalise_participants(payload.participants)
-    if not source_url and participants is None:
-        raise HTTPException(status_code=400, detail="Provide a Natsoft event URL, a driver list, or both.")
+
+    if registrations is not None:
+        participants = [item["name"] for item in registrations]
+
+    if not source_url and participants is None and registrations is None:
+        raise HTTPException(status_code=400, detail="Provide a Natsoft event URL, a registration/driver list, or both.")
 
     verify_natsoft_url(source_url)
 
     inputs = {
         "results_url": source_url,
         "participants_json": json.dumps(participants, ensure_ascii=False) if participants is not None else "",
+        "registrations_json": json.dumps(registrations, ensure_ascii=False) if registrations is not None else "",
     }
     endpoint = f"https://api.github.com/repos/{GITHUB_REPO}/actions/workflows/{GITHUB_WORKFLOW}/dispatches"
     response = requests.post(
@@ -143,4 +187,6 @@ def update_race_results(payload: UpdateRequest) -> dict[str, object]:
         "status": "started",
         "message": "Race results update started successfully.",
         "tracked_driver_count": len(participants) if participants is not None else None,
+        "class_count": len({r["class"] for r in registrations if r["class"]}) if registrations is not None else None,
+        "team_count": len({r["group"] for r in registrations if r["group"]}) if registrations is not None else None,
     }
