@@ -70,6 +70,27 @@
         <a class="button-link primary" href="https://apps.apple.com/au/app/gauge-king/id6777585502" target="_blank" rel="noopener noreferrer">Download on the App Store</a>
       </section>
 
+      <section class="landing-section ozrs-support" id="ozrs-2026" aria-labelledby="ozrs-title">
+        <div class="ozrs-copy" data-reveal>
+          <span class="section-tag">Supporting OZ RenaultSport Nationals 2026</span>
+          <h2 id="ozrs-title">French icons. Live results. Modern telemetry.</h2>
+          <p>To celebrate our partnership with <strong>ENGO Eyewear</strong>, Gauge King is supporting the <strong>2026 OZ RenaultSport Nationals</strong> at Winton Motor Raceway in Victoria on <strong>18 October 2026</strong>.</p>
+          <div class="ozrs-callout"><strong>Race day:</strong> Gauge King will provide phone-friendly live race results so competitors, crews and supporters can follow the action throughout the day.</div>
+          <p>And there’s more. Gauge King now brings <strong>live telemetry support to the iconic Renault Clio II 172/182</strong> — taking a French cult classic that predates standard OBD-II support and bringing its ECU data into 2026.</p>
+          <p class="ozrs-ooh"><strong>Ooh la la.</strong></p>
+          <div class="feature-pills">
+            <span>18 Oct 2026</span><span>Winton Motor Raceway</span><span>ENGO 3 / ActiveLook</span><span>Clio 172/182 telemetry</span>
+          </div>
+          <div class="ozrs-actions">
+            <a class="button-link primary" href="trackresults/">View Live Race Results</a>
+            <a class="button-link secondary" href="#features">Explore Gauge King Vision</a>
+          </div>
+        </div>
+        <figure class="ozrs-media" data-reveal>
+          <img id="ozrs-promo-art" alt="Gauge King French Racing After Dark artwork celebrating ENGO 3 and Renault Clio 172/182 support" />
+        </figure>
+      </section>
+
       <section class="landing-section android-coming" id="android" aria-labelledby="android-title">
         <div class="android-copy" data-reveal>
           <span class="section-tag">Android — coming soon</span>
@@ -184,6 +205,10 @@
   <script>
     const header=document.querySelector('[data-header]');const updateHeader=()=>header?.classList.toggle('is-scrolled',window.scrollY>8);updateHeader();window.addEventListener('scroll',updateHeader,{passive:true});
     const reveal=[...document.querySelectorAll('[data-reveal]')];if('IntersectionObserver' in window){const io=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');io.unobserve(entry.target)}})},{threshold:.08});reveal.forEach(el=>io.observe(el));}else{reveal.forEach(el=>el.classList.add('is-visible'));}
+    Promise.all([
+      fetch('assets/ozrs-2026/part0.txt').then(r=>r.text()),
+      fetch('assets/ozrs-2026/part1.txt').then(r=>r.text())
+    ]).then(parts=>{const img=document.getElementById('ozrs-promo-art');if(img)img.src='data:image/webp;base64,'+parts.join('');}).catch(()=>{});
   </script>
 </body>
 </html>
