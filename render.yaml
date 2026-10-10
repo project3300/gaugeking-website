@@ -3,7 +3,7 @@ services:
     name: gaugeking-race-control
     runtime: python
     plan: free
-    buildCommand: pip install -r race_control_requirements.txt
+    buildCommand: pip install -r race_control_requirements.txt && python -m playwright install chromium
     startCommand: uvicorn race_control_api:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
     autoDeploy: true
