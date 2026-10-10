@@ -4,6 +4,7 @@ import hmac
 import json
 import os
 from urllib.parse import urlparse
+from datetime import datetime
 
 import requests
 from fastapi import FastAPI, HTTPException
@@ -51,6 +52,7 @@ class UpdateRequest(BaseModel):
     results_url: str = ""
     participants: list[str] | None = Field(default=None, max_length=250)
     registrations: list[Registration] | None = Field(default=None, max_length=250)
+    event_selection: dict[str, str] | None = None
 
 
 def validate_natsoft_url(value: str) -> str:
@@ -139,6 +141,32 @@ def normalise_registrations(values: list[Registration] | None) -> list[dict[str,
     return output
 
 
+class DiscoverRequest(BaseModel):
+    pin: str
+    date: str = '2026-10-18'
+    track: str = 'Winton Motor Raceway'
+    name_hint: str = ''
+
+@app.post('/api/race-results/discover')
+def discover_events(payload: DiscoverRequest):
+    if not RACE_CONTROL_PIN or not hmac.compare_digest(payload.pin.strip(), RACE_CONTROL_PIN):
+        raise HTTPException(status_code=401, detail='Incorrect Race Control PIN.')
+    try:
+        datetime.strptime(payload.date, '%Y-%m-%d')
+    except ValueError:
+        raise HTTPException(status_code=400, detail='Date must be YYYY-MM-DD.')
+    track = clean_text(payload.track, 100)
+    if not track:
+        raise HTTPException(status_code=400, detail='Select a race track.')
+    try:
+        from natsoft_browser import discover_meetings
+        events = discover_meetings(payload.date, track)
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail='Natsoft discovery unavailable: ' + str(exc)[:180])
+    hint = clean_text(payload.name_hint, 100).casefold()
+    if hint:
+        events.sort(key=lambda e: hint not in e['name'].casefold())
+    return {'events': events, 'count': len(events)}
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
@@ -152,19 +180,34 @@ def update_race_results(payload: UpdateRequest) -> dict[str, object]:
         raise HTTPException(status_code=401, detail="Incorrect Race Control PIN.")
 
     source_url = validate_natsoft_url(payload.results_url)
+    chosen_event = None
+    if payload.event_selection:
+        chosen_event = {k: clean_text(str(payload.event_selection.get(k, '')), 120) for k in ('name', 'date', 'track', 'id')}
+        if not all(chosen_event.get(k) for k in ('name', 'date', 'track')):
+            raise HTTPException(status_code=400, detail='Select a discovered Natsoft meeting.')
+        if source_url:
+            raise HTTPException(status_code=400, detail='Choose event discovery or a legacy URL, not both.')
+        try:
+            from natsoft_browser import discover_meetings
+            matches = discover_meetings(chosen_event['date'], chosen_event['track'])
+        except Exception as exc:
+            raise HTTPException(status_code=502, detail='Unable to verify Natsoft event: ' + str(exc)[:120])
+        if not any(e['name'] == chosen_event['name'] for e in matches):
+            raise HTTPException(status_code=409, detail='Meeting not found in the current Natsoft index. Search again.')
     registrations = normalise_registrations(payload.registrations)
     participants = normalise_participants(payload.participants)
 
     if registrations is not None:
         participants = [item["name"] for item in registrations]
 
-    if not source_url and participants is None and registrations is None:
+    if not source_url and not chosen_event and participants is None and registrations is None:
         raise HTTPException(status_code=400, detail="Provide a Natsoft event URL, a registration/driver list, or both.")
 
     verify_natsoft_url(source_url)
 
     inputs = {
         "results_url": source_url,
+        "event_selection_json": json.dumps(chosen_event) if chosen_event else "",
         "participants_json": json.dumps(participants, ensure_ascii=False) if participants is not None else "",
         "registrations_json": json.dumps(registrations, ensure_ascii=False) if registrations is not None else "",
     }
