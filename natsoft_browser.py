@@ -2,12 +2,37 @@
 from urllib.parse import urlparse, urljoin
 import re
 import json
+import zlib
+import requests
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 def safe(url):
     p=urlparse(url)
     return p.scheme in ("http","https") and p.hostname in ("racing.natsoft.com.au","www.racing.natsoft.com.au")
+
+def fetch_natsoft_raw(url, context, timeout):
+    """Read raw bytes to tolerate Natsoft's nonstandard deflate responses."""
+    if not safe(url):
+        raise ValueError("Unexpected result host")
+    cookies = {c["name"]: c["value"] for c in context.cookies() if "natsoft.com.au" in c.get("domain", "")}
+    with requests.get(url, headers={"Accept-Encoding": "identity", "Cache-Control": "no-cache", "User-Agent": "Mozilla/5.0"}, cookies=cookies, timeout=timeout, stream=True, allow_redirects=True) as response:
+        response.raise_for_status()
+        if not safe(response.url):
+            raise RuntimeError("Natsoft result redirected to another host")
+        raw = response.raw.read(decode_content=False)
+        encoding = response.headers.get("Content-Encoding", "").lower()
+        if encoding == "deflate":
+            try:
+                raw = zlib.decompress(raw)
+            except zlib.error:
+                raw = zlib.decompress(raw, -zlib.MAX_WBITS)
+        elif encoding == "gzip":
+            raw = zlib.decompress(raw, zlib.MAX_WBITS | 16)
+        charset = response.encoding or "utf-8"
+        html = raw.decode(charset, errors="replace")
+        print(f"Natsoft raw result fetched: status={response.status_code} bytes={len(raw)} url={response.url}", flush=True)
+        return html, dict(response.headers), response.status_code
 
 def discover_live_result(url, timeout=30):
     if not safe(url):
@@ -77,11 +102,7 @@ def discover_live_result(url, timeout=30):
                 page.wait_for_timeout(1500)
                 if len(discovered) > before:
                     result_url = discovered[-1]
-                    selected = result_responses[-1]
-                    selected.finished()
-                    html = selected.text()
-                    headers = selected.headers
-                    status = selected.status
+                    html, headers, status = fetch_natsoft_raw(result_url, context, timeout)
                     browser.close()
                     return result_url, "Latest Published Result", html, headers, status
             page.wait_for_timeout(1200)
@@ -105,14 +126,9 @@ def discover_live_result(url, timeout=30):
                         page.wait_for_timeout(1000)
                     except Exception:
                         pass
-                    fetched = context.request.get(target, timeout=timeout*1000)
-                    body = fetched.text()
-                    headers, status = fetched.headers, fetched.status
-                    selected = result_responses[-1]
-                    selected.finished()
-                    body, headers, status = selected.text(), selected.headers, selected.status
+                    body, headers, status = fetch_natsoft_raw(target, context, timeout)
                     browser.close()
-                    return target,label,body,headers,status,body,headers,status
+                    return target, label, body, headers, status
                 before=len(discovered)
                 try:
                     link.click(timeout=4000)
@@ -121,8 +137,9 @@ def discover_live_result(url, timeout=30):
                     pass
                 if len(discovered)>before:
                     target=discovered[-1]
+                    body, headers, status = fetch_natsoft_raw(target, context, timeout)
                     browser.close()
-                    return target,label
+                    return target, label, body, headers, status
             # Do not silently select a different event if Natsoft changes its UI.
             break
         Path("natsoft-debug").mkdir(exist_ok=True)
