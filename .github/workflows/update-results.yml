@@ -7,6 +7,10 @@ on:
         description: "Natsoft event/results URL (leave blank to refresh the saved event)"
         required: false
         type: string
+      event_selection_json:
+        description: 'Verified selected meeting JSON'
+        required: false
+        type: string
       participants_json:
         description: "JSON array of tracked driver names (leave blank to keep current list)"
         required: false
@@ -60,6 +64,7 @@ jobs:
         if: ${{ github.event_name == 'workflow_dispatch' }}
         env:
           RESULTS_URL: ${{ inputs.results_url }}
+          EVENT_SELECTION_JSON: ${{ inputs.event_selection_json }}
           PARTICIPANTS_JSON: ${{ inputs.participants_json }}
           REGISTRATIONS_JSON: ${{ inputs.registrations_json }}
         run: |
@@ -83,6 +88,17 @@ jobs:
               config.setdefault("natsoft", {})["event_url"] = url
               config["natsoft"]["validation_mode"] = False
               print(f"Saved Natsoft event/source URL: {url}")
+
+          selection_raw = os.environ.get('EVENT_SELECTION_JSON', '').strip()
+          if selection_raw:
+              selection = json.loads(selection_raw)
+              if not all(selection.get(k) for k in ('name', 'date', 'track')):
+                  raise SystemExit('Meeting selection requires name, date, track')
+              config['event'].update({'name':selection['name'], 'date':selection['date'], 'venue':selection['track']})
+              config['natsoft']['meeting'] = selection
+              config['natsoft']['event_url'] = ''
+              config['natsoft']['validation_mode'] = False
+              print('Selected meeting:', selection)
 
           registrations_raw = os.environ.get("REGISTRATIONS_JSON", "").strip()
           participants_raw = os.environ.get("PARTICIPANTS_JSON", "").strip()
