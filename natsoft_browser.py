@@ -31,6 +31,14 @@ def discover_live_result(url, timeout=30):
         except Exception:
             print('Natsoft startup splash still visible after 45 seconds')
         page.wait_for_timeout(2500)
+        # Natsoft's #4 route starts at the discipline selector in a fresh browser.
+        # The icons are clickable images, not anchor links.
+        circuit = page.locator('img[title="Circuit Racing"]')
+        if circuit.count() and circuit.is_visible():
+            print("Entering Natsoft Circuit Racing discipline")
+            circuit.click()
+            page.wait_for_timeout(3500)
+        print("Natsoft drill-through stage:", page.url)
         for depth in range(4):
             for frame in page.frames:
                 try:
