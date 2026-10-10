@@ -34,7 +34,49 @@ def fetch_natsoft_raw(url, context, timeout):
         print(f"Natsoft raw result fetched: status={response.status_code} bytes={len(raw)} url={response.url}", flush=True)
         return html, dict(response.headers), response.status_code
 
-def discover_live_result(url, timeout=30):
+
+def discover_meetings(date_text, track_text, timeout=30):
+    """Render Natsoft's Circuit Racing list and return only verified meeting rows."""
+    from datetime import datetime
+    from playwright.sync_api import sync_playwright
+    target_date = datetime.strptime(date_text, "%Y-%m-%d")
+    aliases = {target_date.strftime("%d/%m/%Y"), target_date.strftime("%d/%m/%y"),
+               target_date.strftime("%d-%m-%Y"), target_date.strftime("%d-%m-%y")}
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page(ignore_https_errors=True)
+        try:
+            page.goto("http://racing.natsoft.com.au/results/", wait_until="domcontentloaded", timeout=timeout*1000)
+            page.locator('img#Discipline_0').wait_for(state="visible", timeout=45000)
+            page.locator('img#Discipline_0').click()
+            page.locator('[id^="MeetingList#r"][id$="c1"]').first.wait_for(timeout=30000)
+            page.wait_for_timeout(1200)
+            rows = page.locator('[id^="MeetingList#r"][id$="c1"]').evaluate_all("""
+              (cells) => cells.map(cell => {
+                const match = cell.id.match(/^(MeetingList#r\\d+)c1$/);
+                if (!match) return null;
+                const base = match[1];
+                const date = document.getElementById(base+'c0');
+                const fields = Array.from(document.querySelectorAll('[id^="'+base+'c"]'));
+                return {id:base, name:(cell.innerText||'').trim(),
+                        date:(date?.innerText||'').trim(),
+                        fields:fields.map(c=>(c.innerText||'').trim())};
+              }).filter(Boolean)
+            """)
+            result=[]
+            for row in rows:
+                combined=" ".join(row["fields"]).casefold()
+                if not any(d in combined for d in aliases):
+                    continue
+                if track_text.casefold() not in combined:
+                    continue
+                result.append({"id":row["id"],"name":row["name"],"date":date_text,
+                               "track":track_text,"details":row["fields"]})
+            return result
+        finally:
+            browser.close()
+
+def discover_live_result(url, timeout=30, meeting=None):
     if not safe(url):
         raise ValueError("Invalid Natsoft URL")
     with sync_playwright() as p:
@@ -75,7 +117,8 @@ def discover_live_result(url, timeout=30):
         print("Natsoft drill-through stage:", page.url, flush=True)
         # The saved #4 test refers to the SubiNats meeting. Natsoft renders
         # meeting rows as div elements (MeetingList#rNc1), not anchors.
-        target_meeting = page.locator('[id^="MeetingList#r"][id$="c1"]').filter(has_text="SubiNats 2026").first
+        target_name = (meeting or {}).get("name", "SubiNats 2026")
+        target_meeting = page.locator('[id^="MeetingList#r"][id$="c1"]').filter(has_text=target_name).first
         if target_meeting.count():
             print("Opening SubiNats 2026 meeting", flush=True)
             row = target_meeting.locator('xpath=ancestor::*[starts-with(@id,"MeetingList#r") and not(contains(substring-after(@id,"#"),"c"))][1]')
@@ -88,7 +131,7 @@ def discover_live_result(url, timeout=30):
             page.screenshot(path="natsoft-debug/after-meeting-click.png", full_page=True)
             Path("natsoft-debug/after-meeting-click.html").write_text(page.content(), encoding="utf-8")
         else:
-            raise RuntimeError("SubiNats 2026 meeting absent from Natsoft index; refusing wrong event")
+            raise RuntimeError(f"Meeting {target_name!r} absent from Natsoft index; refusing wrong event")
 
         # Natsoft uses div-based rows for session results as well. Capture
         # network object responses produced by clicking a current Result cell.
