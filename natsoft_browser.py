@@ -46,6 +46,34 @@ def discover_live_result(url, timeout=30):
         else:
             print("Circuit Racing button not found or not visible", flush=True)
         print("Natsoft drill-through stage:", page.url, flush=True)
+        # The saved #4 test refers to the SubiNats meeting. Natsoft renders
+        # meeting rows as div elements (MeetingList#rNc1), not anchors.
+        target_meeting = page.locator('[id^="MeetingList#r"][id$="c1"]').filter(has_text="SubiNats 2026").first
+        if target_meeting.count():
+            print("Opening SubiNats 2026 meeting", flush=True)
+            target_meeting.dblclick(timeout=6000)
+            page.wait_for_timeout(3000)
+            Path("natsoft-debug").mkdir(exist_ok=True)
+            page.screenshot(path="natsoft-debug/after-meeting-click.png", full_page=True)
+            Path("natsoft-debug/after-meeting-click.html").write_text(page.content(), encoding="utf-8")
+        else:
+            raise RuntimeError("SubiNats 2026 meeting absent from Natsoft index; refusing wrong event")
+
+        # Natsoft uses div-based rows for session results as well. Capture
+        # network object responses produced by clicking a current Result cell.
+        for attempt in range(3):
+            result_cells = page.locator('[id*="Result"], [id*="result"]').filter(has_text=re.compile(r"Result", re.I))
+            print(f"Session result controls: {result_cells.count()}", flush=True)
+            if result_cells.count():
+                candidate = result_cells.last
+                before = len(discovered)
+                candidate.click(timeout=5000)
+                page.wait_for_timeout(1500)
+                if len(discovered) > before:
+                    result_url = discovered[-1]
+                    browser.close()
+                    return result_url, "Latest Published Result"
+            page.wait_for_timeout(1200)
         for depth in range(4):
             for frame in page.frames:
                 try:
