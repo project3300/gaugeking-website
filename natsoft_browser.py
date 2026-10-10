@@ -33,12 +33,19 @@ def discover_live_result(url, timeout=30):
         page.wait_for_timeout(2500)
         # Natsoft's #4 route starts at the discipline selector in a fresh browser.
         # The icons are clickable images, not anchor links.
-        circuit = page.locator('img[title="Circuit Racing"]')
+        circuit = page.locator('img#Discipline_0[title="Circuit Racing"]')
         if circuit.count() and circuit.is_visible():
-            print("Entering Natsoft Circuit Racing discipline")
-            circuit.click()
-            page.wait_for_timeout(3500)
-        print("Natsoft drill-through stage:", page.url)
+            print("Entering Natsoft Circuit Racing discipline via #Discipline_0", flush=True)
+            circuit.scroll_into_view_if_needed()
+            circuit.click(force=True, timeout=6000)
+            page.wait_for_timeout(5000)
+            Path("natsoft-debug").mkdir(exist_ok=True)
+            page.screenshot(path="natsoft-debug/after-circuit-click.png", full_page=True)
+            Path("natsoft-debug/after-circuit-click.html").write_text(page.content(), encoding="utf-8")
+            print("After Circuit Racing click:", page.url, page.locator("body").inner_text()[:800], flush=True)
+        else:
+            print("Circuit Racing button not found or not visible", flush=True)
+        print("Natsoft drill-through stage:", page.url, flush=True)
         for depth in range(4):
             for frame in page.frames:
                 try:
