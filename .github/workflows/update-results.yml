@@ -168,6 +168,13 @@ jobs:
             git push
           fi
 
+      - name: Upload Natsoft browser diagnostics
+        uses: actions/upload-artifact@v4
+        with:
+          name: natsoft-browser-debug
+          path: natsoft-debug/
+          if-no-files-found: ignore
+
       - name: Verify Natsoft scrape succeeded
         if: ${{ steps.scrape.outcome != 'success' }}
         run: |
