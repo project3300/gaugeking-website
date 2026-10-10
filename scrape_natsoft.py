@@ -243,7 +243,7 @@ def scrape() -> dict[str, Any]:
 
     if event_url and urlparse(event_url).fragment and urlparse(event_url).path.rstrip("/") == "/results":
         source_mode = "browser-index"
-        result_url, session_label = discover_live_result(event_url, timeout)
+        result_url, session_label, browser_html, browser_headers, browser_status = discover_live_result(event_url, timeout)
         print(f"Discovered browser result: {session_label} => {result_url}")
     elif event_url and not is_direct_result_url(event_url):
         source_mode = "event"
@@ -254,8 +254,14 @@ def scrape() -> dict[str, Any]:
             raise RuntimeError("No published Natsoft Result links found")
         result_url, session_label = discovered_links[-1]["url"], discovered_links[-1]["label"]
 
-    response = session.get(result_url, timeout=timeout, allow_redirects=True)
-    response.raise_for_status()
+    if source_mode == "browser-index":
+        from types import SimpleNamespace
+        response = SimpleNamespace(url=result_url, text=browser_html, content=browser_html.encode("utf-8"), headers=browser_headers, status_code=browser_status)
+        if browser_status >= 400:
+            raise RuntimeError(f"Natsoft result returned HTTP {browser_status}")
+    else:
+        response = session.get(result_url, timeout=timeout, allow_redirects=True)
+        response.raise_for_status()
 
     content_hash = hashlib.sha256(response.content).hexdigest()
     print(f"RESULT_AUDIT url={response.url} sha256={content_hash} status={response.status_code} age={response.headers.get('Age', '')} cache={response.headers.get('X-Cache', '')}")
