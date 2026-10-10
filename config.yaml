@@ -1,93 +1,341 @@
 event:
-  name: "2026 OZ RS Nationals"
-  date: "2026-10-18"
-  venue: "Winton Motor Raceway"
-
+  name: 2026 OZ RS Nationals
+  date: '2026-10-18'
+  venue: Winton Motor Raceway
 natsoft:
-  # Race Control should normally store the stable event-level Natsoft page here.
-  # On each poll the scraper discovers the newest published Result link from that page.
-  event_url: ""
-  # Direct result URL retained only as a validation/fallback source until the live event page is supplied.
-  url: "http://racing.natsoft.com.au/684283107/object_466841.81y/View?1"
-  validation_mode: true
+  event_url: http://racing.natsoft.com.au/results/#4
+  url: http://racing.natsoft.com.au/684283107/object_466841.81y/View?1
+  validation_mode: false
   timeout_seconds: 30
-
 filters:
-  # Only rows matching one of these registered participants are retained.
-  # Vehicle terms are intentionally disabled so unrelated Renault competitors are excluded.
   vehicle_terms: []
   participants:
-    - "Luke Gray"
-    - "Chris Muyoma"
-    - "Jonathon (Jon) Harrison"
-    - "Matthew Tough"
-    - "Daniel Conacher"
-    - "Damien Hunter"
-    - "Robert Lee"
-    - "Craig simpson"
-    - "Tracy Hoven"
-    - "Riccardo Santilli"
-    - "Adam McInnes"
-    - "Ross Marett"
-    - "Choon Lim"
-    - "Jonathan Gray"
-    - "Alexander Gellings"
-    - "Anthony Musson"
-    - "Simon Ansell"
+  - Ben Everitt
+  - Benjamin Briggs
+  - Benjamin Theocharous
+  - Bree Till
+  - Brian Nicolle
+  - Bryan Elhassan
+  - Cooper Alexander
+  - Fabrice Charon
+  - Jaiden Mammone
+  - Jamie Elters
+  - Jerry D'Avion
+  - John Boston
+  - Tom Gilfedder
+  - Trent Harvey
+  - Aaron Riches
+  - Andrew Middledorp
+  - Beau Campbell
+  - Charles Morgan
+  - Colin Yuen
+  - Domenic Marchese
+  - Emanuel Rizzo
+  - Jackson Grace
+  - Justin Kern
+  - Phil Bunter
+  - Philip Lam
+  - Rob Highett-Smith
+  - Sakarin Allen
+  - Scott Diver
+  - Adam Griffiths
+  - Andrew Jeffcott
+  - Anthony Grace
+  - Craig Jeffries
+  - Kynan Patterson
+  - Mark Williamson
+  - Mitchell Brooks
+  - Nathan Wu
+  - Nicholas Leyden
+  - Paul Harper
+  - Scott Novak
+  - Shane Whiteford
+  - Troy Patterson
+  - Ben McLaren
+  - Beverly Au
+  - Caleb Prescott
+  - Daniel Wall
+  - Grant Visser
+  - Ian Hughes
+  - Jay Davidson
+  - Justin Roots
+  - Luke Taylor
+  - Nicholas Davies
+  - Olivia Briggs
+  - Tina Cho
+  - Ziggy Till
   registrations:
-    - name: "Luke Gray"
-      class: "Test Class A"
-      group: "Test Group A"
-    - name: "Chris Muyoma"
-      class: "Test Class B"
-      group: "Test Group B"
-    - name: "Jonathon (Jon) Harrison"
-      class: "Test Class C"
-      group: "Test Group C"
-    - name: "Matthew Tough"
-      class: "Test Class A"
-      group: "Test Group A"
-    - name: "Daniel Conacher"
-      class: "Test Class B"
-      group: "Test Group B"
-    - name: "Damien Hunter"
-      class: "Test Class C"
-      group: "Test Group C"
-    - name: "Robert Lee"
-      class: "Test Class A"
-      group: "Test Group A"
-    - name: "Craig simpson"
-      class: "Test Class B"
-      group: "Test Group B"
-    - name: "Tracy Hoven"
-      class: "Test Class C"
-      group: "Test Group C"
-    - name: "Riccardo Santilli"
-      class: "Test Class A"
-      group: "Test Group A"
-    - name: "Adam McInnes"
-      class: "Test Class B"
-      group: "Test Group B"
-    - name: "Ross Marett"
-      class: "Test Class C"
-      group: "Test Group C"
-    - name: "Choon Lim"
-      class: "Test Class A"
-      group: "Test Group A"
-    - name: "Jonathan Gray"
-      class: "Test Class B"
-      group: "Test Group B"
-    - name: "Alexander Gellings"
-      class: "Test Class C"
-      group: "Test Group C"
-    - name: "Anthony Musson"
-      class: "Test Class A"
-      group: "Test Group A"
-    - name: "Simon Ansell"
-      class: "Test Class B"
-      group: "Test Group B"
-
+  - name: Ben Everitt
+    class: SPT
+    group: Test Group A
+    id: '28'
+    username: ''
+  - name: Benjamin Briggs
+    class: CLB
+    group: Test Group A
+    id: '97'
+    username: ''
+  - name: Benjamin Theocharous
+    class: CLB
+    group: Test Group A
+    id: '64'
+    username: ''
+  - name: Bree Till
+    class: CLB
+    group: Test Group A
+    id: '24'
+    username: ''
+  - name: Brian Nicolle
+    class: GEN
+    group: Test Group A
+    id: '12'
+    username: ''
+  - name: Bryan Elhassan
+    class: OPN
+    group: Test Group A
+    id: '37'
+    username: ''
+  - name: Cooper Alexander
+    class: SPT
+    group: Test Group A
+    id: '66'
+    username: ''
+  - name: Fabrice Charon
+    class: CLB
+    group: Test Group A
+    id: '16'
+    username: ''
+  - name: Jaiden Mammone
+    class: NA
+    group: Test Group A
+    id: '73'
+    username: ''
+  - name: Jamie Elters
+    class: NA
+    group: Test Group A
+    id: '68'
+    username: ''
+  - name: Jerry D'Avion
+    class: CLB
+    group: Test Group A
+    id: '47'
+    username: ''
+  - name: John Boston
+    class: SPT
+    group: Test Group A
+    id: '41'
+    username: ''
+  - name: Tom Gilfedder
+    class: NA
+    group: Test Group A
+    id: '54'
+    username: ''
+  - name: Trent Harvey
+    class: SPT
+    group: Test Group A
+    id: '52'
+    username: ''
+  - name: Aaron Riches
+    class: OPN
+    group: Test Group B
+    id: '58'
+    username: ''
+  - name: Andrew Middledorp
+    class: SPT
+    group: Test Group B
+    id: '29'
+    username: ''
+  - name: Beau Campbell
+    class: NA
+    group: Test Group B
+    id: '27'
+    username: ''
+  - name: Charles Morgan
+    class: NA
+    group: Test Group B
+    id: '60'
+    username: ''
+  - name: Colin Yuen
+    class: SPT
+    group: Test Group B
+    id: '6'
+    username: ''
+  - name: Domenic Marchese
+    class: SPT
+    group: Test Group B
+    id: '31'
+    username: ''
+  - name: Emanuel Rizzo
+    class: CLB
+    group: Test Group B
+    id: '53'
+    username: ''
+  - name: Jackson Grace
+    class: OPN
+    group: Test Group B
+    id: '14'
+    username: ''
+  - name: Justin Kern
+    class: NA
+    group: Test Group B
+    id: '39'
+    username: ''
+  - name: Phil Bunter
+    class: OPN
+    group: Test Group B
+    id: '77'
+    username: ''
+  - name: Philip Lam
+    class: SPT
+    group: Test Group B
+    id: '25'
+    username: ''
+  - name: Rob Highett-Smith
+    class: SPT
+    group: Test Group B
+    id: '34'
+    username: ''
+  - name: Sakarin Allen
+    class: SPT
+    group: Test Group B
+    id: '70'
+    username: ''
+  - name: Scott Diver
+    class: CLB
+    group: Test Group B
+    id: '23'
+    username: ''
+  - name: Adam Griffiths
+    class: CLB
+    group: Test Group C
+    id: '43'
+    username: ''
+  - name: Andrew Jeffcott
+    class: NA
+    group: Test Group C
+    id: '86'
+    username: ''
+  - name: Anthony Grace
+    class: GEN
+    group: Test Group C
+    id: '4'
+    username: ''
+  - name: Craig Jeffries
+    class: CLB
+    group: Test Group C
+    id: '26'
+    username: ''
+  - name: Kynan Patterson
+    class: OPN
+    group: Test Group C
+    id: '59'
+    username: ''
+  - name: Mark Williamson
+    class: SPT
+    group: Test Group C
+    id: '65'
+    username: ''
+  - name: Mitchell Brooks
+    class: NA
+    group: Test Group C
+    id: '1'
+    username: ''
+  - name: Nathan Wu
+    class: NA
+    group: Test Group C
+    id: '69'
+    username: ''
+  - name: Nicholas Leyden
+    class: CLB
+    group: Test Group C
+    id: '63'
+    username: ''
+  - name: Paul Harper
+    class: CLB
+    group: Test Group C
+    id: '57'
+    username: ''
+  - name: Scott Novak
+    class: SPT
+    group: Test Group C
+    id: '22'
+    username: ''
+  - name: Shane Whiteford
+    class: CLB
+    group: Test Group C
+    id: '61'
+    username: ''
+  - name: Troy Patterson
+    class: OPN
+    group: Test Group C
+    id: '8'
+    username: ''
+  - name: Ben McLaren
+    class: SPT
+    group: Test Group D
+    id: '55'
+    username: ''
+  - name: Beverly Au
+    class: CLB
+    group: Test Group D
+    id: '49'
+    username: ''
+  - name: Caleb Prescott
+    class: NA
+    group: Test Group D
+    id: '36'
+    username: ''
+  - name: Daniel Wall
+    class: OPN
+    group: Test Group D
+    id: '20'
+    username: ''
+  - name: Grant Visser
+    class: CLB
+    group: Test Group D
+    id: '67'
+    username: ''
+  - name: Ian Hughes
+    class: GEN
+    group: Test Group D
+    id: '71'
+    username: ''
+  - name: Jay Davidson
+    class: OPN
+    group: Test Group D
+    id: '80'
+    username: ''
+  - name: Justin Roots
+    class: SPT
+    group: Test Group D
+    id: '32'
+    username: ''
+  - name: Luke Taylor
+    class: SPT
+    group: Test Group D
+    id: '33'
+    username: ''
+  - name: Nicholas Davies
+    class: CLB
+    group: Test Group D
+    id: '50'
+    username: ''
+  - name: Olivia Briggs
+    class: NA
+    group: Test Group D
+    id: '79'
+    username: ''
+  - name: Tina Cho
+    class: CLB
+    group: Test Group D
+    id: '56'
+    username: ''
+  - name: Ziggy Till
+    class: CLB
+    group: Test Group D
+    id: '46'
+    username: ''
 site:
-  title: "Gauge King Track Results"
-  subtitle: "Live OZ RenaultSport Nationals race results"
+  title: Gauge King Track Results
+  subtitle: Live OZ RenaultSport Nationals race results
   refresh_seconds: 300
