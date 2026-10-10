@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-10T07:17:07.538773+00:00",
+  "generated_at": "2026-10-10T07:24:20.323800+00:00",
   "event": {
     "name": "2026 OZ RS Nationals",
     "date": "2026-10-18",
@@ -9,11 +9,11 @@
     "mode": "browser-index",
     "event_url": "http://racing.natsoft.com.au/results/#4",
     "url": "http://racing.natsoft.com.au/results/#4",
-    "result_url": "http://racing.natsoft.com.au/651099223/object_334461.81Y/Result?1",
-    "final_url": "http://racing.natsoft.com.au/651099223/object_334461.81Y/Result?1",
+    "result_url": "http://racing.natsoft.com.au/651128789/object_377626.81h/Result?1",
+    "final_url": "http://racing.natsoft.com.au/651128789/object_377626.81h/Result?1",
     "content_sha256": "1b2c00935c9cdfb1df8b59301e23c53555df81f5f2532be21e284793baaaf570",
     "cache_control": "",
-    "session_label": "Result\n76",
+    "session_label": "Result\n83",
     "status_code": 200,
     "validation_mode": false,
     "discovered_result_count": 0
@@ -816,6 +816,541 @@
       "label": "Result\n76",
       "url": "http://racing.natsoft.com.au/651099223/object_334461.81Y/Result?1",
       "generated_at": "2026-10-10T07:17:07.538773+00:00",
+      "results": [
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "1",
+            "Car": "26",
+            "Competitor / Vehicle": "Craig Jeffries (NSW) Impreza WRX Club Inc. (NSW) Subaru Impreza WRX S 1996 CLB",
+            "Laps": "21",
+            "Fastest Lap": "13",
+            "Best Time": "1:45.8660",
+            "Gap": ""
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "2",
+            "Car": "23",
+            "Competitor / Vehicle": "Scott Diver (NSW) Impreza WRX Club Inc. (NSW) Subaru WRX 2459 CLB",
+            "Laps": "13",
+            "Fastest Lap": "8",
+            "Best Time": "1:46.5910",
+            "Gap": "0:00.7250"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "3",
+            "Car": "16",
+            "Competitor / Vehicle": "Fabrice Charon (NSW) Impreza WRX Club Inc. (NSW) Subaru STi 2500 CLB",
+            "Laps": "14",
+            "Fastest Lap": "13",
+            "Best Time": "1:46.9880",
+            "Gap": "0:01.1220"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "4",
+            "Car": "63",
+            "Competitor / Vehicle": "Nicholas Leyden (NSW) Impreza WRX Club Inc. (NSW) Subaru Impreza WRX S 2000 CLB",
+            "Laps": "20",
+            "Fastest Lap": "10",
+            "Best Time": "1:48.7850",
+            "Gap": "0:02.9190"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "5",
+            "Car": "43",
+            "Competitor / Vehicle": "Adam Griffiths (NSW) Impreza WRX Club Inc. (NSW) Toyota 86 GT 2000 CLB",
+            "Laps": "14",
+            "Fastest Lap": "9",
+            "Best Time": "1:51.0660",
+            "Gap": "0:05.2000"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "7",
+            "Car": "97",
+            "Competitor / Vehicle": "Benjamin Briggs (NSW) Impreza WRX Club Inc. (NSW) Subaru Impreza WRX 2000 CLB",
+            "Laps": "21",
+            "Fastest Lap": "19",
+            "Best Time": "1:51.4720",
+            "Gap": "0:05.6060"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "8",
+            "Car": "50",
+            "Competitor / Vehicle": "Nicholas Davies (NSW) Impreza WRX Club Inc. (NSW) Toyota 86 GTS 2000 CLB",
+            "Laps": "11",
+            "Fastest Lap": "7",
+            "Best Time": "1:53.0750",
+            "Gap": "0:07.2090"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "9",
+            "Car": "24",
+            "Competitor / Vehicle": "Bree Till (NSW) SSCC Subaru Impreza RS40 2000 CLB",
+            "Laps": "26",
+            "Fastest Lap": "23",
+            "Best Time": "1:53.3550",
+            "Gap": "0:07.4890"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "10",
+            "Car": "53",
+            "Competitor / Vehicle": "Emanuel Rizzo (NSW) Impreza WRX Club Inc. (NSW) Subaru WRX STi Blobe 2000 CLB",
+            "Laps": "18",
+            "Fastest Lap": "8",
+            "Best Time": "1:54.6190",
+            "Gap": "0:08.7530"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "11",
+            "Car": "61",
+            "Competitor / Vehicle": "Shane Whiteford (NSW) Impreza WRX Club Inc. (NSW) Subaru Impreza WRX 1994 CLB",
+            "Laps": "22",
+            "Fastest Lap": "19",
+            "Best Time": "1:54.6810",
+            "Gap": "0:08.8150"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "12",
+            "Car": "64",
+            "Competitor / Vehicle": "Benjamin Theocharous NSW Impreza WRX Club Inc. (NSW) Subaru BRZ 2000 CLB",
+            "Laps": "14",
+            "Fastest Lap": "12",
+            "Best Time": "1:54.7200",
+            "Gap": "0:08.8540"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "13",
+            "Car": "49",
+            "Competitor / Vehicle": "Beverly Au (NSW) Impreza WRX Club Inc. (NSW) Subaru WRX STi 2500 CLB",
+            "Laps": "24",
+            "Fastest Lap": "23",
+            "Best Time": "1:56.1920",
+            "Gap": "0:10.3260"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "14",
+            "Car": "46",
+            "Competitor / Vehicle": "Ziggy Till (NSW) SSCC Subaru Impreza RX 2001 CLB",
+            "Laps": "25",
+            "Fastest Lap": "25",
+            "Best Time": "1:57.0430",
+            "Gap": "0:11.1770"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "15",
+            "Car": "57",
+            "Competitor / Vehicle": "Paul Harper (NSW) Impreza WRX Club Inc. (NSW) Subaru Impreza WRX 2495 CLB",
+            "Laps": "18",
+            "Fastest Lap": "14",
+            "Best Time": "1:57.5720",
+            "Gap": "0:11.7060"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "16",
+            "Car": "56",
+            "Competitor / Vehicle": "Tina Cho (NSW) Impreza WRX Club Inc. (NSW) Subaru WRX 2500 CLB",
+            "Laps": "17",
+            "Fastest Lap": "9",
+            "Best Time": "1:58.6600",
+            "Gap": "0:12.7940"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "1",
+            "Car": "71",
+            "Competitor / Vehicle": "Ian Hughes (VIC) Impreza WRX Club Inc. (Vic) Subaru Impreza WRX 2000 GEN 30 16 1:48.0670* 2 4 Anthony Grace (NSW) NSSCC Subaru Impreza WRX 2000 GEN",
+            "Laps": "20",
+            "Fastest Lap": "17",
+            "Best Time": "1:49.9910",
+            "Gap": "0:01.9240"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "1",
+            "Car": "36",
+            "Competitor / Vehicle": "Caleb Prescott (QLD) Other CAMS Affiliated Club Subaru BRZ 2387 NA 31 30 1:47.2900* 2 1 Mitchell Brooks (NSW) Impreza WRX Club Inc. (NSW) Subaru BRZ 2400 NA",
+            "Laps": "16",
+            "Fastest Lap": "9",
+            "Best Time": "1:47.4030",
+            "Gap": "0:00.1130"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "3",
+            "Car": "86",
+            "Competitor / Vehicle": "Andrew Jeffcott (QLD) QLD 86/BRZ Car Club Toyota 86 GT 2400 NA",
+            "Laps": "24",
+            "Fastest Lap": "12",
+            "Best Time": "1:47.8980",
+            "Gap": "0:00.6080"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "4",
+            "Car": "27",
+            "Competitor / Vehicle": "Beau Campbell (NSW) ARDC Subaru BRZ 2000 NA",
+            "Laps": "21",
+            "Fastest Lap": "14",
+            "Best Time": "1:50.4010",
+            "Gap": "0:03.1110"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "5",
+            "Car": "39",
+            "Competitor / Vehicle": "Justin Kern (NSW) Impreza WRX Club Inc. (NSW) Subaru BRZ 2400 NA",
+            "Laps": "26",
+            "Fastest Lap": "18",
+            "Best Time": "1:51.8810",
+            "Gap": "0:04.5910"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "6",
+            "Car": "60",
+            "Competitor / Vehicle": "Charles Morgan (NSW) Impreza WRX Club Inc. (NSW) Subaru BRZ 2400 NA",
+            "Laps": "15",
+            "Fastest Lap": "8",
+            "Best Time": "1:53.0570",
+            "Gap": "0:05.7670"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "7",
+            "Car": "54",
+            "Competitor / Vehicle": "Tom Gilfedder (ACT) Light Car Club Canberra Subaru WRX GF8 3000 NA",
+            "Laps": "26",
+            "Fastest Lap": "15",
+            "Best Time": "1:56.4740",
+            "Gap": "0:09.1840"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "8",
+            "Car": "68",
+            "Competitor / Vehicle": "Jamie Elters (NSW) Impreza WRX Club Inc. (NSW) Subaru BRZ 2400 NA",
+            "Laps": "18",
+            "Fastest Lap": "11",
+            "Best Time": "1:59.7820",
+            "Gap": "0:12.4920"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "9",
+            "Car": "69",
+            "Competitor / Vehicle": "Nathan Wu (NSW) Impreza WRX Club Inc. (NSW) Subaru Impreza 2000 NA",
+            "Laps": "17",
+            "Fastest Lap": "16",
+            "Best Time": "2:10.5080",
+            "Gap": "0:23.2180"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "10",
+            "Car": "73",
+            "Competitor / Vehicle": "Jaiden Mammone (NSW) Impreza WRX Club Inc. (NSW) Subaru BRZ Special E 1998 NA",
+            "Laps": "18",
+            "Fastest Lap": "11",
+            "Best Time": "2:17.1900",
+            "Gap": "0:29.9000"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "1",
+            "Car": "80",
+            "Competitor / Vehicle": "Jay Davidson (QLD) WRX Club of Qld Inc. Subaru Impreza GD 2350 OPN",
+            "Laps": "14",
+            "Fastest Lap": "13",
+            "Best Time": "1:30.9480",
+            "Gap": ""
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "2",
+            "Car": "77",
+            "Competitor / Vehicle": "Phil Bunter (NSW) Impreza WRX Club Inc. (NSW) Subaru WRX 2500 OPN 9 3 1:34.3060 0:03.3580 3 8 Troy Patterson (NSW) Impreza WRX Club Inc. (NSW) Subaru WRX STi 2500 OPN",
+            "Laps": "7",
+            "Fastest Lap": "7",
+            "Best Time": "1:35.6590",
+            "Gap": "0:04.7110"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "5",
+            "Car": "37",
+            "Competitor / Vehicle": "Bryan Elhassan (NSW) Impreza WRX Club Inc. (NSW) Subaru WRX STi 2500 OPN",
+            "Laps": "12",
+            "Fastest Lap": "5",
+            "Best Time": "1:44.0990",
+            "Gap": "0:13.1510"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "6",
+            "Car": "14",
+            "Competitor / Vehicle": "Jackson Grace (NSW) NSSCC Subaru Impreza WRX 2000 OPN",
+            "Laps": "28",
+            "Fastest Lap": "25",
+            "Best Time": "1:50.4360",
+            "Gap": "0:19.4880"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "7",
+            "Car": "58",
+            "Competitor / Vehicle": "Aaron Riches (NSW) Impreza WRX Club Inc. (NSW) Subaru Impreza WRX 2000 OPN",
+            "Laps": "25",
+            "Fastest Lap": "22",
+            "Best Time": "1:53.5050",
+            "Gap": "0:22.5570"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "1",
+            "Car": "41",
+            "Competitor / Vehicle": "John Boston (NSW) ARDC Toyota GR86 2400 SPT",
+            "Laps": "2",
+            "Fastest Lap": "1",
+            "Best Time": "1:40.9660",
+            "Gap": ""
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "2",
+            "Car": "28",
+            "Competitor / Vehicle": "Ben Everitt (NSW) Impreza WRX Club Inc. (NSW) Subaru WRX STi 2500 SPT",
+            "Laps": "27",
+            "Fastest Lap": "11",
+            "Best Time": "1:43.7280",
+            "Gap": "0:02.7620"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "3",
+            "Car": "25",
+            "Competitor / Vehicle": "Philip Lam (NSW) Impreza WRX Club Inc. (NSW) Subaru WRX STi 2500 SPT",
+            "Laps": "21",
+            "Fastest Lap": "10",
+            "Best Time": "1:44.0410",
+            "Gap": "0:03.0750"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "4",
+            "Car": "22",
+            "Competitor / Vehicle": "Scott Novak (NSW) Impreza WRX Club Inc. (NSW) Subaru WRX 2000 SPT",
+            "Laps": "29",
+            "Fastest Lap": "10",
+            "Best Time": "1:44.3380",
+            "Gap": "0:03.3720"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "5",
+            "Car": "33",
+            "Competitor / Vehicle": "Luke Taylor (NSW) Impreza WRX Club Inc. (NSW) Subaru WRX STi 2500 SPT",
+            "Laps": "21",
+            "Fastest Lap": "7",
+            "Best Time": "1:44.5040",
+            "Gap": "0:03.5380"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "6",
+            "Car": "55",
+            "Competitor / Vehicle": "Ben McLaren (NSW) Impreza WRX Club Inc. (NSW) Subaru WRX STi Type 1997 SPT",
+            "Laps": "15",
+            "Fastest Lap": "15",
+            "Best Time": "1:44.6040",
+            "Gap": "0:03.6380"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "7",
+            "Car": "31",
+            "Competitor / Vehicle": "Domenic Marchese (NSW) Impreza WRX Club Inc. (NSW) Subaru WRX Premium 2000 SPT",
+            "Laps": "17",
+            "Fastest Lap": "1",
+            "Best Time": "1:44.8450",
+            "Gap": "0:03.8790"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "8",
+            "Car": "29",
+            "Competitor / Vehicle": "Andrew Middledorp (NSW) Impreza WRX Club Inc. (NSW) Subaru WRX STi 2000 SPT",
+            "Laps": "25",
+            "Fastest Lap": "14",
+            "Best Time": "1:45.1340",
+            "Gap": "0:04.1680"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "9",
+            "Car": "32",
+            "Competitor / Vehicle": "Justin Roots (QLD) WRX Club of Qld Inc. Subaru Impreza WRX S 2500 SPT",
+            "Laps": "26",
+            "Fastest Lap": "11",
+            "Best Time": "1:45.1810",
+            "Gap": "0:04.2150"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "10",
+            "Car": "34",
+            "Competitor / Vehicle": "Rob Highett-Smith (NSW) Impreza WRX Club Inc. (NSW) Subaru WRX STi 2500 SPT",
+            "Laps": "12",
+            "Fastest Lap": "6",
+            "Best Time": "1:45.4510",
+            "Gap": "0:04.4850"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "12",
+            "Car": "66",
+            "Competitor / Vehicle": "Cooper Alexander (ACT) Impreza WRX Club Inc. (NSW) Subaru Impreza WRX 2500 SPT",
+            "Laps": "21",
+            "Fastest Lap": "18",
+            "Best Time": "1:46.6910",
+            "Gap": "0:05.7250"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "13",
+            "Car": "65",
+            "Competitor / Vehicle": "Mark Williamson (NSW) Impreza WRX Club Inc. (NSW) Subaru WRX STi 2500 SPT 15 12 1:47.2270 0:06.2610 14 6 Colin Yuen (NSW) Impreza WRX Club Inc. (NSW) Subaru STi DC Jap 2500 SPT",
+            "Laps": "20",
+            "Fastest Lap": "17",
+            "Best Time": "1:48.9110",
+            "Gap": "0:07.9450"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "15",
+            "Car": "52",
+            "Competitor / Vehicle": "Trent Harvey (NSW) Impreza WRX Club Inc. (NSW) Subaru WRX STi 2447 SPT",
+            "Laps": "9",
+            "Fastest Lap": "8",
+            "Best Time": "1:50.2100",
+            "Gap": "0:09.2440"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "1",
+            "Car": "81",
+            "Competitor / Vehicle": "John Boston (NSW) ARDC Subaru WRX STI 2500 TRK",
+            "Laps": "8",
+            "Fastest Lap": "5",
+            "Best Time": "1:33.4420",
+            "Gap": ""
+          }
+        }
+      ]
+    },
+    {
+      "label": "Result\n83",
+      "url": "http://racing.natsoft.com.au/651128789/object_377626.81h/Result?1",
+      "generated_at": "2026-10-10T07:24:20.323800+00:00",
       "results": [
         {
           "table_index": 1,
