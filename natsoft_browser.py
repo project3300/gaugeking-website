@@ -1,6 +1,7 @@
 """Discover the newest Natsoft result with a fresh Chromium navigation each poll."""
 from urllib.parse import urlparse, urljoin
 import re
+from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 def safe(url):
@@ -56,5 +57,8 @@ def discover_live_result(url, timeout=30):
                     return target,label
             # Do not silently select a different event if Natsoft changes its UI.
             break
+        Path("natsoft-debug").mkdir(exist_ok=True)
+        page.screenshot(path="natsoft-debug/page.png", full_page=True)
+        Path("natsoft-debug/page.html").write_text(page.content(), encoding="utf-8")
         browser.close()
-        raise RuntimeError("Cannot find a published Result link in the rendered Natsoft event #4 page; inspect its dynamic navigation")
+        raise RuntimeError("Natsoft link missing; inspect natsoft-debug artifact")
