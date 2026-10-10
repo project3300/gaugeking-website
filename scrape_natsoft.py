@@ -8,6 +8,8 @@ from typing import Any
 from urllib.parse import urljoin, urlparse
 
 import requests
+import hashlib
+from natsoft_browser import discover_live_result
 import yaml
 from bs4 import BeautifulSoup
 
@@ -240,29 +242,26 @@ def scrape() -> dict[str, Any]:
     discovered_links: list[dict[str, str]] = []
 
     if event_url and urlparse(event_url).fragment and urlparse(event_url).path.rstrip("/") == "/results":
-        resolved_url, resolved_label = resolve_index_event(session, event_url, timeout)
-        print(f"Resolved index selection to: {resolved_url}")
-        event_url = resolved_url
-
-    if event_url and not is_direct_result_url(event_url):
+        source_mode = "browser-index"
+        result_url, session_label = discover_live_result(event_url, timeout)
+        print(f"Discovered browser result: {session_label} => {result_url}")
+    elif event_url and not is_direct_result_url(event_url):
         source_mode = "event"
         event_response = session.get(event_url, timeout=timeout, allow_redirects=True)
         event_response.raise_for_status()
         discovered_links = discover_result_links(event_response.url, event_response.text)
         if not discovered_links:
-            raise RuntimeError(
-                "No published Natsoft Result links were found on the event page. "
-                "The event may not have published a result yet, or Natsoft may have changed its page format."
-            )
-        latest = discovered_links[-1]
-        result_url = latest["url"]
-        session_label = latest["label"]
-        print(f"Discovered {len(discovered_links)} published Result link(s); using latest: {result_url}")
+            raise RuntimeError("No published Natsoft Result links found")
+        result_url, session_label = discovered_links[-1]["url"], discovered_links[-1]["label"]
 
     response = session.get(result_url, timeout=timeout, allow_redirects=True)
     response.raise_for_status()
 
+    content_hash = hashlib.sha256(response.content).hexdigest()
+    print(f"RESULT_AUDIT url={response.url} sha256={content_hash} status={response.status_code} age={response.headers.get('Age', '')} cache={response.headers.get('X-Cache', '')}")
     tables = extract_tables(response.text)
+    if not tables or not any(t["rows"] for t in tables):
+        raise RuntimeError("No parseable result rows; refusing stale deployment")
     vehicle_terms = config.get("filters", {}).get("vehicle_terms", [])
     participants = config.get("filters", {}).get("participants", [])
 
@@ -313,6 +312,8 @@ def scrape() -> dict[str, Any]:
             "url": source_page_url,
             "result_url": response.url,
             "final_url": response.url,
+            "content_sha256": content_hash,
+            "cache_control": response.headers.get("Cache-Control", ""),
             "session_label": session_label,
             "status_code": response.status_code,
             "validation_mode": bool(natsoft.get("validation_mode", False)),
