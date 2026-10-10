@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-10T09:37:38.754494+00:00",
+  "generated_at": "2026-10-10T09:50:01.303868+00:00",
   "event": {
     "name": "2026 OZ RS Nationals",
     "date": "2026-10-18",
@@ -9,11 +9,11 @@
     "mode": "browser-index",
     "event_url": "http://racing.natsoft.com.au/results/#3",
     "url": "http://racing.natsoft.com.au/results/#3",
-    "result_url": "http://racing.natsoft.com.au/651686091/object_177171.81c/Result?1",
-    "final_url": "http://racing.natsoft.com.au/651686091/object_177171.81c/Result?1",
+    "result_url": "http://racing.natsoft.com.au/651755912/object_251629.81U/Result?1",
+    "final_url": "http://racing.natsoft.com.au/651755912/object_251629.81U/Result?1",
     "content_sha256": "1b2c00935c9cdfb1df8b59301e23c53555df81f5f2532be21e284793baaaf570",
     "cache_control": "",
-    "session_label": "Result\n182",
+    "session_label": "Result\n188",
     "status_code": 200,
     "validation_mode": false,
     "discovered_result_count": 0
@@ -1369,6 +1369,12 @@
       "label": "Result\n182",
       "url": "http://racing.natsoft.com.au/651686091/object_177171.81c/Result?1",
       "generated_at": "2026-10-10T09:37:38.754494+00:00",
+      "results": []
+    },
+    {
+      "label": "Result\n188",
+      "url": "http://racing.natsoft.com.au/651755912/object_251629.81U/Result?1",
+      "generated_at": "2026-10-10T09:50:01.303868+00:00",
       "results": []
     }
   ]
