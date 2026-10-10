@@ -176,6 +176,46 @@ def discover_result_links(event_url: str, html: str) -> list[dict[str, str]]:
     return found
 
 
+
+def resolve_index_event(session, index_url: str, timeout: int) -> tuple[str, str]:
+    """Resolve a Natsoft /results/#N index selection through published HTML links.
+
+    The URL fragment is not sent to the server. We can only identify the target
+    if the fetched index has a real anchor for that selection. Fail closed rather
+    than silently scraping another event.
+    """
+    from urllib.parse import urlsplit
+    from urllib.parse import urldefrag
+    from urllib.parse import unquote
+    parsed = urlsplit(index_url)
+    fragment = unquote(parsed.fragment).strip()
+    if not fragment.isdigit():
+        raise RuntimeError("Natsoft index selection must use # followed by a number.")
+    response = session.get(urldefrag(index_url).url, timeout=timeout, allow_redirects=True)
+    response.raise_for_status()
+    soup = BeautifulSoup(response.text, "html.parser")
+    candidates = []
+    for a in soup.find_all("a", href=True):
+        target = urljoin(response.url, a["href"])
+        parsed_target = urlsplit(target)
+        if parsed_target.hostname not in {"racing.natsoft.com.au", "www.racing.natsoft.com.au"}:
+            continue
+        if "/results/" in parsed_target.path.rstrip("/") + "/" and not parsed_target.query:
+            continue
+        if target not in candidates:
+            candidates.append(target)
+        # A page may expose explicit event anchors matching #4.
+        if a.get("id") == fragment or a.get("name") == fragment or a.get("data-id") == fragment:
+            return target, clean(a.get_text(" ", strip=True)) or "Selected Event"
+    # Do not assume that #4 means fourth HTML link: Natsoft's hash
+    # navigation can be populated by JavaScript, not ordinary anchors.
+    raise RuntimeError(
+        f"Natsoft selection #{fragment} could not be resolved from its server HTML. "
+        "The page uses client-side navigation; capture the event link from the "
+        "browser Network tab or the event-level page rather than using an unrelated result."
+    )
+
+
 def comparable(payload: dict[str, Any]) -> dict[str, Any]:
     copy = dict(payload)
     copy.pop("generated_at", None)
@@ -198,6 +238,11 @@ def scrape() -> dict[str, Any]:
     result_url = source_page_url
     session_label = "Current Result"
     discovered_links: list[dict[str, str]] = []
+
+    if event_url and urlparse(event_url).fragment and urlparse(event_url).path.rstrip("/") == "/results":
+        resolved_url, resolved_label = resolve_index_event(session, event_url, timeout)
+        print(f"Resolved index selection to: {resolved_url}")
+        event_url = resolved_url
 
     if event_url and not is_direct_result_url(event_url):
         source_mode = "event"
