@@ -1,6 +1,7 @@
 """Discover the newest Natsoft result with a fresh Chromium navigation each poll."""
 from urllib.parse import urlparse, urljoin
 import re
+import json
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
@@ -17,12 +18,19 @@ def discover_live_result(url, timeout=30):
         page=context.new_page()
         page.set_default_timeout(timeout*1000)
         discovered=[]
+        errors=[]
+        page.on('pageerror', lambda exc: errors.append(str(exc)))
+        page.on('requestfailed', lambda req: errors.append('Request failed: '+req.url))
         def capture(response):
             if safe(response.url) and ("/object_" in response.url.lower() or "/view?" in response.url.lower()):
                 discovered.append(response.url)
         page.on("response",capture)
         page.goto(url,wait_until="domcontentloaded",timeout=timeout*1000)
-        page.wait_for_timeout(3000)
+        try:
+            page.locator('#LoadingPage').wait_for(state='hidden', timeout=45000)
+        except Exception:
+            print('Natsoft startup splash still visible after 45 seconds')
+        page.wait_for_timeout(2500)
         for depth in range(4):
             for frame in page.frames:
                 try:
@@ -60,5 +68,11 @@ def discover_live_result(url, timeout=30):
         Path("natsoft-debug").mkdir(exist_ok=True)
         page.screenshot(path="natsoft-debug/page.png", full_page=True)
         Path("natsoft-debug/page.html").write_text(page.content(), encoding="utf-8")
+        Path("natsoft-debug/errors.json").write_text(json.dumps(errors[-100:], indent=2), encoding="utf-8")
+        for n, frame in enumerate(page.frames):
+            try:
+                Path(f"natsoft-debug/frame-{n}.html").write_text(frame.content(), encoding="utf-8")
+            except Exception:
+                pass
         browser.close()
         raise RuntimeError("Natsoft link missing; inspect natsoft-debug artifact")
