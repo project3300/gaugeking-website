@@ -18,12 +18,14 @@ def discover_live_result(url, timeout=30):
         page=context.new_page()
         page.set_default_timeout(timeout*1000)
         discovered=[]
+        result_responses=[]
         errors=[]
         page.on('pageerror', lambda exc: errors.append(str(exc)))
         page.on('requestfailed', lambda req: errors.append('Request failed: '+req.url))
         def capture(response):
             if safe(response.url) and ("/object_" in response.url.lower() or "/view?" in response.url.lower()):
                 discovered.append(response.url)
+                result_responses.append(response)
         page.on("response",capture)
         page.goto(url,wait_until="domcontentloaded",timeout=timeout*1000)
         try:
@@ -75,8 +77,13 @@ def discover_live_result(url, timeout=30):
                 page.wait_for_timeout(1500)
                 if len(discovered) > before:
                     result_url = discovered[-1]
+                    selected = result_responses[-1]
+                    selected.finished()
+                    html = selected.text()
+                    headers = selected.headers
+                    status = selected.status
                     browser.close()
-                    return result_url, "Latest Published Result"
+                    return result_url, "Latest Published Result", html, headers, status
             page.wait_for_timeout(1200)
         for depth in range(4):
             for frame in page.frames:
@@ -98,8 +105,14 @@ def discover_live_result(url, timeout=30):
                         page.wait_for_timeout(1000)
                     except Exception:
                         pass
+                    fetched = context.request.get(target, timeout=timeout*1000)
+                    body = fetched.text()
+                    headers, status = fetched.headers, fetched.status
+                    selected = result_responses[-1]
+                    selected.finished()
+                    body, headers, status = selected.text(), selected.headers, selected.status
                     browser.close()
-                    return target,label
+                    return target,label,body,headers,status,body,headers,status
                 before=len(discovered)
                 try:
                     link.click(timeout=4000)
