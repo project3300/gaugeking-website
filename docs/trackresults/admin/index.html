@@ -15,12 +15,24 @@
 <div class="eyebrow">GAUGE KING</div>
 <section class="card">
 <h1>Race Control</h1>
-<div class="sub">Paste the Natsoft <strong>event-level page</strong> once. Gauge King will automatically discover the newest published Result link on every poll, so you do not need to keep pasting changing Natsoft object URLs.</div>
+<div class="sub">Find your Natsoft meeting by date and track, select the correct event, then upload the drivers you wish to track.</div>
 <label for="pin">Race Control PIN</label>
 <input id="pin" type="password" inputmode="numeric" autocomplete="off" placeholder="Enter PIN">
-<label for="url">Natsoft event URL <span style="text-transform:none;letter-spacing:0">(optional if only changing drivers)</span></label>
-<input id="url" type="url" inputmode="url" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="http://racing.natsoft.com.au/results/#…">
-<div class="file-help">Use the page that lists the session rows and blue <strong>Result</strong> links. Gauge King will follow the latest published Result automatically. A direct result-object URL is still accepted as a fallback.</div>
+<div class="steps"><strong>Step 1 — Find your meeting</strong></div>
+<label for="eventDate">Event date</label>
+<input id="eventDate" type="date" value="2026-10-18">
+<label for="track">Track</label>
+<input id="track" list="trackOptions" value="Winton Motor Raceway" placeholder="Enter Natsoft track name">
+<datalist id="trackOptions"><option value="Winton Motor Raceway"><option value="Queensland Raceway"><option value="Phillip Island"><option value="Sydney Motorsport Park"></datalist>
+<label for="eventHint">Expected event name (optional)</label>
+<input id="eventHint" value="TRACKSCHOOL Open Pit Lane" placeholder="Used to prioritise matching names">
+<button id="findEvents" class="secondary" type="button">FIND NATSOFT EVENTS</button>
+<div id="discoveredBox" style="display:none">
+<label for="selectedEvent">Choose discovered meeting</label>
+<select id="selectedEvent" style="width:100%;padding:14px;background:#0e1218;color:#f5f7fa;border:1px solid #282f39;border-radius:12px"></select>
+<div class="file-help">Select the actual meeting from Natsoft. If none appears, check the date or track and search again.</div>
+</div>
+<div class="steps"><strong>Step 2 — Track drivers and teams</strong></div>
 <label for="drivers">Tracked driver list <span style="text-transform:none;letter-spacing:0">(optional)</span></label>
 <input id="drivers" type="file" accept=".xlsx,.xls,.csv,.txt,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv,text/plain">
 <div class="file-help">Upload the event registration <strong>XLSX, XLS, CSV or TXT</strong> file to replace the current competitor list. The preferred format contains <strong>Full Name</strong>, <strong>Class</strong> and <strong>Group</strong>. Class creates class leaderboards; Group creates team leaderboards. Plain driver-list files still work.</div>
@@ -28,13 +40,13 @@
 <button class="primary" id="launch">SAVE &amp; UPDATE LIVE RESULTS</button>
 <a class="button secondary" href="../">VIEW LIVE RESULTS</a>
 <div class="status" id="status"></div>
-<div class="steps"><strong>Race-day flow</strong><br>1. Enter the Race Control PIN.<br>2. Paste the Natsoft event page URL when setting/changing the event.<br>3. Upload the registration XLSX/CSV if competitors, classes or teams change.<br>4. Tap <strong>SAVE &amp; UPDATE LIVE RESULTS</strong>.<br><br>After that, automatic polling returns to the event page every 5 minutes, finds the newest published Result link, and keeps earlier captured sessions on the Gauge King results page.</div>
+<div class="steps"><strong>Race-day flow</strong><br>1. Enter PIN, date and track; search Natsoft.<br>2. Select the correct meeting from verified results.<br>3. Upload drivers, classes and teams.<br>4. Start tracking. Gauge King re-discovers the latest published session result on each scheduled poll.</div>
 <div class="note">The GitHub credential is stored only in the secure Gauge King backend. Parsed registration data (driver, class and team/group) is saved into the race-results configuration; the source spreadsheet itself is not stored.</div>
 </section>
 </main>
 <script>
-const API='https://gaugeking-race-control.onrender.com/api/race-results/update';
-const pin=document.getElementById('pin');const input=document.getElementById('url');const drivers=document.getElementById('drivers');const driverBox=document.getElementById('driverBox');const driverCount=document.getElementById('driverCount');const driverList=document.getElementById('driverList');const clearDrivers=document.getElementById('clearDrivers');const status=document.getElementById('status');const launch=document.getElementById('launch');let registrationRows=null;
+const BASE='https://gaugeking-race-control.onrender.com/api/race-results';const API=BASE+'/update';
+const pin=document.getElementById('pin');const findEvents=document.getElementById('findEvents');const selectedEvent=document.getElementById('selectedEvent');const discoveredBox=document.getElementById('discoveredBox');const eventDate=document.getElementById('eventDate');const track=document.getElementById('track');const eventHint=document.getElementById('eventHint');let meetingChoices=[];let selectedMeeting=null;const input=document.getElementById('url');const drivers=document.getElementById('drivers');const driverBox=document.getElementById('driverBox');const driverCount=document.getElementById('driverCount');const driverList=document.getElementById('driverList');const clearDrivers=document.getElementById('clearDrivers');const status=document.getElementById('status');const launch=document.getElementById('launch');let registrationRows=null;
 
 function showStatus(message,type){status.className='status '+type;status.textContent=message;}
 function clean(value){return String(value??'').replace(/^\uFEFF/,'').replace(/^['"]|['"]$/g,'').replace(/\s+/g,' ').trim();}
@@ -104,6 +116,24 @@ function renderDrivers(){
   registrationRows.forEach(r=>{const d=document.createElement('div');const meta=[r.class&&`Class: ${r.class}`,r.group&&`Team: ${r.group}`].filter(Boolean).join(' · ');d.textContent=meta?`${r.name} — ${meta}`:r.name;driverList.appendChild(d);});
 }
 
+function clearMeeting(){selectedMeeting=null;meetingChoices=[];discoveredBox.style.display='none';}
+[eventDate,track,eventHint].forEach(el=>el.addEventListener('input',clearMeeting));
+selectedEvent.addEventListener('change',()=>{selectedMeeting=meetingChoices[Number(selectedEvent.value)]||null;});
+findEvents.addEventListener('click',async()=>{
+  if(!pin.value.trim()){showStatus('Enter your Race Control PIN first.','error');return;}
+  clearMeeting();findEvents.disabled=true;showStatus('Searching Natsoft meetings. This may take up to a minute…','ok');
+  try{
+    const response=await fetch(BASE+'/discover',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pin:pin.value.trim(),date:eventDate.value,track:track.value.trim(),name_hint:eventHint.value.trim()})});
+    const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.detail||'Natsoft search failed');
+    meetingChoices=data.events||[];
+    if(!meetingChoices.length){showStatus('No meetings found for that date and track. Adjust your search and try again.','error');return;}
+    selectedEvent.innerHTML='';
+    meetingChoices.forEach((e,i)=>{const opt=document.createElement('option');opt.value=String(i);opt.textContent=e.name+' — '+e.date+' — '+e.track;selectedEvent.appendChild(opt);});
+    discoveredBox.style.display='block';selectedMeeting=meetingChoices[0];
+    showStatus('Found '+meetingChoices.length+' meeting(s). Review and select the correct meeting before starting tracking.','ok');
+  }catch(err){showStatus(err.message||'Could not discover events','error');}
+  finally{findEvents.disabled=false;}
+});
 drivers.addEventListener('change',async()=>{
   const file=drivers.files&&drivers.files[0];if(!file){registrationRows=null;renderDrivers();return;}
   try{
@@ -118,17 +148,17 @@ drivers.addEventListener('change',async()=>{
 clearDrivers.addEventListener('click',()=>{registrationRows=null;drivers.value='';renderDrivers();showStatus('Registration upload cleared. The existing competitor list will be kept.','ok');});
 
 launch.addEventListener('click',async()=>{
-  const value=input.value.trim();const racePin=pin.value.trim();
+  const value='';const racePin=pin.value.trim();
   if(!racePin){showStatus('Enter the Race Control PIN.','error');return}
-  if(!value&&registrationRows===null){showStatus('Paste a Natsoft event URL, upload a registration list, or both.','error');return}
+  if(!selectedMeeting){showStatus('Find and select a Natsoft meeting first.','error');return;}
   if(value){let parsed;try{parsed=new URL(value)}catch(e){showStatus('Paste a valid Natsoft event URL.','error');return}if(!['racing.natsoft.com.au','www.racing.natsoft.com.au'].includes(parsed.hostname)){showStatus('The link must be from racing.natsoft.com.au.','error');return;}}
   launch.disabled=true;launch.textContent='SAVING & STARTING…';showStatus('Contacting Gauge King Race Control…','ok');
   try{
-    const response=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pin:racePin,results_url:value,registrations:registrationRows})});
+    const response=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pin:racePin,event_selection:selectedMeeting,registrations:registrationRows})});
     const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.detail||'Could not start the update.');
     const regMessage=registrationRows!==null?` ${registrationRows.length} competitors saved with class/team data.`:'';
     showStatus(`🏁 Update started successfully.${regMessage} Gauge King will publish overall, class and team leaderboards from the latest Natsoft Result.`,'ok');
-    input.value='';registrationRows=null;drivers.value='';renderDrivers();
+    registrationRows=null;drivers.value='';renderDrivers();
   }catch(error){showStatus(error.message||'Could not contact Race Control. Please try again.','error');}
   finally{launch.disabled=false;launch.textContent='SAVE & UPDATE LIVE RESULTS';}
 });
