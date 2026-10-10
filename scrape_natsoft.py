@@ -241,7 +241,13 @@ def scrape() -> dict[str, Any]:
     session_label = "Current Result"
     discovered_links: list[dict[str, str]] = []
 
-    if event_url and urlparse(event_url).fragment and urlparse(event_url).path.rstrip("/") == "/results":
+    meeting = natsoft.get("meeting") or {}
+    if meeting:
+        source_mode = "browser-index"
+        source_page_url = "http://racing.natsoft.com.au/results/"
+        result_url, session_label, browser_html, browser_headers, browser_status = discover_live_result(source_page_url, timeout, meeting=meeting)
+        print(f"Selected meeting result: {result_url}")
+    elif event_url and urlparse(event_url).fragment and urlparse(event_url).path.rstrip("/") == "/results":
         source_mode = "browser-index"
         result_url, session_label, browser_html, browser_headers, browser_status = discover_live_result(event_url, timeout)
         print(f"Discovered browser result: {session_label} => {result_url}")
