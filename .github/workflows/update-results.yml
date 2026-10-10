@@ -164,6 +164,7 @@ jobs:
         run: python scrape_natsoft.py
 
       - name: Build static site
+        if: ${{ steps.scrape.outcome == 'success' }}
         run: python build_site.py
 
       - name: Commit Race Control configuration and refreshed data
@@ -191,11 +192,6 @@ jobs:
           path: natsoft-debug/
           if-no-files-found: ignore
 
-      - name: Verify Natsoft scrape succeeded
-        if: ${{ steps.scrape.outcome != 'success' }}
-        run: |
-          echo 'Natsoft scrape failed: refusing to deploy stale race results.'
-          exit 1
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -207,3 +203,10 @@ jobs:
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
+
+      - name: Verify Natsoft scrape succeeded
+        if: ${{ steps.scrape.outcome != 'success' }}
+        run: |
+          echo 'Natsoft scrape failed: preserved existing results; no fresh leaderboard was built.'
+          exit 1
+
