@@ -51,7 +51,11 @@ def discover_live_result(url, timeout=30):
         target_meeting = page.locator('[id^="MeetingList#r"][id$="c1"]').filter(has_text="SubiNats 2026").first
         if target_meeting.count():
             print("Opening SubiNats 2026 meeting", flush=True)
-            target_meeting.dblclick(timeout=6000)
+            row = target_meeting.locator('xpath=ancestor::*[starts-with(@id,"MeetingList#r") and not(contains(substring-after(@id,"#"),"c"))][1]')
+            date_link = row.locator('[id$="c0"]').first
+            if not date_link.count():
+                raise RuntimeError("SubiNats meeting date link not found")
+            date_link.click(timeout=6000)
             page.wait_for_timeout(3000)
             Path("natsoft-debug").mkdir(exist_ok=True)
             page.screenshot(path="natsoft-debug/after-meeting-click.png", full_page=True)
