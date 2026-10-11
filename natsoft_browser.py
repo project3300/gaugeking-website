@@ -138,13 +138,26 @@ def discover_live_result(url, timeout=30, meeting=None):
         # The saved #4 test refers to the SubiNats meeting. Natsoft renders
         # meeting rows as div elements (MeetingList#rNc1), not anchors.
         target_name = (meeting or {}).get("name", "SubiNats 2026")
+        if meeting and meeting.get("date"):
+            from datetime import datetime
+            requested_date = datetime.strptime(meeting["date"], "%Y-%m-%d")
+            year = str(requested_date.year)
+            year_dropdown = page.locator("select").filter(
+                has=page.locator("option").filter(has_text=year)
+            ).first
+            if not year_dropdown.count():
+                raise RuntimeError(f"Natsoft year selector for {year} unavailable")
+            year_dropdown.select_option(label=year)
+            page.wait_for_timeout(2200)
+            page.locator('[id^="MeetingList#r"][id$="c1"]').first.wait_for(timeout=30000)
+            print(f"Tracking Natsoft year {year}", flush=True)
         target_meeting = page.locator('[id^="MeetingList#r"][id$="c1"]').filter(has_text=target_name).first
         if target_meeting.count():
-            print("Opening SubiNats 2026 meeting", flush=True)
+            print(f"Opening selected meeting: {target_name}", flush=True)
             row = target_meeting.locator('xpath=ancestor::*[starts-with(@id,"MeetingList#r") and not(contains(substring-after(@id,"#"),"c"))][1]')
             date_link = row.locator('[id$="c0"]').first
             if not date_link.count():
-                raise RuntimeError("SubiNats meeting date link not found")
+                raise RuntimeError("Selected meeting date link not found")
             date_link.click(timeout=6000)
             page.wait_for_timeout(3000)
             Path("natsoft-debug").mkdir(exist_ok=True)
