@@ -1,124 +1,117 @@
 event:
-  name: 2026 OZ RS Nationals
-  date: '2026-10-18'
+  name: TRACKSCHOOL Track Day
+  date: '2024-10-20'
   venue: Winton Motor Raceway
 natsoft:
-  event_url: http://racing.natsoft.com.au/results/#3
+  event_url: ''
   url: http://racing.natsoft.com.au/684283107/object_466841.81y/View?1
   validation_mode: false
   timeout_seconds: 30
+  meeting:
+    name: TRACKSCHOOL Track Day
+    date: '2024-10-20'
+    track: Winton Motor Raceway
+    id: MeetingList#r83
 filters:
   vehicle_terms: []
   participants:
-  - Luke Gray
-  - Chris Muyoma
-  - Jonathon (Jon) Harrison
-  - Matthew Tough
-  - Daniel Conacher
-  - Damien Hunter
-  - Robert Lee
-  - Craig simpson
-  - Tracy Hoven
-  - Riccardo Santilli
-  - Ross Marett
-  - Choon Lim
-  - Jonathan Gray
-  - Alexander Gellings
   - Simon Ansell
+  - Robert Lee
+  - Rhys Edgar
+  - Simon Baxter
+  - Johnny Law
+  - Chris Muyoma
+  - Chris White
+  - Luke D'Alessio
+  - John Law
+  - Luke Gray
   - Anthony Ket
-  - Jon Harro
-  - Martin Boyd
+  - Adam McInnes
+  - Moss Wattanachai
+  - Luke Starecki
+  - Jeremy Parnell
+  - Tracy Hoven
   registrations:
-  - name: Luke Gray
-    class: NA
-    group: The Highway Men
-    id: '1'
-    username: Clionutta
-  - name: Chris Muyoma
-    class: FI
-    group: ''
-    id: '2'
-    username: ChrisM
-  - name: Jonathon (Jon) Harrison
-    class: NA
-    group: ''
-    id: '3'
-    username: JonHarro
-  - name: Matthew Tough
-    class: FI
-    group: ''
-    id: '4'
-    username: MTOUGH
-  - name: Daniel Conacher
-    class: NA
-    group: ''
-    id: '5'
-    username: DC197
-  - name: Damien Hunter
-    class: NA
-    group: ''
-    id: '6'
-    username: Dhmotorsport
-  - name: Robert Lee
-    class: NA
-    group: ''
-    id: '7'
-    username: roblee8g
-  - name: Craig simpson
-    class: FI
-    group: ''
-    id: '8'
-    username: CraigRSwannabe
-  - name: Tracy Hoven
-    class: NA
-    group: ''
-    id: '9'
-    username: Tracy
-  - name: Riccardo Santilli
-    class: FI
-    group: ''
-    id: '10'
-    username: not applicable
-  - name: Ross Marett
-    class: NA
-    group: ''
-    id: '11'
-    username: Fester2005
-  - name: Choon Lim
-    class: NA
-    group: ''
-    id: '12'
-    username: Choonlim
-  - name: Jonathan Gray
-    class: NA
-    group: ''
-    id: '13'
-    username: Woodsworth
-  - name: Alexander Gellings
-    class: FI
-    group: ''
-    id: '14'
-    username: Coha
   - name: Simon Ansell
-    class: NA
-    group: ''
-    id: '15'
-    username: OZCUP
+    class: Renault Trophy
+    group: French Connection Racing
+    id: '151'
+    username: ''
+  - name: Robert Lee
+    class: Renault Cup
+    group: Apex Renault
+    id: '150'
+    username: ''
+  - name: Rhys Edgar
+    class: Renault Sprint
+    group: Blue Diamond Motorsport
+    id: '149'
+    username: ''
+  - name: Simon Baxter
+    class: Renault Sprint
+    group: R.S. Track Collective
+    id: '166'
+    username: ''
+  - name: Johnny Law
+    class: Renault Sprint
+    group: French Connection Racing
+    id: '165'
+    username: ''
+  - name: Chris Muyoma
+    class: Renault Trophy
+    group: Apex Renault
+    id: '111'
+    username: ''
+  - name: Chris White
+    class: Renault Sprint
+    group: Blue Diamond Motorsport
+    id: '112'
+    username: ''
+  - name: Luke D'Alessio
+    class: Renault Sprint
+    group: R.S. Track Collective
+    id: '133'
+    username: ''
+  - name: John Law
+    class: Renault Sprint
+    group: French Connection Racing
+    id: '125'
+    username: ''
+  - name: Luke Gray
+    class: Renault Sprint
+    group: Apex Renault
+    id: '134'
+    username: ''
   - name: Anthony Ket
-    class: NA
-    group: ''
-    id: '16'
-    username: Gambit
-  - name: Jon Harro
-    class: NA
-    group: The Highway Men
-    id: '17'
-    username: Jharro
-  - name: Martin Boyd
-    class: NA
-    group: The Highway Men
-    id: '18'
-    username: MB21
+    class: Renault Sprint
+    group: Blue Diamond Motorsport
+    id: '107'
+    username: ''
+  - name: Adam McInnes
+    class: Renault Sprint
+    group: R.S. Track Collective
+    id: '103'
+    username: ''
+  - name: Moss Wattanachai
+    class: Renault Sprint
+    group: French Connection Racing
+    id: '144'
+    username: ''
+  - name: Luke Starecki
+    class: Renault Trophy
+    group: Apex Renault
+    id: '135'
+    username: ''
+  - name: Jeremy Parnell
+    class: Renault Sprint
+    group: Blue Diamond Motorsport
+    id: '120'
+    username: ''
+  - name: Tracy Hoven
+    class: Renault Sprint
+    group: R.S. Track Collective
+    id: '154'
+    username: ''
 site:
   title: Gauge King Track Results
   subtitle: Live OZ RenaultSport Nationals race results
