@@ -142,11 +142,32 @@ def discover_live_result(url, timeout=30, meeting=None):
             from datetime import datetime
             requested_date = datetime.strptime(meeting["date"], "%Y-%m-%d")
             year = str(requested_date.year)
+            # Natsoft may still be on the discipline splash after the click.
+            # Wait for its JavaScript to populate the year control, rather
+            # than checking the DOM immediately and treating loading as no data.
+            def wait_for_year():
+                page.wait_for_function(
+                    """year => [...document.querySelectorAll('select')].some(s =>
+                        [...s.options].some(o => o.textContent.trim() === year))""",
+                    arg=year, timeout=30000
+                )
+            try:
+                wait_for_year()
+            except Exception:
+                # One retry if the first click raced the Natsoft application startup.
+                retry = page.locator('img#Discipline_0[title="Circuit Racing"]')
+                if retry.count() and retry.is_visible():
+                    retry.click(force=True, timeout=6000)
+                try:
+                    wait_for_year()
+                except Exception:
+                    Path("natsoft-debug").mkdir(exist_ok=True)
+                    page.screenshot(path="natsoft-debug/year-not-ready.png", full_page=True)
+                    Path("natsoft-debug/year-not-ready.html").write_text(page.content(), encoding="utf-8")
+                    raise RuntimeError(f"Natsoft did not load its year selector for {year}")
             year_dropdown = page.locator("select").filter(
                 has=page.locator("option").filter(has_text=year)
             ).first
-            if not year_dropdown.count():
-                raise RuntimeError(f"Natsoft year selector for {year} unavailable")
             year_dropdown.select_option(label=year)
             page.wait_for_timeout(2200)
             page.locator('[id^="MeetingList#r"][id$="c1"]').first.wait_for(timeout=30000)
