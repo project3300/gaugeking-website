@@ -48,6 +48,7 @@
 const BASE='https://gaugeking-race-control.onrender.com/api/race-results';const API=BASE+'/update';
 const pin=document.getElementById('pin');const findEvents=document.getElementById('findEvents');const selectedEvent=document.getElementById('selectedEvent');const discoveredBox=document.getElementById('discoveredBox');const eventDate=document.getElementById('eventDate');const track=document.getElementById('track');const eventHint=document.getElementById('eventHint');let meetingChoices=[];let selectedMeeting=null;const input=document.getElementById('url');const drivers=document.getElementById('drivers');const driverBox=document.getElementById('driverBox');const driverCount=document.getElementById('driverCount');const driverList=document.getElementById('driverList');const clearDrivers=document.getElementById('clearDrivers');const status=document.getElementById('status');const launch=document.getElementById('launch');let registrationRows=null;
 
+function apiError(data,fallback){const d=data?.detail;if(typeof d==='string')return d;if(Array.isArray(d))return d.map(e=>e?.msg||JSON.stringify(e)).join('; ');return fallback;}
 function showStatus(message,type){status.className='status '+type;status.textContent=message;}
 function clean(value){return String(value??'').replace(/^\uFEFF/,'').replace(/^['"]|['"]$/g,'').replace(/\s+/g,' ').trim();}
 function key(value){return clean(value).toLowerCase().replace(/[^a-z0-9]+/g,' ');}
@@ -124,7 +125,7 @@ findEvents.addEventListener('click',async()=>{
   clearMeeting();findEvents.disabled=true;showStatus('Searching Natsoft meetings. This may take up to a minute…','ok');
   try{
     const response=await fetch(BASE+'/discover',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pin:pin.value.trim(),date:eventDate.value,track:track.value.trim(),name_hint:eventHint.value.trim()})});
-    const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.detail||'Natsoft search failed');
+    const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(apiError(data,'Natsoft search failed'));
     meetingChoices=data.events||[];
     if(!meetingChoices.length){showStatus('No meetings found for that date and track. Adjust your search and try again.','error');return;}
     selectedEvent.innerHTML='';
@@ -155,7 +156,7 @@ launch.addEventListener('click',async()=>{
   launch.disabled=true;launch.textContent='SAVING & STARTING…';showStatus('Contacting Gauge King Race Control…','ok');
   try{
     const response=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pin:racePin,event_selection:selectedMeeting,registrations:registrationRows})});
-    const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.detail||'Could not start the update.');
+    const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(apiError(data,'Could not start the update.'));
     const regMessage=registrationRows!==null?` ${registrationRows.length} competitors saved with class/team data.`:'';
     showStatus(`🏁 Update started successfully.${regMessage} Gauge King will publish overall, class and team leaderboards from the latest Natsoft Result.`,'ok');
     registrationRows=null;drivers.value='';renderDrivers();
