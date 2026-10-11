@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import hmac
+import hashlib
+import time
 import json
 import os
 from urllib.parse import urlparse
@@ -142,6 +144,11 @@ def normalise_registrations(values: list[Registration] | None) -> list[dict[str,
     return output
 
 
+def selection_signature(event, issued):
+    identity = {k: event.get(k, '') for k in ('name', 'date', 'track', 'id')}
+    content = json.dumps({'event': identity, 'issued': issued}, sort_keys=True, separators=(',', ':'))
+    return hmac.new(RACE_CONTROL_PIN.encode(), content.encode(), hashlib.sha256).hexdigest()
+
 class DiscoverRequest(BaseModel):
     pin: str
     date: str = '2026-10-18'
@@ -167,6 +174,10 @@ def discover_events(payload: DiscoverRequest):
     hint = clean_text(payload.name_hint, 100).casefold()
     if hint:
         events.sort(key=lambda e: hint not in e['name'].casefold())
+    issued = int(time.time())
+    for event in events:
+        event['selection_issued'] = issued
+        event['selection_signature'] = selection_signature(event, issued)
     return {'events': events, 'count': len(events)}
 @app.get("/health")
 def health() -> dict[str, str]:
@@ -188,13 +199,16 @@ def update_race_results(payload: UpdateRequest) -> dict[str, object]:
             raise HTTPException(status_code=400, detail='Select a discovered Natsoft meeting.')
         if source_url:
             raise HTTPException(status_code=400, detail='Choose event discovery or a legacy URL, not both.')
+        # Discovery already verified the meeting. Validate a signed, short-lived selection.
         try:
-            from natsoft_browser import discover_meetings
-            matches = discover_meetings(chosen_event['date'], chosen_event['track'])
-        except Exception as exc:
-            raise HTTPException(status_code=502, detail='Unable to verify Natsoft event: ' + str(exc)[:120])
-        if not any(e['name'] == chosen_event['name'] for e in matches):
-            raise HTTPException(status_code=409, detail='Meeting not found in the current Natsoft index. Search again.')
+            issued = int(payload.event_selection.get('selection_issued'))
+        except (TypeError, ValueError):
+            raise HTTPException(status_code=409, detail='Event selection expired. Find events again.')
+        if not 0 <= time.time() - issued <= 7200:
+            raise HTTPException(status_code=409, detail='Event selection expired. Find events again.')
+        signature = str(payload.event_selection.get('selection_signature', ''))
+        if not hmac.compare_digest(selection_signature(chosen_event, issued), signature):
+            raise HTTPException(status_code=409, detail='Event selection verification failed. Find events again.')
     registrations = normalise_registrations(payload.registrations)
     participants = normalise_participants(payload.participants)
 
