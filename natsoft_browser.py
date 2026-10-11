@@ -50,7 +50,27 @@ def discover_meetings(date_text, track_text, timeout=30):
             page.locator('img#Discipline_0').wait_for(state="visible", timeout=45000)
             page.locator('img#Discipline_0').click()
             page.locator('[id^="MeetingList#r"][id$="c1"]').first.wait_for(timeout=30000)
-            page.wait_for_timeout(1200)
+            # Natsoft initially lists the current year. Historical meeting lookup
+            # must explicitly select the requested year before filtering rows.
+            year = str(target_date.year)
+            year_selects = page.locator('select').filter(has=page.locator('option').filter(has_text=year))
+            selected = False
+            for index in range(year_selects.count()):
+                dropdown = year_selects.nth(index)
+                opts = dropdown.locator('option').all()
+                for option in opts:
+                    if option.inner_text().strip() == year:
+                        value = option.get_attribute('value')
+                        dropdown.select_option(value=value if value is not None else None, label=year)
+                        selected = True
+                        print(f"Natsoft discovery selected year {year}", flush=True)
+                        break
+                if selected:
+                    break
+            if not selected:
+                raise RuntimeError(f"Natsoft year selector for {year} was not found")
+            page.wait_for_timeout(2200)
+            page.locator('[id^="MeetingList#r"][id$="c1"]').first.wait_for(timeout=30000)
             rows = page.locator('[id^="MeetingList#r"][id$="c1"]').evaluate_all("""
               (cells) => cells.map(cell => {
                 const match = cell.id.match(/^(MeetingList#r\\d+)c1$/);
