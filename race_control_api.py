@@ -4,6 +4,7 @@ import hmac
 import json
 import os
 from urllib.parse import urlparse
+from typing import Any
 from datetime import datetime
 
 import requests
@@ -52,7 +53,7 @@ class UpdateRequest(BaseModel):
     results_url: str = ""
     participants: list[str] | None = Field(default=None, max_length=250)
     registrations: list[Registration] | None = Field(default=None, max_length=250)
-    event_selection: dict[str, str] | None = None
+    event_selection: dict[str, Any] | None = None
 
 
 def validate_natsoft_url(value: str) -> str:
