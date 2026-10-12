@@ -101,6 +101,9 @@ jobs:
               config['natsoft']['meeting'] = selection
               config['natsoft']['event_url'] = ''
               config['natsoft']['validation_mode'] = False
+              # A different meeting must not inherit the previous event's driver roster.
+              if not os.environ.get('REGISTRATIONS_JSON', '').strip() and not os.environ.get('PARTICIPANTS_JSON', '').strip():
+                  config['filters'] = {'registrations': [], 'participants': [], 'vehicle_terms': []}
               print('Selected meeting:', selection)
 
           registrations_raw = os.environ.get("REGISTRATIONS_JSON", "").strip()
