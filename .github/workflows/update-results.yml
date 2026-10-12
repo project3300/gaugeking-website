@@ -102,7 +102,10 @@ jobs:
               config['natsoft']['event_url'] = ''
               config['natsoft']['validation_mode'] = False
               # A different meeting must not inherit the previous event's driver roster.
-              if not os.environ.get('REGISTRATIONS_JSON', '').strip() and not os.environ.get('PARTICIPANTS_JSON', '').strip():
+              previous_config = yaml.safe_load(Path('/tmp/gaugeking_previous_event.yaml').read_text(encoding='utf-8'))
+              from event_store import event_key
+              changed_event = event_key(previous_config.get('event', {})) != event_key(config['event'])
+              if changed_event and not os.environ.get('REGISTRATIONS_JSON', '').strip() and not os.environ.get('PARTICIPANTS_JSON', '').strip():
                   config['filters'] = {'registrations': [], 'participants': [], 'vehicle_terms': []}
               print('Selected meeting:', selection)
 
