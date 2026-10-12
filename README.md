@@ -55,3 +55,7 @@ python -m http.server 8000 --directory docs
 ```
 
 Open `http://localhost:8000/trackresults/`.
+
+## Historical session cleanup
+
+The 20 October 2024 RS Nationals leaderboard retains `Result 395` as its historical session. Earlier numbered result snapshots (391 and below) were redundant test captures and were removed from `data/results.json` on 13 October 2026. Event and registration metadata are preserved.
