@@ -3,7 +3,8 @@
   "event": {
     "name": "TRACKSCHOOL Track Day",
     "date": "2024-10-20",
-    "venue": "Winton Motor Raceway"
+    "venue": "Winton Motor Raceway",
+    "display_name": "OZ RenaultSport Nationals 2024"
   },
   "event_key": "2024-10-20-winton-motor-raceway-trackschool-track-day",
   "source": {
