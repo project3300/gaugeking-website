@@ -158,13 +158,22 @@ jobs:
           )
           PY
 
+      - name: Isolate and archive selected event
+        run: |
+          python - <<'PY'
+          import yaml
+          from event_store import switch_event
+          from pathlib import Path
+          config = yaml.safe_load(Path("config.yaml").read_text(encoding="utf-8"))
+          switch_event(config)
+          PY
+
       - name: Scrape Natsoft
         id: scrape
         continue-on-error: true
         run: python scrape_natsoft.py
 
       - name: Build static site
-        if: ${{ steps.scrape.outcome == 'success' }}
         run: python build_site.py
 
       - name: Commit Race Control configuration and refreshed data
@@ -173,10 +182,7 @@ jobs:
         run: |
           git config user.name "gaugeking-results-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add config.yaml docs/trackresults/index.html
-          if [ "$SCRAPE_OUTCOME" = "success" ]; then
-            git add data/results.json
-          fi
+          git add config.yaml data/results.json data/events/ docs/trackresults/index.html docs/trackresults/archive/
           if git diff --cached --quiet; then
             echo "No race-result or Race Control changes to commit."
           else
