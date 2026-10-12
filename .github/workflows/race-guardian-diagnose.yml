@@ -1,0 +1,71 @@
+name: Race Guardian - diagnose failures
+on:
+  workflow_run:
+    workflows: ["Update race results"]
+    types: [completed]
+permissions:
+  actions: read
+  issues: write
+  contents: read
+concurrency:
+  group: race-guardian-diagnostics
+  cancel-in-progress: false
+jobs:
+  diagnose:
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report failure and assign Copilot
+        env:
+          GH_TOKEN: ${{ secrets.GUARDIAN_COPILOT_TOKEN }}
+          FALLBACK_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+          RUN_URL: ${{ github.event.workflow_run.html_url }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, os, urllib.request, urllib.error
+          repo = os.environ['REPO']
+          token = os.environ.get('GH_TOKEN') or os.environ['FALLBACK_TOKEN']
+          bot_enabled = bool(os.environ.get('GH_TOKEN'))
+          def api(method, path, body=None):
+              headers = {'Authorization':'Bearer '+token,'Accept':'application/vnd.github+json',
+                         'X-GitHub-Api-Version':'2022-11-28','User-Agent':'GaugeKing-RaceGuardian'}
+              data = json.dumps(body).encode() if body is not None else None
+              req = urllib.request.Request('https://api.github.com'+path, data=data,
+                                           headers=headers, method=method)
+              with urllib.request.urlopen(req, timeout=20) as r:
+                  return json.loads(r.read().decode() or '{}')
+          # One open Guardian issue at a time prevents a polling storm.
+          issues=api('GET',f'/repos/{repo}/issues?state=open&per_page=100')
+          prior=next((i for i in issues if i['title'].startswith('[Race Guardian]')),None)
+          run=os.environ['RUN_URL']
+          body=('Race Guardian detected a failed race-results workflow.\n\n'
+                f'Workflow: {run}\nCommit: `{os.environ["HEAD_SHA"]}`\n'
+                'Inspect the failed scrape logs and the natsoft-browser-debug artifact on that run.\n\n'
+                'Protect event/date identity, driver registrations and prior verified results. '
+                'Never replace them with unrelated data. Change only the Natsoft browser scraping '
+                'implementation when possible. Add a regression test and explain your diagnosis. '
+                'Do not modify workflow files, credentials, deployment policy or event data. '
+                'Deliver a minimal PR, not a direct push to main.')
+          if prior:
+              api('POST',f'/repos/{repo}/issues/{prior["number"]}/comments',{'body':'Another failing poll: '+run})
+              print('Reused issue',prior['number'])
+          else:
+              payload={'title':'[Race Guardian] Recover failing Natsoft results discovery','body':body}
+              if bot_enabled:
+                  payload['assignees']=['copilot-swe-agent[bot]']
+                  payload['agent_assignment']={'target_repo':repo,'base_branch':'main',
+                      'custom_instructions':'Work only on Natsoft result discovery; preserve all event and result safeguards.'}
+              try:
+                  issue=api('POST',f'/repos/{repo}/issues',payload)
+              except urllib.error.HTTPError as exc:
+                  if not bot_enabled: raise
+                  print('Copilot assignment rejected; creating unassigned issue:',exc.code)
+                  payload.pop('assignees',None);payload.pop('agent_assignment',None)
+                  issue=api('POST',f'/repos/{repo}/issues',payload)
+              print('Created issue',issue['html_url'])
+              if not bot_enabled: print('Set GUARDIAN_COPILOT_TOKEN to enable assignment')
+          PY
