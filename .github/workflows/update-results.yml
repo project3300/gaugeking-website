@@ -60,6 +60,9 @@ jobs:
       - name: Install Chromium
         run: python -m playwright install --with-deps chromium
 
+      - name: Preserve previous event configuration
+        run: cp config.yaml /tmp/gaugeking_previous_event.yaml
+
       - name: Save Race Control inputs
         if: ${{ github.event_name == 'workflow_dispatch' }}
         env:
