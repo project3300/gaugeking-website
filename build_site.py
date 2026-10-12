@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import yaml
+from event_store import assert_event
 
 ROOT = Path(__file__).parent
 CONFIG = ROOT / "config.yaml"
@@ -283,6 +284,7 @@ def main():
         "results": [], "sessions": [],
     }
 
+    assert_event(data, config.get("event", {})) if DATA.exists() else None
     registrations = registrations_from_config(config)
     classes = sorted({r["class"] for r in registrations if r["class"]}, key=str.casefold)
     teams = sorted({r["group"] for r in registrations if r["group"]}, key=str.casefold)
@@ -299,7 +301,16 @@ def main():
         else '<div class="live">LIVE EVENT SOURCE — Gauge King automatically discovers the newest published Natsoft result.</div>'
     )
     refresh = int(site.get("refresh_seconds", 300))
-    session_count = len(data.get("sessions") or []) or 1
+    session_count = len(data.get("sessions") or [])
+    if not session_count:
+        banner = '<div class="validation">AWAITING VERIFIED RESULTS — this event has no published results yet. Previous events are archived separately.</div>'
+    archive_root = OUT.parent / "archive"
+    archived_pages = sorted(archive_root.glob("*/index.html")) if archive_root.exists() else []
+    archive_nav = (
+        '<nav style="margin:18px 0"><strong>Previous events</strong> · ' +
+        " · ".join(f'<a style="color:#d4af37" href="archive/{esc(p.parent.name)}/">{esc(p.parent.name)}</a>' for p in archived_pages) +
+        '</nav>'
+    ) if archived_pages else ""
 
     page = f'''<!doctype html>
 <html lang="en"><head>
@@ -315,7 +326,8 @@ def main():
 <section class="hero"><div class="eyebrow">LIVE MOTORSPORT DATA</div><h2>{esc(event.get("name", "Race Results"))}</h2><div class="subtitle">{esc(site.get("subtitle", "Live race results"))}</div><div class="meta">
 <div class="meta-card"><span>Event date</span><strong>{esc(event.get("date", "TBA"))}</strong></div><div class="meta-card"><span>Venue</span><strong>{esc(event.get("venue", "TBA"))}</strong></div><div class="meta-card"><span>Sessions captured</span><strong>{session_count}</strong></div><div class="meta-card"><span>Last checked</span><strong>{esc(checked_label)}</strong></div>
 </div><div class="registration-summary"><span>{len(registrations)} registered competitors</span><span>{len(classes)} classes</span><span>{len(teams)} teams</span></div></section>{banner}
-{session_sections(data, registrations)}
+{session_sections(data, registrations) if session_count else '<div class="empty">No verified sessions for this event yet.</div>'}
+{archive_nav}
 <footer>Gauge King · Data sourced from Natsoft Racing Results · Natsoft remains authoritative · Source mode: {esc(source_mode)}</footer>
 </main>
 <script>
