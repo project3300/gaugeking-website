@@ -193,7 +193,8 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           mkdir -p data/events docs/trackresults/archive
           git add config.yaml data/results.json docs/trackresults/index.html
-          git add -A data/events docs/trackresults/archive
+          if [ -n "$(find data/events -type f -print -quit)" ]; then git add -A data/events; fi
+          if [ -n "$(find docs/trackresults/archive -type f -print -quit)" ]; then git add -A docs/trackresults/archive; fi
           if git diff --cached --quiet; then
             echo "No race-result or Race Control changes to commit."
           else
