@@ -10,6 +10,7 @@ from urllib.parse import urljoin, urlparse
 import requests
 import hashlib
 from natsoft_browser import discover_live_result
+from event_store import assert_event, event_key
 import yaml
 from bs4 import BeautifulSoup
 
@@ -290,6 +291,9 @@ def scrape() -> dict[str, Any]:
         except (json.JSONDecodeError, OSError):
             previous = None
 
+    # Never inherit snapshots across meetings, even if source URL is reused.
+    if previous:
+        assert_event(previous, config.get("event", {}))
     sessions = []
     if previous:
         sessions = list(previous.get("sessions", []))
@@ -318,6 +322,7 @@ def scrape() -> dict[str, Any]:
     payload = {
         "generated_at": current_session["generated_at"],
         "event": config.get("event", {}),
+        "event_key": event_key(config.get("event", {})),
         "source": {
             "mode": source_mode,
             "event_url": event_url,
