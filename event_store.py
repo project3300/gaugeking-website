@@ -2,6 +2,7 @@
 import json
 import re
 import shutil
+import yaml
 from pathlib import Path
 
 ROOT = Path(__file__).parent
@@ -45,6 +46,13 @@ def switch_event(config):
         numbered = sorted(archive_dir.glob("results-*.json"))
         snapshot = archive_dir / f"results-{len(numbered)+1}.json"
     snapshot.write_text(json.dumps(previous, indent=2, ensure_ascii=False), encoding="utf-8")
+    prior_path = Path('/tmp/gaugeking_previous_event.yaml')
+    if prior_path.exists():
+        prior_config = yaml.safe_load(prior_path.read_text(encoding='utf-8')) or {}
+        if event_key(prior_config.get('event', {})) == existing_key:
+            (archive_dir / 'registrations.json').write_text(
+                json.dumps(prior_config.get('filters', {}), indent=2, ensure_ascii=False), encoding='utf-8'
+            )
     old_page = SITE / "index.html"
     if old_page.exists():
         public_archive = SITE / "archive" / existing_key
