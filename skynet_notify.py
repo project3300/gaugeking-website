@@ -8,6 +8,7 @@ from urllib.error import HTTPError
 FROM = "Skynet | Gauge King <skynet@gaugeking.com.au>"
 SUBJECTS = {
     "failure_detected": "[SKYNET] Natsoft recovery initiated",
+    "test": "[SKYNET] Test notification",
     "repair_started": "[SKYNET] Copilot repair started",
     "fix_deployed": "[SKYNET] Natsoft fix deployed",
     "recovery_failed": "[SKYNET] Natsoft recovery failed",
@@ -16,6 +17,8 @@ SUBJECTS = {
 def classify(event_name, event):
     repo = os.environ.get("GITHUB_REPOSITORY", "")
     root = "https://github.com/" + repo
+    if event_name == "workflow_dispatch":
+        return "test", "This is a controlled test of Skynet email delivery. No Natsoft failure or repair was triggered."
     if event_name == "pull_request":
         pr = event.get("pull_request") or {}
         if event.get("action") not in ("opened", "ready_for_review") or (pr.get("user") or {}).get("login") not in ("Copilot", "copilot-swe-agent[bot]"):
@@ -50,6 +53,8 @@ def main():
     token = os.environ.get("RESEND_API_KEY", "")
     recipient = os.environ.get("SKYNET_NOTIFY_EMAIL", "")
     if not token or not recipient:
+        if os.environ["GITHUB_EVENT_NAME"] == "workflow_dispatch":
+            raise SystemExit("Test failed: RESEND_API_KEY or SKYNET_NOTIFY_EMAIL missing")
         print("Skynet: RESEND_API_KEY or SKYNET_NOTIFY_EMAIL missing; notification skipped.")
         return
     payload = {
