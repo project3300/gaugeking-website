@@ -62,7 +62,7 @@ jobs:
               sys.exit("No unique open Race Guardian incident")
           issue=guardians[0]
           body=pr.get("body") or ""
-          if not re.search(r"(?<!\\d)#"+str(issue["number"])+r"\\b",body) and issue["html_url"] not in body:
+          if not re.search(r"(?<!\d)#"+str(issue["number"])+r"\b",body) and issue["html_url"] not in body:
               sys.exit("Copilot PR does not reference the active Guardian issue")
           checks=api("GET",f"/repos/{repo}/commits/{pr['head']['sha']}/check-runs?per_page=100")
           matches=[c for c in checks["check_runs"] if c["name"]=="verify" and c["conclusion"]=="success" and c["status"]=="completed"]
