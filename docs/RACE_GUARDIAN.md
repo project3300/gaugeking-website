@@ -69,3 +69,34 @@ Confirm that an unrelated-file change fails the gate, a bad URL-change fails
 the gate, and an invalid scrape fails the live probe. Only a fully successful
 single-file patch should be merged. Review Actions run logs before relying on
 unattended recovery on race day.
+
+## Skynet identity and branded email
+
+The autonomous recovery system is branded **Skynet**; GitHub Copilot remains
+the underlying coding agent, and GitHub's own Copilot notification sender cannot
+be renamed.
+
+`.github/workflows/skynet-notifications.yml` sends lifecycle alerts using
+`skynet_notify.py` and Resend:
+
+- Failed `Update race results` run: **[SKYNET] Natsoft recovery initiated**.
+- Copilot-created PR opened or marked ready: **[SKYNET] Copilot repair started**.
+- Independent verification or merge workflow failed: **[SKYNET] Natsoft recovery failed**.
+- Post-merge `Update race results` workflow succeeded with a Race Guardian
+  recovery commit: **[SKYNET] Natsoft fix deployed**.
+
+Sender display name: **Skynet | Gauge King**. Sender address:
+`skynet@gaugeking.com.au`.
+
+For actual delivery, first verify `gaugeking.com.au` as a sending domain in
+Resend, and add these **repository Actions secrets**:
+
+- `RESEND_API_KEY`: restricted API credential from Resend.
+- `SKYNET_NOTIFY_EMAIL`: destination email address for alerts.
+
+Notifications skip safely when credentials are missing, without disrupting the
+scraper or the merge gate. No email delivery has been confirmed until the sender
+domain and secrets are configured and a workflow emits an alert.
+
+GitHub Copilot's native emails are separate. To avoid duplicates, adjust GitHub
+notification preferences or filter GitHub messages in your mailbox.
