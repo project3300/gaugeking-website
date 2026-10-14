@@ -71,7 +71,17 @@ def main():
                 raise RuntimeError("Unexpected mail provider status")
             print("Skynet: alert accepted by email provider:", kind)
     except HTTPError as exc:
-        print("Skynet: email delivery request failed with HTTP", exc.code, file=sys.stderr)
+        # Report only Resend's documented error fields, never credentials or payloads.
+        reason = "unspecified"
+        try:
+            error = json.loads(exc.read(4096).decode("utf-8"))
+            if isinstance(error, dict):
+                reason = str(error.get("message") or error.get("name") or "unspecified")
+                # Avoid printing any sensitive or arbitrary server-supplied text.
+                reason = reason.replace(token, "[redacted]").replace(recipient, "[redacted]")[:350]
+        except (ValueError, UnicodeError):
+            pass
+        print(f"Skynet: Resend HTTP {exc.code}; reason: {reason}", file=sys.stderr)
         raise SystemExit(1)
 
 if __name__ == "__main__":
