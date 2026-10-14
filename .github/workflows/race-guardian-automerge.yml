@@ -1,0 +1,77 @@
+name: Race Guardian - auto-merge validated repair
+on:
+  workflow_run:
+    workflows: ["Race Guardian - validate Copilot repair"]
+    types: [completed]
+permissions:
+  contents: read
+  pull-requests: read
+  issues: read
+concurrency:
+  group: race-guardian-automerge
+  cancel-in-progress: false
+jobs:
+  merge:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify exact tested Copilot PR and merge
+        env:
+          GH_TOKEN: ${{ secrets.GUARDIAN_MERGE_TOKEN }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+          TEST_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          python - <<'PY'
+          import json, os, re, sys, urllib.request
+          from urllib.parse import urlencode
+          token=os.getenv("GH_TOKEN")
+          if not token:
+              sys.exit("GUARDIAN_MERGE_TOKEN missing: fail closed, no automatic merge")
+          repo=os.environ["REPO"]
+          base=f"https://api.github.com/repos/{repo}"
+          def api(method, path, body=None):
+              data=json.dumps(body).encode() if body is not None else None
+              request=urllib.request.Request("https://api.github.com"+path,data=data,method=method,headers={
+                  "Authorization":"Bearer "+token,"Accept":"application/vnd.github+json",
+                  "X-GitHub-Api-Version":"2022-11-28","User-Agent":"GaugeKing-Guardian"})
+              with urllib.request.urlopen(request,timeout=20) as response:
+                  return json.load(response)
+          run=api("GET",f"/repos/{repo}/actions/runs/{os.environ['RUN_ID']}")
+          if run["conclusion"]!="success" or run["event"]!="pull_request" or run["name"]!="Race Guardian - validate Copilot repair":
+              sys.exit("Unexpected CI run")
+          prs=run.get("pull_requests",[])
+          if len(prs)!=1:
+              sys.exit("No unique PR attached to validated workflow run")
+          number=prs[0]["number"]
+          pr=api("GET",f"/repos/{repo}/pulls/{number}")
+          if (pr["state"]!="open" or pr["draft"] or pr["base"]["ref"]!="main"
+              or pr["head"]["sha"]!=os.environ["TEST_SHA"]
+              or pr["head"]["repo"]["full_name"]!=repo
+              or pr["user"]["login"]!="copilot-swe-agent[bot]"):
+              sys.exit("PR state, author or tested head mismatch")
+          files=api("GET",f"/repos/{repo}/pulls/{number}/files?per_page=100")
+          if len(files)!=1 or files[0]["filename"]!="natsoft_browser.py" or files[0]["status"]!="modified":
+              sys.exit("Unsafe PR files: refusing automatic merge")
+          if files[0]["changes"]>120:
+              sys.exit("Patch larger than static safety limit")
+          issues=api("GET",f"/repos/{repo}/issues?state=open&per_page=100")
+          guardians=[i for i in issues if i["title"].startswith("[Race Guardian]") and "pull_request" not in i]
+          if len(guardians)!=1:
+              sys.exit("No unique open Race Guardian incident")
+          issue=guardians[0]
+          body=pr.get("body") or ""
+          if not re.search(r"(?<!\\d)#"+str(issue["number"])+r"\\b",body) and issue["html_url"] not in body:
+              sys.exit("Copilot PR does not reference the active Guardian issue")
+          checks=api("GET",f"/repos/{repo}/commits/{pr['head']['sha']}/check-runs?per_page=100")
+          matches=[c for c in checks["check_runs"] if c["name"]=="verify" and c["conclusion"]=="success" and c["status"]=="completed"]
+          if not matches:
+              sys.exit("Expected green independent verifier check missing")
+          result=api("PUT",f"/repos/{repo}/pulls/{number}/merge",{
+              "sha":pr["head"]["sha"],"merge_method":"squash",
+              "commit_title":"Race Guardian: verified Natsoft recovery"})
+          if not result.get("merged"):
+              sys.exit("GitHub did not accept the merge")
+          print(f"Safely merged Copilot PR #{number}")
+          PY
