@@ -64,7 +64,9 @@ def main():
     }
     req = urllib.request.Request("https://api.resend.com/emails",
         data=json.dumps(payload).encode("utf-8"), method="POST",
-        headers={"Authorization": "Bearer " + token, "Content-Type": "application/json"})
+        headers={"Authorization": "Bearer " + token, "Content-Type": "application/json",
+                 "User-Agent": "GaugeKing-Skynet/1.0 (GitHub Actions; transactional notifications)",
+                 "Accept": "application/json"})
     try:
         with urllib.request.urlopen(req, timeout=20) as response:
             if response.status not in (200, 201, 202):
