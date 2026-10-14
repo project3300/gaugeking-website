@@ -1,0 +1,54 @@
+name: Race Guardian - validate Copilot repair
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+permissions:
+  contents: read
+concurrency:
+  group: race-guardian-check-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    if: github.event.pull_request.user.login == 'copilot-swe-agent[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Independent static patch gate
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          git fetch origin "$BASE_SHA" "$HEAD_SHA"
+          python race_guardian_gate.py "$BASE_SHA" "$HEAD_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Python syntax checks
+        run: python -m compileall -q natsoft_browser.py scrape_natsoft.py event_store.py
+      - name: Live read-only integration probe
+        run: |
+          python scrape_natsoft.py
+          python - <<'PY'
+          import json, yaml
+          from pathlib import Path
+          from event_store import assert_event
+          config=yaml.safe_load(Path("config.yaml").read_text())
+          data=json.loads(Path("data/results.json").read_text())
+          assert_event(data, config["event"])
+          assert any(item.get("results") for item in data.get("sessions", [])) or bool(data.get("results")), "No real result rows found"
+          print("Natsoft live probe passed: current event and result rows validated.")
+          PY
+      - name: Upload diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: guardian-pr-diagnostics
+          path: natsoft-debug/
+          if-no-files-found: ignore
