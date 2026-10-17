@@ -1,6 +1,6 @@
 event:
   name: TRACKSCHOOL Open Pit Lane
-  display_name: OZ RenaultSport Nationals 2024
+  display_name: OZ RenaultSport Nationals 2026
   date: '2026-10-18'
   venue: Winton Motor Raceway
 natsoft:
@@ -133,5 +133,5 @@ filters:
     username: ''
 site:
   title: Gauge King Track Results
-  subtitle: OZ RenaultSport Nationals · 20 October 2024
+  subtitle: OZ RenaultSport Nationals · 18 October 2026
   refresh_seconds: 300
