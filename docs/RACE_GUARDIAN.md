@@ -43,6 +43,10 @@ closed until policy is configured.
 5. The ordinary main-branch workflow runs again after the PAT-authorized
    merge and publishes new results only after the scraper succeeds.
 
+## Natsoft Live timing recovery contract
+
+For the selected meeting, the **Live** column (`c2`) is authoritative. The date cell and **View** column (`c3`) are not acceptable fallback sources for race-day timing. Skynet's incident instructions require Copilot to preserve this behavior. The static gate rejects removal of the Live selection markers and known date/View fallbacks. This is a structural check, **not** proof that the Live timing payload is correctly parsed or fresh. The existing read-only smoke test must still pass, and race-day operators should verify its output against Natsoft Live. If parsing fails, retain the last verified result and fail closed.
+
 ## Safeguards and limitations
 
 - Candidate code runs only in the unprivileged PR workflow, without secrets.
