@@ -176,10 +176,13 @@ def discover_live_result(url, timeout=30, meeting=None):
         if target_meeting.count():
             print(f"Opening selected meeting: {target_name}", flush=True)
             row = target_meeting.locator('xpath=ancestor::*[starts-with(@id,"MeetingList#r") and not(contains(substring-after(@id,"#"),"c"))][1]')
-            date_link = row.locator('[id$="c0"]').first
-            if not date_link.count():
-                raise RuntimeError("Selected meeting date link not found")
-            date_link.click(timeout=6000)
+            # Prefer the Live column (c2) over the historical View column (c3).
+            # The date cell opens published sessions, not live timing.
+            live_cell = row.locator('[id$="c2"]').first
+            if not live_cell.count() or not re.search(r"\\bLive\\b", live_cell.inner_text(), re.I):
+                raise RuntimeError("Selected meeting has no Live timing link; refusing historical View fallback")
+            print("Opening selected meeting LIVE timing", flush=True)
+            live_cell.click(timeout=6000)
             page.wait_for_timeout(3000)
             Path("natsoft-debug").mkdir(exist_ok=True)
             page.screenshot(path="natsoft-debug/after-meeting-click.png", full_page=True)
