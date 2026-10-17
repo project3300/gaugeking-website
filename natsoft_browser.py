@@ -5,11 +5,15 @@ import json
 import zlib
 import requests
 from pathlib import Path
+from datetime import datetime
+import unittest
 from playwright.sync_api import sync_playwright
+
 
 def safe(url):
     p=urlparse(url)
     return p.scheme in ("http","https") and p.hostname in ("racing.natsoft.com.au","www.racing.natsoft.com.au")
+
 
 def fetch_natsoft_raw(url, context, timeout):
     """Read raw bytes to tolerate Natsoft's nonstandard deflate responses."""
@@ -35,9 +39,76 @@ def fetch_natsoft_raw(url, context, timeout):
         return html, dict(response.headers), response.status_code
 
 
+def meeting_matches(row, meeting):
+    """Match all configured meeting identity fields against one Natsoft row."""
+    normalize = lambda value: " ".join(str(value or "").split()).casefold()
+    if normalize(row.get("name")) != normalize(meeting.get("name")):
+        return False
+
+    try:
+        expected_date = datetime.strptime(str(meeting.get("date") or ""), "%Y-%m-%d").date()
+    except ValueError:
+        return False
+    date_text = str(row.get("date", ""))
+    date_matches = re.findall(r"(?<!\d)\d{1,2}[/-]\d{1,2}[/-]\d{2,4}(?!\d)", date_text)
+    formats = ("%d/%m/%Y", "%d/%m/%y", "%d-%m-%Y", "%d-%m-%y")
+    actual_dates = set()
+    for value in date_matches:
+        for fmt in formats:
+            try:
+                actual_dates.add(datetime.strptime(value, fmt).date())
+                break
+            except ValueError:
+                continue
+    if expected_date not in actual_dates:
+        return False
+
+    expected_track = normalize(meeting.get("track"))
+    return bool(expected_track) and any(
+        expected_track in normalize(value) for value in row.get("fields", [])
+    )
+
+
+class TestMeetingMatches(unittest.TestCase):
+    def setUp(self):
+        self.meeting = {
+            "name": "TRACKSCHOOL Track Day",
+            "date": "2024-10-20",
+            "track": "Winton Motor Raceway",
+        }
+        self.row = {
+            "name": "TRACKSCHOOL Track Day",
+            "date": "20/10/2024",
+            "fields": ["20/10/2024", "TRACKSCHOOL Track Day", "Winton Motor Raceway"],
+        }
+
+    def test_matches_complete_natsoft_identity(self):
+        self.assertTrue(meeting_matches(self.row, self.meeting))
+
+    def test_rejects_same_name_on_wrong_date_or_track(self):
+        wrong_date = dict(self.row, date="21/10/2024")
+        wrong_track = dict(self.row, fields=["20/10/2024", "TRACKSCHOOL Track Day", "Collie Motorplex"])
+        self.assertFalse(meeting_matches(wrong_date, self.meeting))
+        self.assertFalse(meeting_matches(wrong_track, self.meeting))
+
+
+def _read_meeting_rows(page):
+    return page.locator('[id^="MeetingList#r"][id$="c1"]').evaluate_all("""
+      (cells) => cells.map(cell => {
+        const match = cell.id.match(/^(MeetingList#r\\d+)c1$/);
+        if (!match) return null;
+        const base = match[1];
+        const date = document.getElementById(base+'c0');
+        const fields = Array.from(document.querySelectorAll('[id^="'+base+'c"]'));
+        return {id:base, name:(cell.innerText||'').trim(),
+                date:(date?.innerText||'').trim(),
+                fields:fields.map(c=>(c.innerText||'').trim())};
+      }).filter(Boolean)
+    """)
+
+
 def discover_meetings(date_text, track_text, timeout=30):
     """Render Natsoft's Circuit Racing list and return only verified meeting rows."""
-    from datetime import datetime
     from playwright.sync_api import sync_playwright
     target_date = datetime.strptime(date_text, "%Y-%m-%d")
     aliases = {target_date.strftime("%d/%m/%Y"), target_date.strftime("%d/%m/%y"),
@@ -71,18 +142,7 @@ def discover_meetings(date_text, track_text, timeout=30):
                 raise RuntimeError(f"Natsoft year selector for {year} was not found")
             page.wait_for_timeout(2200)
             page.locator('[id^="MeetingList#r"][id$="c1"]').first.wait_for(timeout=30000)
-            rows = page.locator('[id^="MeetingList#r"][id$="c1"]').evaluate_all("""
-              (cells) => cells.map(cell => {
-                const match = cell.id.match(/^(MeetingList#r\\d+)c1$/);
-                if (!match) return null;
-                const base = match[1];
-                const date = document.getElementById(base+'c0');
-                const fields = Array.from(document.querySelectorAll('[id^="'+base+'c"]'));
-                return {id:base, name:(cell.innerText||'').trim(),
-                        date:(date?.innerText||'').trim(),
-                        fields:fields.map(c=>(c.innerText||'').trim())};
-              }).filter(Boolean)
-            """)
+            rows = _read_meeting_rows(page)
             result=[]
             for row in rows:
                 combined=" ".join(row["fields"]).casefold()
@@ -172,7 +232,17 @@ def discover_live_result(url, timeout=30, meeting=None):
             page.wait_for_timeout(2200)
             page.locator('[id^="MeetingList#r"][id$="c1"]').first.wait_for(timeout=30000)
             print(f"Tracking Natsoft year {year}", flush=True)
-        target_meeting = page.locator('[id^="MeetingList#r"][id$="c1"]').filter(has_text=target_name).first
+        if meeting:
+            matches = [row for row in _read_meeting_rows(page) if meeting_matches(row, meeting)]
+            if len(matches) != 1:
+                raise RuntimeError(
+                    f"Expected one Natsoft meeting matching name/date/track "
+                    f"{target_name!r}/{meeting.get('date')!r}/{meeting.get('track')!r}; "
+                    f"found {len(matches)}"
+                )
+            target_meeting = page.locator(f'[id="{matches[0]["id"]}c1"]')
+        else:
+            target_meeting = page.locator('[id^="MeetingList#r"][id$="c1"]').filter(has_text=target_name).first
         if target_meeting.count():
             print(f"Opening selected meeting: {target_name}", flush=True)
             row = target_meeting.locator('xpath=ancestor::*[starts-with(@id,"MeetingList#r") and not(contains(substring-after(@id,"#"),"c"))][1]')
