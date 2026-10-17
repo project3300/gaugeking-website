@@ -1,0 +1,159 @@
+{
+  "vehicle_terms": [],
+  "participants": [
+    "Matt",
+    "John",
+    "Simon",
+    "Alex",
+    "Choon",
+    "Rob",
+    "Dario",
+    "Adam",
+    "Woody",
+    "Chris",
+    "Anthony",
+    "Tracey",
+    "Sam",
+    "Robyn",
+    "Daniel",
+    "Ross",
+    "Jon",
+    "Luke",
+    "Martin"
+  ],
+  "registrations": [
+    {
+      "name": "Matt",
+      "class": "FI",
+      "group": "Apex Predators",
+      "id": "",
+      "username": ""
+    },
+    {
+      "name": "John",
+      "class": "NA",
+      "group": "Apex Predators",
+      "id": "",
+      "username": ""
+    },
+    {
+      "name": "Simon",
+      "class": "NA",
+      "group": "Apex Predators",
+      "id": "",
+      "username": ""
+    },
+    {
+      "name": "Alex",
+      "class": "FI",
+      "group": "Baguette Brigade",
+      "id": "",
+      "username": ""
+    },
+    {
+      "name": "Choon",
+      "class": "NA",
+      "group": "Baguette Brigade",
+      "id": "",
+      "username": ""
+    },
+    {
+      "name": "Rob",
+      "class": "NA",
+      "group": "Baguette Brigade",
+      "id": "",
+      "username": ""
+    },
+    {
+      "name": "Dario",
+      "class": "FI",
+      "group": "Boost & Breathe",
+      "id": "",
+      "username": ""
+    },
+    {
+      "name": "Adam",
+      "class": "NA",
+      "group": "Boost & Breathe",
+      "id": "",
+      "username": ""
+    },
+    {
+      "name": "Woody",
+      "class": "NA",
+      "group": "Boost & Breathe",
+      "id": "",
+      "username": ""
+    },
+    {
+      "name": "Chris",
+      "class": "FI",
+      "group": "Diamond Cutters",
+      "id": "",
+      "username": ""
+    },
+    {
+      "name": "Anthony",
+      "class": "NA",
+      "group": "Diamond Cutters",
+      "id": "",
+      "username": ""
+    },
+    {
+      "name": "Tracey",
+      "class": "NA",
+      "group": "Diamond Cutters",
+      "id": "",
+      "username": ""
+    },
+    {
+      "name": "Sam",
+      "class": "NA",
+      "group": "Diamond Cutters (reserve)",
+      "id": "",
+      "username": ""
+    },
+    {
+      "name": "Robyn",
+      "class": "FI",
+      "group": "Le Mans Mob",
+      "id": "",
+      "username": ""
+    },
+    {
+      "name": "Daniel",
+      "class": "NA",
+      "group": "Le Mans Mob",
+      "id": "",
+      "username": ""
+    },
+    {
+      "name": "Ross",
+      "class": "NA",
+      "group": "Le Mans Mob",
+      "id": "",
+      "username": ""
+    },
+    {
+      "name": "Jon",
+      "class": "FI",
+      "group": "The Highway Men",
+      "id": "",
+      "username": ""
+    },
+    {
+      "name": "Luke",
+      "class": "NA",
+      "group": "The Highway Men",
+      "id": "",
+      "username": ""
+    },
+    {
+      "name": "Martin",
+      "class": "NA",
+      "group": "The Highway Men",
+      "id": "",
+      "username": ""
+    }
+  ]
+}
