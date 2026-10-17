@@ -16,117 +16,117 @@ natsoft:
 filters:
   vehicle_terms: []
   participants:
-  - Matt
-  - John
-  - Simon
-  - Alex
-  - Choon
-  - Rob
-  - Dario
-  - Adam
-  - Woody
-  - Chris
-  - Anthony
-  - Tracey
-  - Sam
-  - Robyn
-  - Daniel
-  - Ross
-  - Jon
-  - Luke
-  - Martin
+  - C. Muyoma
+  - Anthony – TBC
+  - T. Hoven
+  - Sam – TBC
+  - A. Gellings
+  - C. Lim
+  - R. Lee
+  - M. Tough
+  - S. Ansell
+  - John – TBC
+  - Dario – TBC
+  - J. Gray
+  - Adam – TBC
+  - Robyn – TBC
+  - D. Conacher
+  - R. Marett
+  - J. Harrison
+  - L. Gray
+  - Martin – TBC
   registrations:
-  - name: Matt
-    class: FI
-    group: Apex Predators
-    id: ''
-    username: ''
-  - name: John
-    class: NA
-    group: Apex Predators
-    id: ''
-    username: ''
-  - name: Simon
-    class: NA
-    group: Apex Predators
-    id: ''
-    username: ''
-  - name: Alex
-    class: FI
-    group: Baguette Brigade
-    id: ''
-    username: ''
-  - name: Choon
-    class: NA
-    group: Baguette Brigade
-    id: ''
-    username: ''
-  - name: Rob
-    class: NA
-    group: Baguette Brigade
-    id: ''
-    username: ''
-  - name: Dario
-    class: FI
-    group: Boost & Breathe
-    id: ''
-    username: ''
-  - name: Adam
-    class: NA
-    group: Boost & Breathe
-    id: ''
-    username: ''
-  - name: Woody
-    class: NA
-    group: Boost & Breathe
-    id: ''
-    username: ''
-  - name: Chris
+  - name: C. Muyoma
     class: FI
     group: Diamond Cutters
     id: ''
     username: ''
-  - name: Anthony
+  - name: Anthony – TBC
     class: NA
     group: Diamond Cutters
     id: ''
     username: ''
-  - name: Tracey
+  - name: T. Hoven
     class: NA
     group: Diamond Cutters
     id: ''
     username: ''
-  - name: Sam
+  - name: Sam – TBC
     class: NA
     group: Diamond Cutters (reserve)
     id: ''
     username: ''
-  - name: Robyn
+  - name: A. Gellings
+    class: FI
+    group: Baguette Brigade
+    id: ''
+    username: ''
+  - name: C. Lim
+    class: NA
+    group: Baguette Brigade
+    id: ''
+    username: ''
+  - name: R. Lee
+    class: NA
+    group: Baguette Brigade
+    id: ''
+    username: ''
+  - name: M. Tough
+    class: FI
+    group: Apex Predators
+    id: ''
+    username: ''
+  - name: S. Ansell
+    class: NA
+    group: Apex Predators
+    id: ''
+    username: ''
+  - name: John – TBC
+    class: NA
+    group: Apex Predators
+    id: ''
+    username: ''
+  - name: Dario – TBC
+    class: FI
+    group: Boost & Breathe
+    id: ''
+    username: ''
+  - name: J. Gray
+    class: NA
+    group: Boost & Breathe
+    id: ''
+    username: ''
+  - name: Adam – TBC
+    class: NA
+    group: Boost & Breathe
+    id: ''
+    username: ''
+  - name: Robyn – TBC
     class: FI
     group: Le Mans Mob
     id: ''
     username: ''
-  - name: Daniel
+  - name: D. Conacher
     class: NA
     group: Le Mans Mob
     id: ''
     username: ''
-  - name: Ross
+  - name: R. Marett
     class: NA
     group: Le Mans Mob
     id: ''
     username: ''
-  - name: Jon
+  - name: J. Harrison
     class: FI
     group: The Highway Men
     id: ''
     username: ''
-  - name: Luke
+  - name: L. Gray
     class: NA
     group: The Highway Men
     id: ''
     username: ''
-  - name: Martin
+  - name: Martin – TBC
     class: NA
     group: The Highway Men
     id: ''
