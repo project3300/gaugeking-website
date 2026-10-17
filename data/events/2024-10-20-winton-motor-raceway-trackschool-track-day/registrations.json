@@ -1,0 +1,135 @@
+{
+  "vehicle_terms": [],
+  "participants": [
+    "Simon Ansell",
+    "Robert Lee",
+    "Rhys Edgar",
+    "Simon Baxter",
+    "Johnny Law",
+    "Chris Muyoma",
+    "Chris White",
+    "Luke D'Alessio",
+    "John Law",
+    "Luke Gray",
+    "Anthony Ket",
+    "Adam McInnes",
+    "Moss Wattanachai",
+    "Luke Starecki",
+    "Jeremy Parnell",
+    "Tracy Hoven"
+  ],
+  "registrations": [
+    {
+      "name": "Simon Ansell",
+      "class": "Renault Trophy",
+      "group": "French Connection Racing",
+      "id": "151",
+      "username": ""
+    },
+    {
+      "name": "Robert Lee",
+      "class": "Renault Cup",
+      "group": "Apex Renault",
+      "id": "150",
+      "username": ""
+    },
+    {
+      "name": "Rhys Edgar",
+      "class": "Renault Sprint",
+      "group": "Blue Diamond Motorsport",
+      "id": "149",
+      "username": ""
+    },
+    {
+      "name": "Simon Baxter",
+      "class": "Renault Sprint",
+      "group": "R.S. Track Collective",
+      "id": "166",
+      "username": ""
+    },
+    {
+      "name": "Johnny Law",
+      "class": "Renault Sprint",
+      "group": "French Connection Racing",
+      "id": "165",
+      "username": ""
+    },
+    {
+      "name": "Chris Muyoma",
+      "class": "Renault Trophy",
+      "group": "Apex Renault",
+      "id": "111",
+      "username": ""
+    },
+    {
+      "name": "Chris White",
+      "class": "Renault Sprint",
+      "group": "Blue Diamond Motorsport",
+      "id": "112",
+      "username": ""
+    },
+    {
+      "name": "Luke D'Alessio",
+      "class": "Renault Sprint",
+      "group": "R.S. Track Collective",
+      "id": "133",
+      "username": ""
+    },
+    {
+      "name": "John Law",
+      "class": "Renault Sprint",
+      "group": "French Connection Racing",
+      "id": "125",
+      "username": ""
+    },
+    {
+      "name": "Luke Gray",
+      "class": "Renault Sprint",
+      "group": "Apex Renault",
+      "id": "134",
+      "username": ""
+    },
+    {
+      "name": "Anthony Ket",
+      "class": "Renault Sprint",
+      "group": "Blue Diamond Motorsport",
+      "id": "107",
+      "username": ""
+    },
+    {
+      "name": "Adam McInnes",
+      "class": "Renault Sprint",
+      "group": "R.S. Track Collective",
+      "id": "103",
+      "username": ""
+    },
+    {
+      "name": "Moss Wattanachai",
+      "class": "Renault Sprint",
+      "group": "French Connection Racing",
+      "id": "144",
+      "username": ""
+    },
+    {
+      "name": "Luke Starecki",
+      "class": "Renault Trophy",
+      "group": "Apex Renault",
+      "id": "135",
+      "username": ""
+    },
+    {
+      "name": "Jeremy Parnell",
+      "class": "Renault Sprint",
+      "group": "Blue Diamond Motorsport",
+      "id": "120",
+      "username": ""
+    },
+    {
+      "name": "Tracy Hoven",
+      "class": "Renault Sprint",
+      "group": "R.S. Track Collective",
+      "id": "154",
+      "username": ""
+    }
+  ]
+}
