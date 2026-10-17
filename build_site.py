@@ -255,7 +255,13 @@ def session_sections(data, registrations):
     for index, session in enumerate(reversed(sessions)):
         label = session.get("label") or ("Current Result" if index == 0 else "Previous Result")
         current_badge = '<span class="current-badge">LATEST</span>' if index == 0 else ''
-        registered_results = current_registered_results(session.get("results", []), registrations)
+        raw_results = session.get("results", [])
+        mismatch = bool(session.get("roster_mismatch"))
+        # Also recognise older snapshots containing rows but no matching names.
+        if registrations and raw_results and not current_registered_results(raw_results, registrations):
+            mismatch = True
+        registered_results = raw_results if mismatch else current_registered_results(raw_results, registrations)
+        mismatch_notice = ('<div class="validation" role="status">Uploaded competitor names do not match the Natsoft live result names. The competitor filter has NOT been applied; showing all available results for this session. Please update the uploaded names.</div>' if mismatch else "")
         overall = leaderboard(
             registered_results,
             f"{index}-overall",
@@ -263,14 +269,15 @@ def session_sections(data, registrations):
             "OZ RS POS",
             "OZ RS GAP",
         )
-        classes = subgroup_boards(registered_results, registrations, "class", "Class Leaderboards", "CLASS", index)
-        teams = subgroup_boards(registered_results, registrations, "group", "Team Leaderboards", "TEAM", index)
+        classes = "" if mismatch else subgroup_boards(registered_results, registrations, "class", "Class Leaderboards", "CLASS", index)
+        teams = "" if mismatch else subgroup_boards(registered_results, registrations, "group", "Team Leaderboards", "TEAM", index)
 
         blocks.append(
             f'<section class="session-block">'
             f'<div class="section-head"><h3>{esc(label)} {current_badge}</h3>'
-            f'<div>{len(registered_results)} registered result(s)</div></div>'
-            f'<div class="board-title"><h4>Overall Leaderboard</h4><p>Positions and gaps are calculated only across registered OZ RS competitors.</p></div>'
+            f'<div>{len(registered_results)} result(s)</div></div>'
+            f'{mismatch_notice}'
+            f'<div class="board-title"><h4>Overall Leaderboard</h4><p>{"Showing all Natsoft competitors (filter not applied)." if mismatch else "Positions and gaps are calculated only across registered OZ RS competitors."}</p></div>'
             f'{overall}{classes}{teams}'
             f'</section>'
         )
