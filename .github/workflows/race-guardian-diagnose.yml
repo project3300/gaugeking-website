@@ -45,6 +45,9 @@ jobs:
           body=('Race Guardian detected a failed race-results workflow.\n\n'
                 f'Workflow: {run}\nCommit: `{os.environ["HEAD_SHA"]}`\n'
                 'Inspect the failed scrape logs and the natsoft-browser-debug artifact on that run.\n\n'
+                'The selected Natsoft meeting Live column (c2) is authoritative for race-day timing. '
+                'Never use the date cell, View column (c3), or historical published results as a fallback. '
+                'If live timing cannot be parsed, fail closed and preserve previous verified results. '
                 'Protect event/date identity, driver registrations and prior verified results. '
                 'Never replace them with unrelated data. Change only the Natsoft browser scraping '
                 'implementation when possible. Add a regression test and explain your diagnosis. '
@@ -58,7 +61,7 @@ jobs:
               if bot_enabled:
                   payload['assignees']=['copilot-swe-agent[bot]']
                   payload['agent_assignment']={'target_repo':repo,'base_branch':'main',
-                      'custom_instructions':'Work only on Natsoft result discovery; preserve all event and result safeguards.'}
+                      'custom_instructions':'Repair only Natsoft Live timing discovery (meeting Live column c2). Never fall back to View c3, date links, or historical results. Preserve event identity, roster and previous verified data.'}
               try:
                   issue=api('POST',f'/repos/{repo}/issues',payload)
               except urllib.error.HTTPError as exc:
