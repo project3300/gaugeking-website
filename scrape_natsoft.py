@@ -278,11 +278,15 @@ def scrape() -> dict[str, Any]:
     vehicle_terms = config.get("filters", {}).get("vehicle_terms", [])
     participants = config.get("filters", {}).get("participants", [])
 
-    matched: list[dict[str, Any]] = []
-    for table in tables:
-        for row in table["rows"]:
-            if row_matches(row, vehicle_terms, participants):
-                matched.append({"table_index": table["table_index"], "row": row})
+    all_rows = [{"table_index": table["table_index"], "row": row}
+                for table in tables for row in table["rows"]]
+    matched = [item for item in all_rows if row_matches(item["row"], vehicle_terms, participants)]
+    # A roster mismatch must not hide otherwise verified live timing rows.
+    # Do not fall back when the source itself has no parseable rows.
+    roster_mismatch = bool(participants) and not matched and bool(all_rows)
+    displayed_results = all_rows if roster_mismatch else matched
+    if roster_mismatch:
+        print("ROSTER_MISMATCH: no uploaded names matched; displaying unfiltered Natsoft rows.")
 
     previous = None
     if OUTPUT_PATH.exists():
@@ -311,7 +315,8 @@ def scrape() -> dict[str, Any]:
         "label": session_label,
         "url": response.url,
         "generated_at": datetime.now(timezone.utc).isoformat(),
-        "results": matched,
+        "results": displayed_results,
+        "roster_mismatch": roster_mismatch,
     }
     existing_index = next((i for i, item in enumerate(sessions) if item.get("url") == response.url), None)
     if existing_index is None:
@@ -341,8 +346,9 @@ def scrape() -> dict[str, Any]:
             "table_count": len(tables),
             "row_count": sum(len(t["rows"]) for t in tables),
             "matched_row_count": len(matched),
+            "roster_mismatch": roster_mismatch,
         },
-        "results": matched,
+        "results": displayed_results,
         "sessions": sessions,
     }
 
