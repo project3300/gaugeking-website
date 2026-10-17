@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-17T21:14:29.033875+00:00",
+  "generated_at": "2026-10-17T21:27:09.645644+00:00",
   "event": {
     "name": "TRACKSCHOOL Track Day",
     "display_name": "OZ RenaultSport Nationals 2024",
@@ -11,11 +11,11 @@
     "mode": "browser-index",
     "event_url": "",
     "url": "http://racing.natsoft.com.au/results/",
-    "result_url": "http://racing.natsoft.com.au/681449029/object_838143.81e/Result?1",
-    "final_url": "http://racing.natsoft.com.au/681449029/object_838143.81e/Result?1",
+    "result_url": "http://racing.natsoft.com.au/681455491/object_914293.81i/Result?1",
+    "final_url": "http://racing.natsoft.com.au/681455491/object_914293.81i/Result?1",
     "content_sha256": "96d2af03d1d54d0f44acac038ec89052e17f3c2f92c9c59acfccb8e1d72eeee8",
     "cache_control": "",
-    "session_label": "Result\n420",
+    "session_label": "Result\n422",
     "status_code": 200,
     "validation_mode": false,
     "discovered_result_count": 0
@@ -2036,6 +2036,205 @@
       "label": "Result\n420",
       "url": "http://racing.natsoft.com.au/681449029/object_838143.81e/Result?1",
       "generated_at": "2026-10-17T21:14:29.033875+00:00",
+      "results": [
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "19",
+            "Car": "151",
+            "Competitor / Vehicle": "Simon Ansell RS Megane 275 Trophy",
+            "Laps": "19",
+            "Fastest Lap": "8",
+            "Best Time": "1:37.6620",
+            "Gap": "0:11.3450"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "21",
+            "Car": "150",
+            "Competitor / Vehicle": "Robert Lee RS Clio Cup X85",
+            "Laps": "25",
+            "Fastest Lap": "15",
+            "Best Time": "1:40.2950",
+            "Gap": "0:13.9780"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "22",
+            "Car": "149",
+            "Competitor / Vehicle": "Rhys Edgar RS Clio 182",
+            "Laps": "22",
+            "Fastest Lap": "2",
+            "Best Time": "1:40.4810",
+            "Gap": "0:14.1640"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "27",
+            "Car": "166",
+            "Competitor / Vehicle": "Simon Baxter RS Clio 182",
+            "Laps": "21",
+            "Fastest Lap": "6",
+            "Best Time": "1:43.8930",
+            "Gap": "0:17.5760"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "29",
+            "Car": "165",
+            "Competitor / Vehicle": "Johnny Law RS Clio 182 Gordini",
+            "Laps": "5",
+            "Fastest Lap": "5",
+            "Best Time": "1:45.1890",
+            "Gap": "0:18.8720"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "30",
+            "Car": "111",
+            "Competitor / Vehicle": "Chris Muyoma RS Megane 265",
+            "Laps": "19",
+            "Fastest Lap": "11",
+            "Best Time": "1:45.2050",
+            "Gap": "0:18.8880"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "32",
+            "Car": "112",
+            "Competitor / Vehicle": "Chris White RS Clio 200",
+            "Laps": "29",
+            "Fastest Lap": "11",
+            "Best Time": "1:46.8190",
+            "Gap": "0:20.5020"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "33",
+            "Car": "133",
+            "Competitor / Vehicle": "Luke D'Alessio RS Clio 200",
+            "Laps": "38",
+            "Fastest Lap": "34",
+            "Best Time": "1:47.3020",
+            "Gap": "0:20.9850"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "34",
+            "Car": "125",
+            "Competitor / Vehicle": "John Law RS Clio 182",
+            "Laps": "15",
+            "Fastest Lap": "15",
+            "Best Time": "1:48.4880",
+            "Gap": "0:22.1710"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "35",
+            "Car": "134",
+            "Competitor / Vehicle": "Luke Gray RS Clio 172",
+            "Laps": "34",
+            "Fastest Lap": "13",
+            "Best Time": "1:48.5000",
+            "Gap": "0:22.1830"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "36",
+            "Car": "107",
+            "Competitor / Vehicle": "Anthony Ket RS Clio 182",
+            "Laps": "12",
+            "Fastest Lap": "7",
+            "Best Time": "1:48.5400",
+            "Gap": "0:22.2230"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "39",
+            "Car": "103",
+            "Competitor / Vehicle": "Adam McInnes RS Clio 200",
+            "Laps": "42",
+            "Fastest Lap": "9",
+            "Best Time": "1:49.3280",
+            "Gap": "0:23.0110"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "41",
+            "Car": "144",
+            "Competitor / Vehicle": "Moss Wattanachai RS Clio 172",
+            "Laps": "17",
+            "Fastest Lap": "16",
+            "Best Time": "1:52.0650",
+            "Gap": "0:25.7480"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "43",
+            "Car": "135",
+            "Competitor / Vehicle": "Luke Starecki RS Megane 265",
+            "Laps": "9",
+            "Fastest Lap": "5",
+            "Best Time": "1:53.5970",
+            "Gap": "0:27.2800"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "44",
+            "Car": "120",
+            "Competitor / Vehicle": "Jeremy Parnell RS Clio 182",
+            "Laps": "27",
+            "Fastest Lap": "27",
+            "Best Time": "1:53.8540",
+            "Gap": "0:27.5370"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "46",
+            "Car": "154",
+            "Competitor / Vehicle": "Tracy Hoven RS Clio 200",
+            "Laps": "34",
+            "Fastest Lap": "16",
+            "Best Time": "1:55.9460",
+            "Gap": "0:29.6290"
+          }
+        }
+      ]
+    },
+    {
+      "label": "Result\n422",
+      "url": "http://racing.natsoft.com.au/681455491/object_914293.81i/Result?1",
+      "generated_at": "2026-10-17T21:27:09.645644+00:00",
       "results": [
         {
           "table_index": 1,
