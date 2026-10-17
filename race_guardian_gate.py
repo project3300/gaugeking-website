@@ -48,6 +48,20 @@ def main():
         raise SystemExit("Guardian blocked: Natsoft URL allowlist changed")
     if get_func(candidate, "fetch_natsoft_raw") != get_func(original, "fetch_natsoft_raw"):
         raise SystemExit("Guardian blocked: transport security guard changed")
+    # Fail closed if a Copilot repair removes the authoritative Live-column path.
+    # This is a structural guard, not proof that Natsoft's live format parses.
+    live_function = next(
+        (n for n in ast.parse(candidate).body
+         if isinstance(n, ast.FunctionDef) and n.name == "discover_live_result"), None
+    )
+    if live_function is None:
+        raise SystemExit("Guardian blocked: Live discovery function missing")
+    live_source = ast.get_source_segment(candidate, live_function) or ""
+    required_live_markers = ('[id$="c2"]', "live_cell.click", "no Live timing link")
+    if not all(marker in live_source for marker in required_live_markers):
+        raise SystemExit("Guardian blocked: authoritative Live column selection removed")
+    if 'date_link.click' in live_source or '[id$="c3"]' in live_source:
+        raise SystemExit("Guardian blocked: historical date/View fallback introduced")
     for blocked in ("subprocess", "os.system", "eval(", "exec(", "pickle", "base64.b64decode"):
         if blocked in candidate and blocked not in original:
             raise SystemExit("Guardian blocked: suspicious new execution primitive")
