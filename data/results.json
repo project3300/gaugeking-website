@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-18T02:59:43.352160+00:00",
+  "generated_at": "2026-10-18T03:48:54.915464+00:00",
   "event": {
     "name": "TRACKSCHOOL Open Pit Lane",
     "display_name": "OZ RenaultSport Nationals 2026",
@@ -13,7 +13,7 @@
     "url": "http://racing.natsoft.com.au/results/",
     "result_url": "http://server.natsoft.com.au:8080/LiveMeeting/20261018.WIN",
     "final_url": "http://server.natsoft.com.au:8080/LiveMeeting/20261018.WIN",
-    "content_sha256": "4572cea7b7617791acd65fb1478aa52ef93956596e79cc4ddf330414c7a68ee1",
+    "content_sha256": "60b16506f34591e749784b46b4118b6d552dd00f7b630d67751d54b5f494c29c",
     "cache_control": "",
     "session_label": "Live Timing",
     "status_code": 200,
@@ -60,7 +60,7 @@
         "Laps": "22",
         "Fastest Lap": "11",
         "Best Time": "1:38.1760",
-        "Gap": "1.5810"
+        "Gap": "1.6230"
       }
     },
     {
@@ -69,10 +69,10 @@
         "Position": "9",
         "Car": "76",
         "Competitor / Vehicle": "L. Gray",
-        "Laps": "30",
+        "Laps": "31",
         "Fastest Lap": "21",
         "Best Time": "1:40.3850",
-        "Gap": "3.7900"
+        "Gap": "3.8320"
       }
     },
     {
@@ -81,10 +81,10 @@
         "Position": "10",
         "Car": "108",
         "Competitor / Vehicle": "Car 108",
-        "Laps": "37",
+        "Laps": "38",
         "Fastest Lap": "14",
         "Best Time": "1:40.8000",
-        "Gap": "4.2050"
+        "Gap": "4.2470"
       }
     },
     {
@@ -93,10 +93,10 @@
         "Position": "11",
         "Car": "94",
         "Competitor / Vehicle": "S. Burgess",
-        "Laps": "25",
-        "Fastest Lap": "19",
-        "Best Time": "1:41.7060",
-        "Gap": "5.1110"
+        "Laps": "39",
+        "Fastest Lap": "30",
+        "Best Time": "1:41.3280",
+        "Gap": "4.7750"
       }
     },
     {
@@ -105,10 +105,10 @@
         "Position": "17",
         "Car": "39",
         "Competitor / Vehicle": "A. Gellings",
-        "Laps": "20",
+        "Laps": "28",
         "Fastest Lap": "15",
         "Best Time": "1:44.6090",
-        "Gap": "8.0140"
+        "Gap": "8.0560"
       }
     },
     {
@@ -120,7 +120,7 @@
         "Laps": "19",
         "Fastest Lap": "13",
         "Best Time": "1:44.8840",
-        "Gap": "8.2890"
+        "Gap": "8.3310"
       }
     },
     {
@@ -129,10 +129,10 @@
         "Position": "22",
         "Car": "74",
         "Competitor / Vehicle": "J. Gray",
-        "Laps": "23",
+        "Laps": "24",
         "Fastest Lap": "4",
         "Best Time": "1:45.1030",
-        "Gap": "8.5080"
+        "Gap": "8.5500"
       }
     },
     {
@@ -141,10 +141,10 @@
         "Position": "23",
         "Car": "56",
         "Competitor / Vehicle": "D. Conacher",
-        "Laps": "34",
+        "Laps": "44",
         "Fastest Lap": "18",
         "Best Time": "1:45.3440",
-        "Gap": "8.7490"
+        "Gap": "8.7910"
       }
     },
     {
@@ -156,43 +156,43 @@
         "Laps": "25",
         "Fastest Lap": "13",
         "Best Time": "1:45.4280",
-        "Gap": "8.8330"
-      }
-    },
-    {
-      "table_index": 1,
-      "row": {
-        "Position": "26",
-        "Car": "88",
-        "Competitor / Vehicle": "R. Lee",
-        "Laps": "10",
-        "Fastest Lap": "10",
-        "Best Time": "1:45.6420",
-        "Gap": "9.0470"
+        "Gap": "8.8750"
       }
     },
     {
       "table_index": 1,
       "row": {
         "Position": "27",
-        "Car": "48",
-        "Competitor / Vehicle": "C. Lim",
-        "Laps": "27",
-        "Fastest Lap": "26",
-        "Best Time": "1:46.2650",
-        "Gap": "9.6700"
+        "Car": "88",
+        "Competitor / Vehicle": "R. Lee",
+        "Laps": "10",
+        "Fastest Lap": "10",
+        "Best Time": "1:45.6420",
+        "Gap": "9.0890"
       }
     },
     {
       "table_index": 1,
       "row": {
-        "Position": "28",
+        "Position": "29",
+        "Car": "48",
+        "Competitor / Vehicle": "C. Lim",
+        "Laps": "27",
+        "Fastest Lap": "26",
+        "Best Time": "1:46.2650",
+        "Gap": "9.7120"
+      }
+    },
+    {
+      "table_index": 1,
+      "row": {
+        "Position": "30",
         "Car": "80",
         "Competitor / Vehicle": "M. Tough",
-        "Laps": "23",
-        "Fastest Lap": "12",
-        "Best Time": "1:46.7780",
-        "Gap": "10.1830"
+        "Laps": "32",
+        "Fastest Lap": "27",
+        "Best Time": "1:46.2660",
+        "Gap": "9.7130"
       }
     },
     {
@@ -201,34 +201,34 @@
         "Position": "33",
         "Car": "91",
         "Competitor / Vehicle": "R. Marett",
-        "Laps": "50",
+        "Laps": "56",
         "Fastest Lap": "26",
         "Best Time": "1:51.3400",
-        "Gap": "14.7450"
+        "Gap": "14.7870"
       }
     },
     {
       "table_index": 1,
       "row": {
-        "Position": "40",
-        "Car": "99",
-        "Competitor / Vehicle": "T. Hoven",
-        "Laps": "19",
-        "Fastest Lap": "9",
-        "Best Time": "1:56.9090",
-        "Gap": "20.3140"
+        "Position": "39",
+        "Car": "57",
+        "Competitor / Vehicle": "D. Killenberger",
+        "Laps": "22",
+        "Fastest Lap": "14",
+        "Best Time": "1:54.1030",
+        "Gap": "17.5500"
       }
     },
     {
       "table_index": 1,
       "row": {
         "Position": "41",
-        "Car": "57",
-        "Competitor / Vehicle": "D. Killenberger",
-        "Laps": "10",
-        "Fastest Lap": "4",
-        "Best Time": "1:59.5270",
-        "Gap": "22.9320"
+        "Car": "99",
+        "Competitor / Vehicle": "T. Hoven",
+        "Laps": "24",
+        "Fastest Lap": "9",
+        "Best Time": "1:56.9090",
+        "Gap": "20.3560"
       }
     },
     {
@@ -240,7 +240,7 @@
         "Laps": "11",
         "Fastest Lap": "5",
         "Best Time": "2:03.1380",
-        "Gap": "26.5430"
+        "Gap": "26.5850"
       }
     }
   ],
@@ -248,7 +248,7 @@
     {
       "label": "Live Timing",
       "url": "http://server.natsoft.com.au:8080/LiveMeeting/20261018.WIN",
-      "generated_at": "2026-10-18T02:59:43.352160+00:00",
+      "generated_at": "2026-10-18T03:48:54.915464+00:00",
       "results": [
         {
           "table_index": 1,
@@ -259,7 +259,7 @@
             "Laps": "22",
             "Fastest Lap": "11",
             "Best Time": "1:38.1760",
-            "Gap": "1.5810"
+            "Gap": "1.6230"
           }
         },
         {
@@ -268,10 +268,10 @@
             "Position": "9",
             "Car": "76",
             "Competitor / Vehicle": "L. Gray",
-            "Laps": "30",
+            "Laps": "31",
             "Fastest Lap": "21",
             "Best Time": "1:40.3850",
-            "Gap": "3.7900"
+            "Gap": "3.8320"
           }
         },
         {
@@ -280,10 +280,10 @@
             "Position": "10",
             "Car": "108",
             "Competitor / Vehicle": "Car 108",
-            "Laps": "37",
+            "Laps": "38",
             "Fastest Lap": "14",
             "Best Time": "1:40.8000",
-            "Gap": "4.2050"
+            "Gap": "4.2470"
           }
         },
         {
@@ -292,10 +292,10 @@
             "Position": "11",
             "Car": "94",
             "Competitor / Vehicle": "S. Burgess",
-            "Laps": "25",
-            "Fastest Lap": "19",
-            "Best Time": "1:41.7060",
-            "Gap": "5.1110"
+            "Laps": "39",
+            "Fastest Lap": "30",
+            "Best Time": "1:41.3280",
+            "Gap": "4.7750"
           }
         },
         {
@@ -304,10 +304,10 @@
             "Position": "17",
             "Car": "39",
             "Competitor / Vehicle": "A. Gellings",
-            "Laps": "20",
+            "Laps": "28",
             "Fastest Lap": "15",
             "Best Time": "1:44.6090",
-            "Gap": "8.0140"
+            "Gap": "8.0560"
           }
         },
         {
@@ -319,7 +319,7 @@
             "Laps": "19",
             "Fastest Lap": "13",
             "Best Time": "1:44.8840",
-            "Gap": "8.2890"
+            "Gap": "8.3310"
           }
         },
         {
@@ -328,10 +328,10 @@
             "Position": "22",
             "Car": "74",
             "Competitor / Vehicle": "J. Gray",
-            "Laps": "23",
+            "Laps": "24",
             "Fastest Lap": "4",
             "Best Time": "1:45.1030",
-            "Gap": "8.5080"
+            "Gap": "8.5500"
           }
         },
         {
@@ -340,10 +340,10 @@
             "Position": "23",
             "Car": "56",
             "Competitor / Vehicle": "D. Conacher",
-            "Laps": "34",
+            "Laps": "44",
             "Fastest Lap": "18",
             "Best Time": "1:45.3440",
-            "Gap": "8.7490"
+            "Gap": "8.7910"
           }
         },
         {
@@ -355,43 +355,43 @@
             "Laps": "25",
             "Fastest Lap": "13",
             "Best Time": "1:45.4280",
-            "Gap": "8.8330"
-          }
-        },
-        {
-          "table_index": 1,
-          "row": {
-            "Position": "26",
-            "Car": "88",
-            "Competitor / Vehicle": "R. Lee",
-            "Laps": "10",
-            "Fastest Lap": "10",
-            "Best Time": "1:45.6420",
-            "Gap": "9.0470"
+            "Gap": "8.8750"
           }
         },
         {
           "table_index": 1,
           "row": {
             "Position": "27",
-            "Car": "48",
-            "Competitor / Vehicle": "C. Lim",
-            "Laps": "27",
-            "Fastest Lap": "26",
-            "Best Time": "1:46.2650",
-            "Gap": "9.6700"
+            "Car": "88",
+            "Competitor / Vehicle": "R. Lee",
+            "Laps": "10",
+            "Fastest Lap": "10",
+            "Best Time": "1:45.6420",
+            "Gap": "9.0890"
           }
         },
         {
           "table_index": 1,
           "row": {
-            "Position": "28",
+            "Position": "29",
+            "Car": "48",
+            "Competitor / Vehicle": "C. Lim",
+            "Laps": "27",
+            "Fastest Lap": "26",
+            "Best Time": "1:46.2650",
+            "Gap": "9.7120"
+          }
+        },
+        {
+          "table_index": 1,
+          "row": {
+            "Position": "30",
             "Car": "80",
             "Competitor / Vehicle": "M. Tough",
-            "Laps": "23",
-            "Fastest Lap": "12",
-            "Best Time": "1:46.7780",
-            "Gap": "10.1830"
+            "Laps": "32",
+            "Fastest Lap": "27",
+            "Best Time": "1:46.2660",
+            "Gap": "9.7130"
           }
         },
         {
@@ -400,34 +400,34 @@
             "Position": "33",
             "Car": "91",
             "Competitor / Vehicle": "R. Marett",
-            "Laps": "50",
+            "Laps": "56",
             "Fastest Lap": "26",
             "Best Time": "1:51.3400",
-            "Gap": "14.7450"
+            "Gap": "14.7870"
           }
         },
         {
           "table_index": 1,
           "row": {
-            "Position": "40",
-            "Car": "99",
-            "Competitor / Vehicle": "T. Hoven",
-            "Laps": "19",
-            "Fastest Lap": "9",
-            "Best Time": "1:56.9090",
-            "Gap": "20.3140"
+            "Position": "39",
+            "Car": "57",
+            "Competitor / Vehicle": "D. Killenberger",
+            "Laps": "22",
+            "Fastest Lap": "14",
+            "Best Time": "1:54.1030",
+            "Gap": "17.5500"
           }
         },
         {
           "table_index": 1,
           "row": {
             "Position": "41",
-            "Car": "57",
-            "Competitor / Vehicle": "D. Killenberger",
-            "Laps": "10",
-            "Fastest Lap": "4",
-            "Best Time": "1:59.5270",
-            "Gap": "22.9320"
+            "Car": "99",
+            "Competitor / Vehicle": "T. Hoven",
+            "Laps": "24",
+            "Fastest Lap": "9",
+            "Best Time": "1:56.9090",
+            "Gap": "20.3560"
           }
         },
         {
@@ -439,7 +439,7 @@
             "Laps": "11",
             "Fastest Lap": "5",
             "Best Time": "2:03.1380",
-            "Gap": "26.5430"
+            "Gap": "26.5850"
           }
         }
       ],
