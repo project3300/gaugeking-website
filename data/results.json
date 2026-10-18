@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-18T02:53:28.316359+00:00",
+  "generated_at": "2026-10-18T02:59:43.352160+00:00",
   "event": {
     "name": "TRACKSCHOOL Open Pit Lane",
     "display_name": "OZ RenaultSport Nationals 2026",
@@ -13,7 +13,7 @@
     "url": "http://racing.natsoft.com.au/results/",
     "result_url": "http://server.natsoft.com.au:8080/LiveMeeting/20261018.WIN",
     "final_url": "http://server.natsoft.com.au:8080/LiveMeeting/20261018.WIN",
-    "content_sha256": "0171cc9d1f40eb680addec1b7f1ebd3d4a00dc6d86704cae5482994e1a7085ce",
+    "content_sha256": "4572cea7b7617791acd65fb1478aa52ef93956596e79cc4ddf330414c7a68ee1",
     "cache_control": "",
     "session_label": "Live Timing",
     "status_code": 200,
@@ -46,7 +46,7 @@
   },
   "diagnostics": {
     "table_count": 1,
-    "row_count": 43,
+    "row_count": 44,
     "matched_row_count": 16,
     "roster_mismatch": false
   },
@@ -66,7 +66,7 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "8",
+        "Position": "9",
         "Car": "76",
         "Competitor / Vehicle": "L. Gray",
         "Laps": "30",
@@ -78,7 +78,7 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "9",
+        "Position": "10",
         "Car": "108",
         "Competitor / Vehicle": "Car 108",
         "Laps": "37",
@@ -90,7 +90,7 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "10",
+        "Position": "11",
         "Car": "94",
         "Competitor / Vehicle": "S. Burgess",
         "Laps": "25",
@@ -102,7 +102,7 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "16",
+        "Position": "17",
         "Car": "39",
         "Competitor / Vehicle": "A. Gellings",
         "Laps": "20",
@@ -114,7 +114,7 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "17",
+        "Position": "19",
         "Car": "75",
         "Competitor / Vehicle": "J. Harrison",
         "Laps": "19",
@@ -126,7 +126,7 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "20",
+        "Position": "22",
         "Car": "74",
         "Competitor / Vehicle": "J. Gray",
         "Laps": "23",
@@ -138,10 +138,10 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "21",
+        "Position": "23",
         "Car": "56",
         "Competitor / Vehicle": "D. Conacher",
-        "Laps": "32",
+        "Laps": "34",
         "Fastest Lap": "18",
         "Best Time": "1:45.3440",
         "Gap": "8.7490"
@@ -150,7 +150,7 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "22",
+        "Position": "24",
         "Car": "98",
         "Competitor / Vehicle": "S. Ansell",
         "Laps": "25",
@@ -162,7 +162,7 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "24",
+        "Position": "26",
         "Car": "88",
         "Competitor / Vehicle": "R. Lee",
         "Laps": "10",
@@ -174,7 +174,7 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "26",
+        "Position": "27",
         "Car": "48",
         "Competitor / Vehicle": "C. Lim",
         "Laps": "27",
@@ -186,7 +186,7 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "27",
+        "Position": "28",
         "Car": "80",
         "Competitor / Vehicle": "M. Tough",
         "Laps": "23",
@@ -198,10 +198,10 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "32",
+        "Position": "33",
         "Car": "91",
         "Competitor / Vehicle": "R. Marett",
-        "Laps": "48",
+        "Laps": "50",
         "Fastest Lap": "26",
         "Best Time": "1:51.3400",
         "Gap": "14.7450"
@@ -210,7 +210,7 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "39",
+        "Position": "40",
         "Car": "99",
         "Competitor / Vehicle": "T. Hoven",
         "Laps": "19",
@@ -222,7 +222,7 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "40",
+        "Position": "41",
         "Car": "57",
         "Competitor / Vehicle": "D. Killenberger",
         "Laps": "10",
@@ -234,7 +234,7 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "41",
+        "Position": "42",
         "Car": "40",
         "Competitor / Vehicle": "A. Ket",
         "Laps": "11",
@@ -248,7 +248,7 @@
     {
       "label": "Live Timing",
       "url": "http://server.natsoft.com.au:8080/LiveMeeting/20261018.WIN",
-      "generated_at": "2026-10-18T02:53:28.316359+00:00",
+      "generated_at": "2026-10-18T02:59:43.352160+00:00",
       "results": [
         {
           "table_index": 1,
@@ -265,7 +265,7 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "8",
+            "Position": "9",
             "Car": "76",
             "Competitor / Vehicle": "L. Gray",
             "Laps": "30",
@@ -277,7 +277,7 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "9",
+            "Position": "10",
             "Car": "108",
             "Competitor / Vehicle": "Car 108",
             "Laps": "37",
@@ -289,7 +289,7 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "10",
+            "Position": "11",
             "Car": "94",
             "Competitor / Vehicle": "S. Burgess",
             "Laps": "25",
@@ -301,7 +301,7 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "16",
+            "Position": "17",
             "Car": "39",
             "Competitor / Vehicle": "A. Gellings",
             "Laps": "20",
@@ -313,7 +313,7 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "17",
+            "Position": "19",
             "Car": "75",
             "Competitor / Vehicle": "J. Harrison",
             "Laps": "19",
@@ -325,7 +325,7 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "20",
+            "Position": "22",
             "Car": "74",
             "Competitor / Vehicle": "J. Gray",
             "Laps": "23",
@@ -337,10 +337,10 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "21",
+            "Position": "23",
             "Car": "56",
             "Competitor / Vehicle": "D. Conacher",
-            "Laps": "32",
+            "Laps": "34",
             "Fastest Lap": "18",
             "Best Time": "1:45.3440",
             "Gap": "8.7490"
@@ -349,7 +349,7 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "22",
+            "Position": "24",
             "Car": "98",
             "Competitor / Vehicle": "S. Ansell",
             "Laps": "25",
@@ -361,7 +361,7 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "24",
+            "Position": "26",
             "Car": "88",
             "Competitor / Vehicle": "R. Lee",
             "Laps": "10",
@@ -373,7 +373,7 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "26",
+            "Position": "27",
             "Car": "48",
             "Competitor / Vehicle": "C. Lim",
             "Laps": "27",
@@ -385,7 +385,7 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "27",
+            "Position": "28",
             "Car": "80",
             "Competitor / Vehicle": "M. Tough",
             "Laps": "23",
@@ -397,10 +397,10 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "32",
+            "Position": "33",
             "Car": "91",
             "Competitor / Vehicle": "R. Marett",
-            "Laps": "48",
+            "Laps": "50",
             "Fastest Lap": "26",
             "Best Time": "1:51.3400",
             "Gap": "14.7450"
@@ -409,7 +409,7 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "39",
+            "Position": "40",
             "Car": "99",
             "Competitor / Vehicle": "T. Hoven",
             "Laps": "19",
@@ -421,7 +421,7 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "40",
+            "Position": "41",
             "Car": "57",
             "Competitor / Vehicle": "D. Killenberger",
             "Laps": "10",
@@ -433,7 +433,7 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "41",
+            "Position": "42",
             "Car": "40",
             "Competitor / Vehicle": "A. Ket",
             "Laps": "11",
