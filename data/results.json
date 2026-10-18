@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-18T05:47:51.056900+00:00",
+  "generated_at": "2026-10-18T05:53:51.636313+00:00",
   "event": {
     "name": "TRACKSCHOOL Open Pit Lane",
     "display_name": "OZ RenaultSport Nationals 2026",
@@ -13,7 +13,7 @@
     "url": "http://racing.natsoft.com.au/results/",
     "result_url": "http://server.natsoft.com.au:8080/LiveMeeting/20261018.WIN",
     "final_url": "http://server.natsoft.com.au:8080/LiveMeeting/20261018.WIN",
-    "content_sha256": "e3351bec934dd5b06c3c660e0c7ec66f5603d98eb5421e4730e91aa966a44ac0",
+    "content_sha256": "a5a7c4c299cbbdddf5faa754e71b7a943a56dd4ef113b2aca867b49bfd3fdad6",
     "cache_control": "",
     "session_label": "Live Timing",
     "status_code": 200,
@@ -236,7 +236,7 @@
     {
       "label": "Live Timing",
       "url": "http://server.natsoft.com.au:8080/LiveMeeting/20261018.WIN",
-      "generated_at": "2026-10-18T05:47:51.056900+00:00",
+      "generated_at": "2026-10-18T05:53:51.636313+00:00",
       "results": [
         {
           "table_index": 1,
