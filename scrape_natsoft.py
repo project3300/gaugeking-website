@@ -75,6 +75,34 @@ def extract_fixed_width_rows(html: str) -> list[dict[str, str]]:
     return rows
 
 
+def extract_live_timing_rows(html):
+    soup = BeautifulSoup(html, "html.parser")
+    for title in soup.find_all(string=lambda t: t and clean(str(t)) == "Best lap"):
+        header = title.find_parent("div", class_="NLayout")
+        if not header:
+            continue
+        cells = {}
+        for node in header.parent.find_all("div", class_="NLayout", recursive=False):
+            style = node.get("style", "")
+            x = re.search("left: ([0-9]+)px", style)
+            y = re.search("top: ([0-9]+)px", style)
+            if x and y:
+                cells[int(y.group(1)), int(x.group(1))] = clean(node.get_text(" ", strip=True))
+        if any(cells.get((0, x)) != label for x, label in [(5,"Pos"),(45,"Car"),(113,"Driver"),(368,"Best lap")]):
+            continue
+        rows = []
+        for y in sorted(y for y, x in cells if x == 5 and y > 0):
+            pos, car, driver, laps, best = [cells.get((y,x),"") for x in (5,45,113,232,368)]
+            if not (pos.isdigit() and car and driver and (not laps or laps.isdigit())):
+                continue
+            if best and not re.fullmatch("[0-9]{1,2}:[0-9]{2}[.][0-9]+", best):
+                continue
+            rows.append({"Position":pos,"Car":car,"Competitor / Vehicle":driver,"Laps":laps or "0","Fastest Lap":cells.get((y,434),""),"Best Time":best,"Gap":cells.get((y,465),"")})
+        if rows:
+            return rows
+    return []
+
+
 def extract_tables(html: str) -> list[dict[str, Any]]:
     soup = BeautifulSoup(html, "html.parser")
     tables: list[dict[str, Any]] = []
@@ -272,7 +300,12 @@ def scrape() -> dict[str, Any]:
 
     content_hash = hashlib.sha256(response.content).hexdigest()
     print(f"RESULT_AUDIT url={response.url} sha256={content_hash} status={response.status_code} age={response.headers.get('Age', '')} cache={response.headers.get('X-Cache', '')}")
-    tables = extract_tables(response.text)
+    if "/LiveMeeting/" in response.url:
+        live_rows = extract_live_timing_rows(response.text)
+        tables = [{"table_index": 1, "headers": list(live_rows[0]), "rows": live_rows}] if live_rows else []
+        print(f"LiveMeeting timing rows: {len(live_rows)}", flush=True)
+    else:
+        tables = extract_tables(response.text)
     if not tables or not any(t["rows"] for t in tables):
         raise RuntimeError("No parseable result rows; refusing stale deployment")
     vehicle_terms = config.get("filters", {}).get("vehicle_terms", [])
