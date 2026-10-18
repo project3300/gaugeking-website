@@ -60,7 +60,10 @@ jobs:
       - name: Install Chromium
         run: python -m playwright install --with-deps chromium
 
-      - name: Synchronize with latest main\n        run: git pull --ff-only origin main\n\n      - name: Preserve previous event configuration
+      - name: Synchronize with latest main
+        run: git pull --ff-only origin main
+
+      - name: Preserve previous event configuration
         run: cp config.yaml /tmp/gaugeking_previous_event.yaml
 
       - name: Save Race Control inputs
