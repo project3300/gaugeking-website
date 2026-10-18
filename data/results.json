@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-18T04:47:55.491516+00:00",
+  "generated_at": "2026-10-18T04:55:11.203621+00:00",
   "event": {
     "name": "TRACKSCHOOL Open Pit Lane",
     "display_name": "OZ RenaultSport Nationals 2026",
@@ -13,7 +13,7 @@
     "url": "http://racing.natsoft.com.au/results/",
     "result_url": "http://server.natsoft.com.au:8080/LiveMeeting/20261018.WIN",
     "final_url": "http://server.natsoft.com.au:8080/LiveMeeting/20261018.WIN",
-    "content_sha256": "2daffe8b526bdf6aab73d4be6883304af98c76f83edea91e8d7b3826acb32db6",
+    "content_sha256": "763857cebf534b90e920a22e34d3ec12afed854b519d594786ff6031d5d1cff1",
     "cache_control": "",
     "session_label": "Live Timing",
     "status_code": 200,
@@ -90,7 +90,7 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "18",
+        "Position": "19",
         "Car": "88",
         "Competitor / Vehicle": "R. Lee",
         "Laps": "14",
@@ -102,7 +102,7 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "19",
+        "Position": "20",
         "Car": "39",
         "Competitor / Vehicle": "A. Gellings",
         "Laps": "34",
@@ -141,7 +141,7 @@
         "Position": "24",
         "Car": "56",
         "Competitor / Vehicle": "D. Conacher",
-        "Laps": "51",
+        "Laps": "53",
         "Fastest Lap": "18",
         "Best Time": "1:45.3440",
         "Gap": "8.7910"
@@ -186,7 +186,7 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "33",
+        "Position": "34",
         "Car": "91",
         "Competitor / Vehicle": "R. Marett",
         "Laps": "71",
@@ -236,7 +236,7 @@
     {
       "label": "Live Timing",
       "url": "http://server.natsoft.com.au:8080/LiveMeeting/20261018.WIN",
-      "generated_at": "2026-10-18T04:47:55.491516+00:00",
+      "generated_at": "2026-10-18T04:55:11.203621+00:00",
       "results": [
         {
           "table_index": 1,
@@ -277,7 +277,7 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "18",
+            "Position": "19",
             "Car": "88",
             "Competitor / Vehicle": "R. Lee",
             "Laps": "14",
@@ -289,7 +289,7 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "19",
+            "Position": "20",
             "Car": "39",
             "Competitor / Vehicle": "A. Gellings",
             "Laps": "34",
@@ -328,7 +328,7 @@
             "Position": "24",
             "Car": "56",
             "Competitor / Vehicle": "D. Conacher",
-            "Laps": "51",
+            "Laps": "53",
             "Fastest Lap": "18",
             "Best Time": "1:45.3440",
             "Gap": "8.7910"
@@ -373,7 +373,7 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "33",
+            "Position": "34",
             "Car": "91",
             "Competitor / Vehicle": "R. Marett",
             "Laps": "71",
