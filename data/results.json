@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-18T04:55:11.203621+00:00",
+  "generated_at": "2026-10-18T05:18:49.522044+00:00",
   "event": {
     "name": "TRACKSCHOOL Open Pit Lane",
     "display_name": "OZ RenaultSport Nationals 2026",
@@ -13,7 +13,7 @@
     "url": "http://racing.natsoft.com.au/results/",
     "result_url": "http://server.natsoft.com.au:8080/LiveMeeting/20261018.WIN",
     "final_url": "http://server.natsoft.com.au:8080/LiveMeeting/20261018.WIN",
-    "content_sha256": "763857cebf534b90e920a22e34d3ec12afed854b519d594786ff6031d5d1cff1",
+    "content_sha256": "2fd8fde70622e24b4ce2710fab533b1b17d085f2701c2089f68adabb8b53b501",
     "cache_control": "",
     "session_label": "Live Timing",
     "status_code": 200,
@@ -69,7 +69,7 @@
         "Position": "10",
         "Car": "108",
         "Competitor / Vehicle": "L. Gray",
-        "Laps": "49",
+        "Laps": "57",
         "Fastest Lap": "14",
         "Best Time": "1:40.8000",
         "Gap": "4.2470"
@@ -141,7 +141,7 @@
         "Position": "24",
         "Car": "56",
         "Competitor / Vehicle": "D. Conacher",
-        "Laps": "53",
+        "Laps": "59",
         "Fastest Lap": "18",
         "Best Time": "1:45.3440",
         "Gap": "8.7910"
@@ -189,7 +189,7 @@
         "Position": "34",
         "Car": "91",
         "Competitor / Vehicle": "R. Marett",
-        "Laps": "71",
+        "Laps": "72",
         "Fastest Lap": "26",
         "Best Time": "1:51.3400",
         "Gap": "14.7870"
@@ -236,7 +236,7 @@
     {
       "label": "Live Timing",
       "url": "http://server.natsoft.com.au:8080/LiveMeeting/20261018.WIN",
-      "generated_at": "2026-10-18T04:55:11.203621+00:00",
+      "generated_at": "2026-10-18T05:18:49.522044+00:00",
       "results": [
         {
           "table_index": 1,
@@ -256,7 +256,7 @@
             "Position": "10",
             "Car": "108",
             "Competitor / Vehicle": "L. Gray",
-            "Laps": "49",
+            "Laps": "57",
             "Fastest Lap": "14",
             "Best Time": "1:40.8000",
             "Gap": "4.2470"
@@ -328,7 +328,7 @@
             "Position": "24",
             "Car": "56",
             "Competitor / Vehicle": "D. Conacher",
-            "Laps": "53",
+            "Laps": "59",
             "Fastest Lap": "18",
             "Best Time": "1:45.3440",
             "Gap": "8.7910"
@@ -376,7 +376,7 @@
             "Position": "34",
             "Car": "91",
             "Competitor / Vehicle": "R. Marett",
-            "Laps": "71",
+            "Laps": "72",
             "Fastest Lap": "26",
             "Best Time": "1:51.3400",
             "Gap": "14.7870"
