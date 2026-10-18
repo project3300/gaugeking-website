@@ -179,7 +179,7 @@ def discover_live_result(url, timeout=30, meeting=None):
             # Prefer the Live column (c2) over the historical View column (c3).
             # The date cell opens published sessions, not live timing.
             live_cell = row.locator('[id$="c2"]').first
-            if not live_cell.count() or not re.search(r"\\bLive\\b", live_cell.inner_text(), re.I):
+            if not live_cell.count() or not re.search(r"\bLive\b", live_cell.inner_text(), re.I):
                 raise RuntimeError("Selected meeting has no Live timing link; refusing historical View fallback")
             print("Opening selected meeting LIVE timing", flush=True)
             live_cell.click(timeout=6000)
