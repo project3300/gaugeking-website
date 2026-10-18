@@ -86,8 +86,8 @@ def extract_live_timing_rows(html):
         cells = {}
         for node in children:
             style = node.get("style", "")
-            x = re.search(r"left:\\s*([0-9]+)px", style)
-            y = re.search(r"top:\\s*([0-9]+)px", style)
+            x = re.search("left: *([0-9]+)px", style)
+            y = re.search("top: *([0-9]+)px", style)
             if x and y:
                 cells[(int(y.group(1)), int(x.group(1)))] = clean(node.get_text(" ", strip=True))
         headings = {value.casefold(): x for (y, x), value in cells.items() if y == 0}
