@@ -76,30 +76,38 @@ def extract_fixed_width_rows(html: str) -> list[dict[str, str]]:
 
 
 def extract_live_timing_rows(html):
+    """Read Natsoft's absolutely-positioned timing grid by column labels."""
     soup = BeautifulSoup(html, "html.parser")
-    for title in soup.find_all(string=lambda t: t and clean(str(t)) == "Best lap"):
-        header = title.find_parent("div", class_="NLayout")
-        if not header:
+    grids = soup.find_all("div", class_="NLayout")
+    for grid in grids:
+        children = grid.find_all("div", class_="NLayout", recursive=False)
+        if len(children) < 10:
             continue
         cells = {}
-        for node in header.parent.find_all("div", class_="NLayout", recursive=False):
+        for node in children:
             style = node.get("style", "")
-            x = re.search("left: ([0-9]+)px", style)
-            y = re.search("top: ([0-9]+)px", style)
+            x = re.search(r"left:\\s*([0-9]+)px", style)
+            y = re.search(r"top:\\s*([0-9]+)px", style)
             if x and y:
-                cells[int(y.group(1)), int(x.group(1))] = clean(node.get_text(" ", strip=True))
-        if any(cells.get((0, x)) != label for x, label in [(5,"Pos"),(45,"Car"),(113,"Driver"),(368,"Best lap")]):
+                cells[(int(y.group(1)), int(x.group(1)))] = clean(node.get_text(" ", strip=True))
+        headings = {value.casefold(): x for (y, x), value in cells.items() if y == 0}
+        if not all(name in headings for name in ("pos", "car", "driver", "laps", "best lap")):
             continue
+        col = lambda name: headings[name]
         rows = []
-        for y in sorted(y for y, x in cells if x == 5 and y > 0):
-            pos, car, driver, laps, best = [cells.get((y,x),"") for x in (5,45,113,232,368)]
+        for y in sorted({y for y, x in cells if y > 0 and x == col("pos")}):
+            val = lambda name: cells.get((y, col(name)), "") if name in headings else ""
+            pos, car, driver, laps, best = [val(name) for name in ("pos", "car", "driver", "laps", "best lap")]
             if not (pos.isdigit() and car and driver and (not laps or laps.isdigit())):
                 continue
-            if best and not re.fullmatch("[0-9]{1,2}:[0-9]{2}[.][0-9]+", best):
+            if best and not re.fullmatch(r"[0-9]{1,2}:[0-9]{2}[.][0-9]+", best):
                 continue
-            rows.append({"Position":pos,"Car":car,"Competitor / Vehicle":driver,"Laps":laps or "0","Fastest Lap":cells.get((y,434),""),"Best Time":best,"Gap":cells.get((y,465),"")})
+            rows.append({"Position": pos, "Car": car, "Competitor / Vehicle": driver,
+                         "Laps": laps or "0", "Fastest Lap": val("on"),
+                         "Best Time": best, "Gap": val("gap to lead")})
         if rows:
             return rows
+    print(f"LiveMeeting parse diagnostics: layouts={len(grids)}, body={clean(soup.get_text(' ', strip=True))[:500]!r}", flush=True)
     return []
 
 
