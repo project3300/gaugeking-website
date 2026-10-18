@@ -96,6 +96,10 @@ def discover_meetings(date_text, track_text, timeout=30):
         finally:
             browser.close()
 
+def safe_live_url(url):
+    p = urlparse(url)
+    return p.scheme in ("http", "https") and p.hostname in ("server.natsoft.com.au", "racing.natsoft.com.au") and "/LiveMeeting/" in p.path
+
 def discover_live_result(url, timeout=30, meeting=None):
     if not safe(url):
         raise ValueError("Invalid Natsoft URL")
@@ -189,6 +193,28 @@ def discover_live_result(url, timeout=30, meeting=None):
             Path("natsoft-debug/after-meeting-click.html").write_text(page.content(), encoding="utf-8")
         else:
             raise RuntimeError(f"Meeting {target_name!r} absent from Natsoft index; refusing wrong event")
+
+        # Live timing is rendered inside a separate LiveMeeting iframe, not a
+        # historical Result object. Read its current DOM after the Live click.
+        live_frames = [frame for frame in page.frames if "/LiveMeeting/" in frame.url]
+        if live_frames:
+            live_frame = live_frames[0]
+            live_frame.locator("text=Best lap").first.wait_for(timeout=15000)
+            live_html = live_frame.content()
+            live_text = live_frame.locator("body").inner_text()
+            if target_name.casefold() not in live_text.casefold():
+                raise RuntimeError("Live timing meeting title does not match selected event")
+            from datetime import datetime
+            expected_day = datetime.strptime((meeting or {}).get("date", ""), "%Y-%m-%d").strftime("%Y%m%d") if (meeting or {}).get("date") else ""
+            if expected_day and expected_day not in live_frame.url:
+                raise RuntimeError("Live timing URL date does not match selected event")
+            if not safe_live_url(live_frame.url):
+                raise RuntimeError("Unexpected Natsoft LiveMeeting host")
+            Path("natsoft-debug").mkdir(exist_ok=True)
+            Path("natsoft-debug/live-meeting.html").write_text(live_html, encoding="utf-8")
+            print(f"Captured verified LiveMeeting iframe: {live_frame.url}", flush=True)
+            browser.close()
+            return live_frame.url, "Live Timing", live_html, {}, 200
 
         # Natsoft uses div-based rows for session results as well. Capture
         # network object responses produced by clicking a current Result cell.
