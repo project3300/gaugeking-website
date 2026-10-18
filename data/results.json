@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-18T05:18:49.522044+00:00",
+  "generated_at": "2026-10-18T05:47:51.056900+00:00",
   "event": {
     "name": "TRACKSCHOOL Open Pit Lane",
     "display_name": "OZ RenaultSport Nationals 2026",
@@ -13,7 +13,7 @@
     "url": "http://racing.natsoft.com.au/results/",
     "result_url": "http://server.natsoft.com.au:8080/LiveMeeting/20261018.WIN",
     "final_url": "http://server.natsoft.com.au:8080/LiveMeeting/20261018.WIN",
-    "content_sha256": "2fd8fde70622e24b4ce2710fab533b1b17d085f2701c2089f68adabb8b53b501",
+    "content_sha256": "e3351bec934dd5b06c3c660e0c7ec66f5603d98eb5421e4730e91aa966a44ac0",
     "cache_control": "",
     "session_label": "Live Timing",
     "status_code": 200,
@@ -69,7 +69,7 @@
         "Position": "10",
         "Car": "108",
         "Competitor / Vehicle": "L. Gray",
-        "Laps": "57",
+        "Laps": "63",
         "Fastest Lap": "14",
         "Best Time": "1:40.8000",
         "Gap": "4.2470"
@@ -90,7 +90,7 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "19",
+        "Position": "20",
         "Car": "88",
         "Competitor / Vehicle": "R. Lee",
         "Laps": "14",
@@ -102,7 +102,7 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "20",
+        "Position": "21",
         "Car": "39",
         "Competitor / Vehicle": "A. Gellings",
         "Laps": "34",
@@ -114,7 +114,7 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "21",
+        "Position": "22",
         "Car": "75",
         "Competitor / Vehicle": "J. Harrison",
         "Laps": "19",
@@ -126,7 +126,7 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "23",
+        "Position": "24",
         "Car": "74",
         "Competitor / Vehicle": "J. Gray",
         "Laps": "33",
@@ -138,10 +138,10 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "24",
+        "Position": "25",
         "Car": "56",
         "Competitor / Vehicle": "D. Conacher",
-        "Laps": "59",
+        "Laps": "61",
         "Fastest Lap": "18",
         "Best Time": "1:45.3440",
         "Gap": "8.7910"
@@ -150,7 +150,7 @@
     {
       "table_index": 1,
       "row": {
-        "Position": "25",
+        "Position": "26",
         "Car": "98",
         "Competitor / Vehicle": "S. Ansell",
         "Laps": "25",
@@ -236,7 +236,7 @@
     {
       "label": "Live Timing",
       "url": "http://server.natsoft.com.au:8080/LiveMeeting/20261018.WIN",
-      "generated_at": "2026-10-18T05:18:49.522044+00:00",
+      "generated_at": "2026-10-18T05:47:51.056900+00:00",
       "results": [
         {
           "table_index": 1,
@@ -256,7 +256,7 @@
             "Position": "10",
             "Car": "108",
             "Competitor / Vehicle": "L. Gray",
-            "Laps": "57",
+            "Laps": "63",
             "Fastest Lap": "14",
             "Best Time": "1:40.8000",
             "Gap": "4.2470"
@@ -277,7 +277,7 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "19",
+            "Position": "20",
             "Car": "88",
             "Competitor / Vehicle": "R. Lee",
             "Laps": "14",
@@ -289,7 +289,7 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "20",
+            "Position": "21",
             "Car": "39",
             "Competitor / Vehicle": "A. Gellings",
             "Laps": "34",
@@ -301,7 +301,7 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "21",
+            "Position": "22",
             "Car": "75",
             "Competitor / Vehicle": "J. Harrison",
             "Laps": "19",
@@ -313,7 +313,7 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "23",
+            "Position": "24",
             "Car": "74",
             "Competitor / Vehicle": "J. Gray",
             "Laps": "33",
@@ -325,10 +325,10 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "24",
+            "Position": "25",
             "Car": "56",
             "Competitor / Vehicle": "D. Conacher",
-            "Laps": "59",
+            "Laps": "61",
             "Fastest Lap": "18",
             "Best Time": "1:45.3440",
             "Gap": "8.7910"
@@ -337,7 +337,7 @@
         {
           "table_index": 1,
           "row": {
-            "Position": "25",
+            "Position": "26",
             "Car": "98",
             "Competitor / Vehicle": "S. Ansell",
             "Laps": "25",
