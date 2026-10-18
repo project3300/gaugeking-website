@@ -12,36 +12,76 @@ natsoft:
     name: TRACKSCHOOL Open Pit Lane
     date: '2026-10-18'
     track: Winton Motor Raceway
-    id: MeetingList#r1
+    id: MeetingList#r3
 filters:
   vehicle_terms: []
   participants:
-  - C. Muyoma
-  - Anthony – TBC
-  - T. Hoven
-  - Sam – TBC
-  - A. Gellings
-  - C. Lim
-  - R. Lee
-  - M. Tough
-  - S. Ansell
-  - John – TBC
-  - Dario – TBC
-  - J. Gray
-  - Adam – TBC
-  - Robyn – TBC
-  - D. Conacher
-  - R. Marett
   - J. Harrison
+  - R. Lee
+  - A. Gellings
+  - R. Marett
+  - S. Burgess
+  - M. Tough
+  - A. Ket
+  - S. Ansell
+  - C. Muyoma
+  - J. Gray
+  - T. Hoven
+  - C. Lim
+  - D. Conacher
+  - D. Killenberger
+  - Car 108
   - L. Gray
-  - Martin – TBC
+  - Robyn
+  - A. McInnes
+  - John
   registrations:
+  - name: J. Harrison
+    class: FI
+    group: Apex Predators
+    id: ''
+    username: ''
+  - name: R. Lee
+    class: NA
+    group: Apex Predators
+    id: ''
+    username: ''
+  - name: A. Gellings
+    class: FI
+    group: Baguette Brigade
+    id: ''
+    username: ''
+  - name: R. Marett
+    class: NA
+    group: Baguette Brigade
+    id: ''
+    username: ''
+  - name: S. Burgess
+    class: NA
+    group: Baguette Brigade
+    id: ''
+    username: ''
+  - name: M. Tough
+    class: FI
+    group: Boost & Breathe
+    id: ''
+    username: ''
+  - name: A. Ket
+    class: NA
+    group: Boost & Breathe
+    id: ''
+    username: ''
+  - name: S. Ansell
+    class: NA
+    group: Boost & Breathe
+    id: ''
+    username: ''
   - name: C. Muyoma
     class: FI
     group: Diamond Cutters
     id: ''
     username: ''
-  - name: Anthony – TBC
+  - name: J. Gray
     class: NA
     group: Diamond Cutters
     id: ''
@@ -51,58 +91,8 @@ filters:
     group: Diamond Cutters
     id: ''
     username: ''
-  - name: Sam – TBC
-    class: NA
-    group: Diamond Cutters (reserve)
-    id: ''
-    username: ''
-  - name: A. Gellings
-    class: FI
-    group: Baguette Brigade
-    id: ''
-    username: ''
   - name: C. Lim
     class: NA
-    group: Baguette Brigade
-    id: ''
-    username: ''
-  - name: R. Lee
-    class: NA
-    group: Baguette Brigade
-    id: ''
-    username: ''
-  - name: M. Tough
-    class: FI
-    group: Apex Predators
-    id: ''
-    username: ''
-  - name: S. Ansell
-    class: NA
-    group: Apex Predators
-    id: ''
-    username: ''
-  - name: John – TBC
-    class: NA
-    group: Apex Predators
-    id: ''
-    username: ''
-  - name: Dario – TBC
-    class: FI
-    group: Boost & Breathe
-    id: ''
-    username: ''
-  - name: J. Gray
-    class: NA
-    group: Boost & Breathe
-    id: ''
-    username: ''
-  - name: Adam – TBC
-    class: NA
-    group: Boost & Breathe
-    id: ''
-    username: ''
-  - name: Robyn – TBC
-    class: FI
     group: Le Mans Mob
     id: ''
     username: ''
@@ -111,13 +101,13 @@ filters:
     group: Le Mans Mob
     id: ''
     username: ''
-  - name: R. Marett
-    class: NA
-    group: Le Mans Mob
+  - name: D. Killenberger
+    class: FI
+    group: The Highway Men
     id: ''
     username: ''
-  - name: J. Harrison
-    class: FI
+  - name: Car 108
+    class: NA
     group: The Highway Men
     id: ''
     username: ''
@@ -126,9 +116,19 @@ filters:
     group: The Highway Men
     id: ''
     username: ''
-  - name: Martin – TBC
+  - name: Robyn
+    class: FI
+    group: Le Mans Mob
+    id: ''
+    username: ''
+  - name: A. McInnes
     class: NA
-    group: The Highway Men
+    group: Apex Predators
+    id: ''
+    username: ''
+  - name: John
+    class: NA
+    group: ''
     id: ''
     username: ''
 site:
