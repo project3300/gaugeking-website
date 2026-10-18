@@ -1,5 +1,5 @@
 event:
-  name: Winton Motor Raceway
+  name: TRACKSCHOOL Open Pit Lane
   display_name: OZ RenaultSport Nationals 2026
   date: '2026-10-18'
   venue: Winton Motor Raceway
@@ -9,10 +9,10 @@ natsoft:
   validation_mode: false
   timeout_seconds: 30
   meeting:
-    name: Winton Motor Raceway
+    name: TRACKSCHOOL Open Pit Lane
     date: '2026-10-18'
     track: Winton Motor Raceway
-    id: MeetingList#r3
+    id: MeetingList#r1
 filters:
   vehicle_terms: []
   participants:
