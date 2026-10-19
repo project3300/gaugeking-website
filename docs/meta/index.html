@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex">
+  <meta name="referrer" content="no-referrer">
   <meta name="theme-color" content="#071018">
   <title>Gauge King · Meta Wearables</title>
   <style>
@@ -18,9 +19,18 @@
 <body>
   <main>
     <div class="eyebrow">Gauge King · Meta Wearables</div>
-    <h1>Opening Gauge King…</h1>
-    <p>If Gauge King is installed, iOS should hand this link to the app. If it does not open automatically, return to Gauge King and continue the Meta glasses setup there.</p>
-    <a href="/">Back to Gauge King</a>
+    <h1>Return to Gauge King</h1>
+    <p id="instructions">Tap Open Gauge King to return to the app. If pairing has not completed, start Pair Glasses again while parked. Returning to the app alone does not complete registration.</p>
+    <a id="open-app" href="gaugeking://dashboard">Open Gauge King</a>
+    <noscript><p>JavaScript is required to pass the registration response back to Gauge King. Enable it, then start Pair Glasses again.</p></noscript>
   </main>
+  <script>
+    const callbackPayload = window.location.search + window.location.hash;
+    if (callbackPayload) {
+      document.getElementById("open-app").href = "gaugeking://meta" + callbackPayload;
+      document.getElementById("instructions").textContent =
+        "Meta returned a registration response. Tap Open Gauge King to pass it to the app and finish setup. This requires a Gauge King build with the Meta callback fix.";
+    }
+  </script>
 </body>
 </html>
