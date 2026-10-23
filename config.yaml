@@ -1,5 +1,5 @@
 event:
-  name: TRACKSCHOOL Open Pit Lane
+  name: Winton Motor Raceway
   display_name: OZ RenaultSport Nationals 2026
   date: '2026-10-18'
   venue: Winton Motor Raceway
@@ -9,128 +9,14 @@ natsoft:
   validation_mode: false
   timeout_seconds: 30
   meeting:
-    name: TRACKSCHOOL Open Pit Lane
+    name: Winton Motor Raceway
     date: '2026-10-18'
     track: Winton Motor Raceway
-    id: MeetingList#r3
+    id: MeetingList#r8
 filters:
+  registrations: []
+  participants: []
   vehicle_terms: []
-  participants:
-  - J. Harrison
-  - R. Lee
-  - A. Gellings
-  - R. Marett
-  - S. Burgess
-  - M. Tough
-  - A. Ket
-  - S. Ansell
-  - C. Muyoma
-  - J. Gray
-  - T. Hoven
-  - C. Lim
-  - D. Conacher
-  - D. Killenberger
-  - Car 108
-  - L. Gray
-  - Robyn
-  - A. McInnes
-  - John
-  registrations:
-  - name: J. Harrison
-    class: FI
-    group: Apex Predators
-    id: ''
-    username: ''
-  - name: R. Lee
-    class: NA
-    group: Apex Predators
-    id: ''
-    username: ''
-  - name: A. Gellings
-    class: FI
-    group: Baguette Brigade
-    id: ''
-    username: ''
-  - name: R. Marett
-    class: NA
-    group: Baguette Brigade
-    id: ''
-    username: ''
-  - name: S. Burgess
-    class: NA
-    group: Baguette Brigade
-    id: ''
-    username: ''
-  - name: M. Tough
-    class: FI
-    group: Boost & Breathe
-    id: ''
-    username: ''
-  - name: A. Ket
-    class: NA
-    group: Boost & Breathe
-    id: ''
-    username: ''
-  - name: S. Ansell
-    class: NA
-    group: Boost & Breathe
-    id: ''
-    username: ''
-  - name: C. Muyoma
-    class: FI
-    group: Diamond Cutters
-    id: ''
-    username: ''
-  - name: J. Gray
-    class: NA
-    group: Diamond Cutters
-    id: ''
-    username: ''
-  - name: T. Hoven
-    class: NA
-    group: Diamond Cutters
-    id: ''
-    username: ''
-  - name: C. Lim
-    class: NA
-    group: Le Mans Mob
-    id: ''
-    username: ''
-  - name: D. Conacher
-    class: NA
-    group: Le Mans Mob
-    id: ''
-    username: ''
-  - name: D. Killenberger
-    class: FI
-    group: The Highway Men
-    id: ''
-    username: ''
-  - name: Car 108
-    class: NA
-    group: The Highway Men
-    id: ''
-    username: ''
-  - name: L. Gray
-    class: NA
-    group: The Highway Men
-    id: ''
-    username: ''
-  - name: Robyn
-    class: FI
-    group: Le Mans Mob
-    id: ''
-    username: ''
-  - name: A. McInnes
-    class: NA
-    group: Apex Predators
-    id: ''
-    username: ''
-  - name: John
-    class: NA
-    group: ''
-    id: ''
-    username: ''
 site:
   title: Gauge King Track Results
   subtitle: OZ RenaultSport Nationals · 18 October 2026
