@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Learn Gauge King: connect vehicle telemetry, set up RaceBox lap timing and smart-glasses HUDs, then align and export telemetry videos in Replay Studio." />
+  <meta name="theme-color" content="#04080c" />
+  <title>How To | Gauge King</title>
+  <link rel="icon" type="image/jpeg" href="../trackresults/assets/gauge-king-logo.jpg" />
+  <link rel="stylesheet" href="../assets/gaugeking.css" />
+  <link rel="stylesheet" href="../assets/how-to.css" />
+</head>
+<body class="landing-body guide-body">
+  <a class="skip-link" href="#main">Skip to guides</a>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand-lockup" href="../" aria-label="Gauge King home">
+        <img src="../trackresults/assets/gauge-king-logo.jpg" alt="" width="54" height="54" />
+        <span><span class="brand-kicker">Pocket AI Mechanic</span><span class="brand-name">GaugeKing</span></span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="../">Home</a><a href="../#features">Features</a><a href="./" aria-current="page">How To</a><a href="../trackresults/">Track Results</a>
+        <a href="https://pocketaimechanic.com/support/gaugeking/">Support</a>
+      </nav>
+      <a class="button-link primary header-cta" href="https://apps.apple.com/au/app/gauge-king/id6777585502" target="_blank" rel="noopener noreferrer">App Store</a>
+    </header>
+
+    <main id="main">
+      <section class="guide-hero" aria-labelledby="guide-title">
+        <div>
+          <span class="eyebrow">The Gauge King field guide</span>
+          <h1 id="guide-title">Your data.<br />In the right place.</h1>
+          <p class="guide-lead">From your first connection to your first replay. Practical setup guides, plain-English settings and a clearer view of every lap.</p>
+          <div class="hero-actions"><a class="button-link primary" href="#choose">Find your guide <span aria-hidden="true">&darr;</span></a><a class="button-link secondary" href="#features">Explore the features</a></div>
+          <p class="version-note">iPhone guide &middot; Covers version 1.4.5 &middot; Some features require compatible hardware and subscription access.</p>
+        </div>
+        <aside class="guide-route" aria-label="A typical track-day workflow">
+          <span class="surface-label">Your track-day workflow</span>
+          <ol>
+            <li><span>01</span><div><strong>Connect</strong><small>Vehicle + RaceBox</small></div></li>
+            <li><span>02</span><div><strong>Set the line</strong><small>Arm Gauge King's lap timing</small></div></li>
+            <li><span>03</span><div><strong>See your data</strong><small>Phone or supported glasses</small></div></li>
+            <li><span>04</span><div><strong>Replay the drive</strong><small>Record, align, overlay, export</small></div></li>
+          </ol>
+        </aside>
+      </section>
+
+      <div class="safety-note"><strong>Set up while parked.</strong> Use telemetry and glasses as supplemental information, never for safety-critical decisions. Test lap timing on a suitable closed course. Have a passenger operate the phone if needed.</div>
+
+      <section class="guide-picker" id="choose" aria-labelledby="choose-title">
+        <div class="section-heading"><span class="section-tag">Start here</span><h2 id="choose-title">What would you like to do?</h2></div>
+        <div class="guide-cards">
+          <a href="#vehicle"><span class="guide-number">01 / CONNECT</span><h3>Set up your car</h3><p>Bring vehicle telemetry to your dashboard.</p><span class="card-link">Vehicle setup <span aria-hidden="true">&nearr;</span></span></a>
+          <a href="#racebox"><span class="guide-number">02 / TIME</span><h3>Time your laps</h3><p>Set a start/finish line and read your delta.</p><span class="card-link">RaceBox guide <span aria-hidden="true">&nearr;</span></span></a>
+          <a href="#meta"><span class="guide-number">03 / SEE</span><h3>Use Meta glasses</h3><p>Choose an in-lens layout for your drive.</p><span class="card-link">Meta HUD guide <span aria-hidden="true">&nearr;</span></span></a>
+          <a href="#engo"><span class="guide-number">04 / FOCUS</span><h3>Use ENGO glasses</h3><p>Connect an ActiveLook HUD and tune its display.</p><span class="card-link">ENGO HUD guide <span aria-hidden="true">&nearr;</span></span></a>
+          <a href="#replay"><span class="guide-number">05 / REPLAY</span><h3>Create a telemetry video</h3><p>Record a session, sync your footage and export.</p><span class="card-link">Replay Studio guide <span aria-hidden="true">&nearr;</span></span></a>
+          <a href="#alignment"><span class="guide-number">06 / SYNC</span><h3>Get the timing right</h3><p>Understand offsets with worked examples.</p><span class="card-link">Video alignment <span aria-hidden="true">&nearr;</span></span></a>
+        </div>
+      </section>
+
+      <div class="guide-layout">
+        <nav class="chapter-nav" aria-label="Guide chapters">
+          <span class="surface-label">On this page</span>
+          <a href="#features">Feature summary</a><a href="#vehicle">01 &nbsp; Vehicle setup</a><a href="#racebox">02 &nbsp; RaceBox</a><a href="#meta">03 &nbsp; Meta glasses</a><a href="#engo">04 &nbsp; ENGO glasses</a><a href="#replay">05 &nbsp; Replay Studio</a><a href="#alignment">06 &nbsp; Alignment</a><a href="#help">Quick answers</a>
+        </nav>
+        <div class="guide-content">
+          <section class="guide-section" id="features" aria-labelledby="features-title">
+            <span class="section-tag">At a glance</span><h2 id="features-title">One app. Several ways to see your drive.</h2>
+            <p>Vehicle data, GPS lap timing and video are separate sources. Connect the ones you need; a RaceBox connection does not supply engine RPM, and glasses do not record your Replay Studio telemetry.</p>
+            <div class="table-wrap" tabindex="0" role="region" aria-label="Feature summary table">
+              <table>
+                <caption>Feature summary</caption>
+                <thead><tr><th scope="col">Feature</th><th scope="col">What it does</th><th scope="col">What you need</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">Vehicle dashboard</th><td>Live gauges such as speed, RPM and supported temperatures, with configurable layouts and warnings.</td><td>A compatible OBD-II adapter and vehicle. Available readings vary by ECU and adapter.</td></tr>
+                  <tr><th scope="row">RaceBox lap timing</th><td>GPS speed, lap number, current lap time and delta to your reference lap.</td><td>RaceBox Micro, usable GPS, a saved line and a track session started in Gauge King.</td></tr>
+                  <tr><th scope="row">Meta HUD</th><td>Track Cockpit, Compact, Text and a large RaceBox timing layout in the lens.</td><td>Compatible Meta Ray-Ban Display glasses and Meta registration. Ordinary non-display camera glasses cannot show a HUD.</td></tr>
+                  <tr><th scope="row">ENGO HUD</th><td>Supplemental telemetry and shift cues on supported ActiveLook glasses.</td><td>Compatible glasses, such as ENGO 3, connected in ENGO HUD Setup.</td></tr>
+                  <tr><th scope="row">Replay Studio</th><td>Local telemetry recording, imported video, source alignment and rendered video overlays.</td><td>A saved or imported telemetry session. Record your footage separately.</td></tr>
+                  <tr><th scope="row">Demo tools</th><td>Explore vehicle gauges and synthetic RaceBox timing without hardware.</td><td>Demo Mode; start RaceBox Demo Preview separately for lap values.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="fine-print">Access depends on the feature and your subscription. The setup screens show current access requirements. This guide describes the iPhone app; it does not imply Android feature parity.</p>
+          </section>
+
+          <section class="guide-section" id="vehicle" aria-labelledby="vehicle-title">
+            <span class="section-tag">01 / Vehicle setup</span><h2 id="vehicle-title">Start with a trustworthy signal.</h2>
+            <p class="menu-path">In the app: Settings &rarr; Set Up My Car</p>
+            <ol class="steps">
+              <li><strong>Park, connect your adapter and switch the ignition on as required.</strong> Follow your adapter's instructions and use it only with a compatible vehicle.</li>
+              <li><strong>Open Set Up My Car.</strong> Select the appropriate vehicle and connection options for your setup. Connect using Gauge King's adapter controls.</li>
+              <li><strong>Verify readings before customising.</strong> Check that RPM and other available readings respond as expected. A missing channel is not a zero reading.</li>
+              <li><strong>Choose your gauges and units.</strong> Configure your dashboard, warning thresholds and shared Shift Light setup while stationary.</li>
+            </ol>
+            <div class="table-wrap" tabindex="0" role="region" aria-label="Vehicle settings table"><table>
+              <caption>Vehicle settings, explained</caption>
+              <thead><tr><th scope="col">Setting / reading</th><th scope="col">Meaning</th><th scope="col">Useful to know</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Vehicle setup</th><td>Defines how Gauge King connects to and interprets your vehicle's data.</td><td>Use the profile and connection appropriate to your car; not every ECU exposes every gauge.</td></tr>
+                <tr><th scope="row">Gauge units</th><td>The unit used to display a reading.</td><td>Phone, Meta and ENGO can have their own gauge-unit choices. Check the output you are using.</td></tr>
+                <tr><th scope="row">Alerts</th><td>Warning and critical thresholds for supported readings.</td><td>Set thresholds suitable for your vehicle. They are supplemental, not a substitute for its instruments.</td></tr>
+                <tr><th scope="row">Shift RPM</th><td>The global target for shift cues.</td><td>Meta uses the shared Shift Light configuration, rather than a separate Meta-only redline.</td></tr>
+                <tr><th scope="row">Per-gear shift points</th><td>Optional targets that vary by gear.</td><td>The Meta HUD uses measured gear; without a usable gear reading it falls back to the global target.</td></tr>
+                <tr><th scope="row">Demo Mode</th><td>Uses simulated vehicle telemetry instead of live OBD.</td><td>Turn it off before evaluating real vehicle data. It does not automatically simulate RaceBox timing.</td></tr>
+                <tr><th scope="row"><code>--</code></th><td>A reading is missing, unavailable or stale.</td><td>Do not interpret it as zero. Check connection status and whether the vehicle supports that channel.</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+
+          <section class="guide-section" id="racebox" aria-labelledby="racebox-title">
+            <span class="section-tag">02 / RaceBox Micro</span><h2 id="racebox-title">A line. A crossing. Your next lap.</h2>
+            <p class="menu-path">In the app: Settings &rarr; Racebox Setup</p>
+            <ol class="steps">
+              <li><strong>Connect to RaceBox Micro.</strong> Power it on, scan in Racebox Setup and select the unit.</li>
+              <li><strong>Wait outdoors for usable GPS.</strong> Check GPS / timing status. Being Bluetooth-connected alone is not enough.</li>
+              <li><strong>Set Start / Finish Line.</strong> Tap two endpoints on opposite sides of the track. They define <em>one line across the circuit</em>, not separate start and finish locations. Use a line 5&ndash;100 metres long and save it.</li>
+              <li><strong>Tap Start Track Session.</strong> Cross the line at at least 10 km/h to start lap 1. The first crossing establishes the driving direction.</li>
+              <li><strong>Complete a valid lap.</strong> It must satisfy the minimum 15 seconds and 100 metres travelled. The first valid completed lap provides a delta reference; faster valid laps replace it.</li>
+              <li><strong>Stop Track Session when finished.</strong> Starting a new track session clears its previous laps. Use Replay Studio separately if you want to retain telemetry for video work.</li>
+            </ol>
+            <div class="table-wrap" tabindex="0" role="region" aria-label="RaceBox settings table"><table>
+              <caption>RaceBox controls and readings</caption>
+              <thead><tr><th scope="col">Setting / reading</th><th scope="col">Meaning</th><th scope="col">When to use it</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">GPS / timing</th><td>Shows whether GPS and Gauge King's timing are ready or running.</td><td>Check here when connected but lap values are missing.</td></tr>
+                <tr><th scope="row">GPS Speed</th><td>Speed measured by RaceBox, independent of OBD speed.</td><td>A usable fix can correctly show 0 km/h while stationary.</td></tr>
+                <tr><th scope="row">Set / Edit Start / Finish Line</th><td>Saves the crossing line Gauge King uses for laps.</td><td>Stop the track session before editing. A line in the RaceBox app is not imported automatically.</td></tr>
+                <tr><th scope="row">Start Track Session</th><td>Arms Gauge King's lap timer; the first valid line crossing starts lap 1.</td><td>Requires usable live GPS and a saved start/finish line.</td></tr>
+                <tr><th scope="row">Lap number / lap time</th><td>The current lap and its elapsed time.</td><td>Appear after timing starts, not just after connecting.</td></tr>
+                <tr><th scope="row">Lap delta</th><td>Difference against your reference lap at comparable progress.</td><td>Needs a valid reference lap. Negative is ahead; positive is behind.</td></tr>
+                <tr><th scope="row">Show RaceBox on ENGO</th><td>Selects the ENGO RaceBox track layout.</td><td>It does not connect RaceBox or select the Meta layout.</td></tr>
+                <tr><th scope="row">Start RaceBox Demo Preview</th><td>Synthetic speed, lap number, lap time and delta.</td><td>Available in Demo Mode without a unit or finish line. It never creates real laps.</td></tr>
+              </tbody>
+            </table></div>
+            <aside class="callout caution"><strong>Keep the timing app in the foreground.</strong> Backgrounding Gauge King invalidates the current RaceBox lap. Simultaneous onboard recording and RaceBox-app sharing are hardware-dependent and have not been verified as a reliable workflow. Gauge King calculates its own laps; it does not receive lap timing from the RaceBox app.</aside>
+          </section>
+
+          <section class="guide-section" id="meta" aria-labelledby="meta-title">
+            <span class="section-tag">03 / Meta glasses</span><h2 id="meta-title">Put the essentials in your lens.</h2>
+            <p class="menu-path">In the app: Settings &rarr; Meta HUD Setup</p>
+            <ol class="steps">
+              <li><strong>Prepare compatible display glasses.</strong> Complete the manufacturer's setup and keep the glasses and Meta integration app up to date.</li>
+              <li><strong>Pair Glasses in Gauge King.</strong> Complete Meta's registration flow and return to Gauge King. Registration is separate from connecting the display.</li>
+              <li><strong>Choose HUD layout.</strong> Pick Track Cockpit, Compact, Text or RaceBox. For Track Cockpit, select your three secondary gauges.</li>
+              <li><strong>Check the data source and units.</strong> Connect vehicle telemetry and/or RaceBox for live readings, or use the demo tools while parked.</li>
+              <li><strong>Tap Connect Display.</strong> Confirm the HUD appears and is readable before use. If the SDK interrupts the session, reconnect explicitly.</li>
+            </ol>
+            <div class="table-wrap" tabindex="0" role="region" aria-label="Meta layouts table"><table>
+              <caption>Which Meta layout should I choose?</caption>
+              <thead><tr><th scope="col">Layout</th><th scope="col">What you see</th><th scope="col">Best for</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Track Cockpit</th><td>Speed, RPM arc, gear, shift lights, three selectable gauges and status.</td><td>A broader vehicle overview. Gauge choices include temperatures, boost, pressure, voltage and RaceBox timing.</td></tr>
+                <tr><th scope="row">Compact</th><td>A reduced speed, RPM and gear display with shift lights and relevant status cues.</td><td>Fewer elements and a smaller graphical layout.</td></tr>
+                <tr><th scope="row">Text</th><td>A native text-based telemetry presentation.</td><td>A simple alternative to the graphical layouts.</td></tr>
+                <tr><th scope="row">RaceBox</th><td>Large lap delta, lap time and lap number; smaller GPS speed, RPM and gear.</td><td>Prioritising lap timing. Speed prefers RaceBox GPS, then fresh OBD. This layout deliberately omits the bottom status/footer lines.</td></tr>
+              </tbody>
+            </table></div>
+            <div class="table-wrap" tabindex="0" role="region" aria-label="Meta settings table"><table>
+              <caption>Meta settings, explained</caption>
+              <thead><tr><th scope="col">Control</th><th scope="col">What it changes</th><th scope="col">Important distinction</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Pair Glasses</th><td>Registers Gauge King with Meta.</td><td>Does not start a HUD display session on its own.</td></tr>
+                <tr><th scope="row">Connect / Disconnect Display</th><td>Starts or ends delivery to the real glasses.</td><td>A preview on the phone is not proof of a real display connection.</td></tr>
+                <tr><th scope="row">Meta gauge units</th><td>Sets units for the Meta output.</td><td>Can differ from phone and ENGO units.</td></tr>
+                <tr><th scope="row">Track Cockpit gauge slots</th><td>Chooses the three secondary metrics, with no duplicates.</td><td>Does not alter the dedicated RaceBox layout's fixed timing fields.</td></tr>
+                <tr><th scope="row">Use Gauge King Demo Telemetry</th><td>Uses synthetic vehicle readings and suspends live OBD.</td><td>Connected RaceBox data can still be real unless you start its separate demo preview.</td></tr>
+                <tr><th scope="row">Pause demo</th><td>Pauses the vehicle demo generator.</td><td>Does not pause RaceBox Demo Preview.</td></tr>
+                <tr><th scope="row">Start RaceBox Demo Preview</th><td>Adds synthetic GPS and timing values for layout testing.</td><td>Stops when Gauge King leaves the foreground or Demo Mode ends.</td></tr>
+                <tr><th scope="row">Update Glasses App in Meta AI</th><td>Opens the Meta update workflow.</td><td>Updating the wristband alone does not update the glasses integration app.</td></tr>
+              </tbody>
+            </table></div>
+            <aside class="callout"><strong>What does NORMAL mean?</strong> It is a vehicle HUD status: no active warning or shift cue is currently being shown. It is not a GPS-quality indicator or a guarantee that every sensor is available. App switching no longer deliberately disconnects Meta, but iOS background execution and SDK interruptions can still stop updates.</aside>
+          </section>
+
+          <section class="guide-section" id="engo" aria-labelledby="engo-title">
+            <span class="section-tag">04 / ENGO &amp; ActiveLook</span><h2 id="engo-title">A focused, lightweight HUD.</h2>
+            <p class="menu-path">In the app: Settings &rarr; ENGO HUD Setup</p>
+            <ol class="steps">
+              <li><strong>Enable ActiveLook.</strong> Power on compatible glasses, then tap Scan for Glasses and select the device.</li>
+              <li><strong>Confirm the connection.</strong> Use Test Display while parked to check the output.</li>
+              <li><strong>Choose Layout, units and brightness.</strong> For lap timing, connect RaceBox and start Gauge King's track session, then use Show RaceBox on ENGO in Racebox Setup.</li>
+            </ol>
+            <div class="table-wrap" tabindex="0" role="region" aria-label="ENGO settings table"><table>
+              <caption>ENGO settings, explained</caption>
+              <thead><tr><th scope="col">Setting</th><th scope="col">Meaning</th><th scope="col">Tip</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Enable ActiveLook</th><td>Enables the supported glasses integration.</td><td>You still need to scan and connect to a device.</td></tr>
+                <tr><th scope="row">Reconnect Automatically</th><td>Allows the ENGO integration to reconnect.</td><td>Applies to ActiveLook, not Meta's display session.</td></tr>
+                <tr><th scope="row">Layout</th><td>Selects the arrangement of HUD information.</td><td>The RPM arch fills towards your shift point; without gear, speed takes its place inside the arch.</td></tr>
+                <tr><th scope="row">ENGO gauge units</th><td>Controls units on this output.</td><td>Independent of Meta and phone gauge-unit choices.</td></tr>
+                <tr><th scope="row">Update Rate</th><td>Sets the requested display update rate.</td><td>Does not make the vehicle acquire new data faster. Actual delivery depends on the connection.</td></tr>
+                <tr><th scope="row">Brightness</th><td>Adjusts display brightness from 1 to 15.</td><td>Set a comfortable, readable level before moving.</td></tr>
+                <tr><th scope="row">Gesture Changes Layout</th><td>Enables layout changes using the glasses' supported gesture.</td><td>Check the selected layout while stationary.</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+
+          <section class="guide-section" id="replay" aria-labelledby="replay-title">
+            <span class="section-tag">05 / Replay Studio</span><h2 id="replay-title">Make the drive tell its story.</h2>
+            <p class="menu-path">In the app: Settings &rarr; Replay Studio</p>
+            <p>Replay Studio records telemetry locally. Your camera records video independently. A <strong>session</strong> holds the telemetry; a <strong>project</strong> holds a clip, its alignment and your overlay choices.</p>
+            <ol class="steps">
+              <li><strong>Prepare live data.</strong> Connect your vehicle and RaceBox as needed. For laps, define the line and start a track session in Racebox Setup. Glasses are optional.</li>
+              <li><strong>Start Session in Replay Studio before driving.</strong> Record your camera footage independently. You do not need to import the Gauge King session again.</li>
+              <li><strong>Stop Session when parked.</strong> Open it from Recorded Sessions and create a New Replay Project.</li>
+              <li><strong>Import Video (Files).</strong> For a clip in Photos, share it and choose Save to Files first, then import that copy. Import does not overwrite your original footage.</li>
+              <li><strong>Choose an overlay in HUD Simulator.</strong> Select a Meta layout to reproduce the in-lens graphics with transparent backgrounds. Adjust its size and position.</li>
+              <li><strong>Align, preview and save.</strong> Turn off HUD Demo / Test, enable Show source video, adjust Video offset and check a recognisable event. <a href="#alignment">See the alignment guide below.</a></li>
+              <li><strong>Export Video.</strong> Keep Gauge King in the foreground until complete, then Share Export. Output is a new file, not a replacement for the source clip.</li>
+            </ol>
+            <div class="table-wrap" tabindex="0" role="region" aria-label="Replay settings table"><table>
+              <caption>Replay Studio settings, explained</caption>
+              <thead><tr><th scope="col">Setting</th><th scope="col">What it means</th><th scope="col">Suggested use</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Follow recorded HUD changes</th><td>Uses timestamped recorded dashboard configuration rather than just your edited project layout.</td><td>Turn off to customise your own replay overlay.</td></tr>
+                <tr><th scope="row">Layout</th><td>Phone, Analogue, Digital, ENGO, legacy Meta-inspired, or the actual Meta picture layouts.</td><td>Choose Meta Track Cockpit, Meta Compact or Meta RaceBox for the shared glasses graphics.</td></tr>
+                <tr><th scope="row">Meta Text (approximation)</th><td>A software approximation of Meta's native text display.</td><td>Content is similar; native glasses fonts and spacing are not an exact match.</td></tr>
+                <tr><th scope="row">HUD size / horizontal / vertical position</th><td>Scales and places the complete Meta display over the footage.</td><td>Keeps its square aspect ratio without cropping. Position moves through the space remaining around it.</td></tr>
+                <tr><th scope="row">Opacity</th><td>Adjusts the visibility of the overlay graphics.</td><td>Meta backgrounds and card fills are already transparent; lower opacity also fades text and gauges.</td></tr>
+                <tr><th scope="row">Imperial units / Shift RPM</th><td>Changes display units and the replay shift threshold.</td><td>Recorded per-gauge unit choices can also apply. The unit toggle clears those per-gauge overrides.</td></tr>
+                <tr><th scope="row">HUD Demo / Test (simulated)</th><td>Uses synthetic vehicle and RaceBox data for the preview.</td><td>Turn off when synchronising footage. This preview-only mode cannot be exported.</td></tr>
+                <tr><th scope="row">Show source video</th><td>Shows or hides the video in the editor preview.</td><td>Turn on when aligning. It does not detach or delete the clip.</td></tr>
+                <tr><th scope="row">Import RaceBox CSV / VBO / GPX</th><td>Adds separately recorded telemetry.</td><td>Review source mappings and offsets; imported files do not guarantee all lap timing channels exist.</td></tr>
+                <tr><th scope="row">Source selection</th><td>Chooses which provider supplies a channel when more than one exists.</td><td>In older sessions, select racebox-live for Speed if you want GPS rather than OBD speed. New recordings retain separate GPS speed.</td></tr>
+                <tr><th scope="row">Transparent HUD-only MOV</th><td>Exports an overlay-only HEVC-with-alpha file on supported hardware.</td><td>No source footage is included. Normal MP4 composites the transparent HUD onto video; MP4 itself has no alpha channel.</td></tr>
+                <tr><th scope="row">Save Alignment / Save Project</th><td>Stores project choices without rewriting telemetry or footage.</td><td>One session can support multiple projects and clips with different layouts and offsets.</td></tr>
+              </tbody>
+            </table></div>
+            <aside class="callout"><strong>Want to make a demo video?</strong> Enable the app's Demo Mode, start RaceBox Demo Preview if needed, and record a <em>new Replay Studio session</em>. Then use that saved session in a project. Simulated readings retain their demo labels in playback and export. The editor's HUD Demo / Test toggle is only a preview.</aside>
+            <p class="fine-print">Use Replay Studio's recorder for this workflow, not the separate Sessions-tab recorder. Replay reconstructs the HUD from available channels; it is not a capture of actual glasses frames. Missing readings stay missing. Keep acquisition foregrounded; iOS suspension can interrupt recording.</p>
+          </section>
+
+          <section class="guide-section" id="alignment" aria-labelledby="alignment-title">
+            <span class="section-tag">06 / Synchronisation</span><h2 id="alignment-title">Same moment. Same frame.</h2>
+            <p class="menu-path">In your replay project: Synchronization &mdash; offsets in seconds</p>
+            <p>All offsets use <strong>seconds, to three decimal places</strong>: <code>1.000</code> is one second, <code>0.100</code> is a tenth and <code>68.000</code> is one minute eight seconds. Decimal input precision does not guarantee millisecond sensor or video accuracy.</p>
+            <div class="equation"><span>Session time</span><b>=</b><span>Video time</span><b>+</b><span>Video offset</span></div>
+            <ol class="steps">
+              <li><strong>Start with the individual source offsets at 0.</strong> Gauge King's sources share a recording clock. Usually only Video offset needs adjustment.</li>
+              <li><strong>Find a clear event.</strong> Pulling away from stationary is useful: compare visible motion with speed beginning to rise. You can also compare an obvious engine-speed or gear change if recorded.</li>
+              <li><strong>Calculate Video offset.</strong> Subtract the event's position in the video from its telemetry session time. An event at session time 25 s and video time 5 s needs <code>+20.000</code>.</li>
+              <li><strong>Preview near the video start.</strong> With Video offset <code>+30.000</code>, scrub to session time 30 s to see the beginning of the clip. Earlier session times have no video.</li>
+              <li><strong>Fine-tune and save.</strong> Use Play / Pause and &minus; frame / + frame. If telemetry appears too early, decrease Video offset; if too late, increase it. Check another event later, then Save Alignment.</li>
+            </ol>
+            <div class="table-wrap" tabindex="0" role="region" aria-label="Offset directions table"><table>
+              <caption>Offset direction cheat sheet</caption>
+              <thead><tr><th scope="col">Control</th><th scope="col">Positive value</th><th scope="col">Negative value</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Video offset</th><td>Video starts later on the session timeline. At a fixed video moment, you see later telemetry.</td><td>Video starts before session time zero. Early frames may have no telemetry.</td></tr>
+                <tr><th scope="row">Individual source offset</th><td>That source's samples appear later on the session timeline.</td><td>That source's samples appear earlier on the session timeline.</td></tr>
+              </tbody>
+            </table></div>
+            <div class="worked-example">
+              <span class="surface-label">Worked example / RaceBox timing</span>
+              <h3>Show timing from 1:08 at the start of your video.</h3>
+              <p>If Video offset is <code>+30.000</code>, set <strong>racebox-timing to <code>&minus;38.000</code></strong>: <code>30 &minus; 68 = &minus;38</code>. Video time zero now shows RaceBox timing from source time 68 seconds.</p>
+              <p>This shifts lap number, lap time and delta only. It does not move GPS speed or OBD. To advance the timing source by an additional 68 seconds instead, use a source offset of <code>&minus;68.000</code>.</p>
+            </div>
+            <div class="table-wrap" tabindex="0" role="region" aria-label="Recorded source offsets table"><table>
+              <caption>What do the source names mean?</caption>
+              <thead><tr><th scope="col">Source</th><th scope="col">Contents</th><th scope="col">Normal starting offset</th></tr></thead>
+              <tbody>
+                <tr><th scope="row"><code>settings</code></th><td>Recorded HUD configuration changes. Leave at zero: the separate source offset is not used to retime configuration events.</td><td>0.000</td></tr>
+                <tr><th scope="row"><code>racebox-live</code></th><td>Raw RaceBox GPS speed, position, accuracy and related measurements.</td><td>0.000</td></tr>
+                <tr><th scope="row"><code>racebox-timing</code></th><td>Gauge King's lap number, elapsed lap time and delta; simulated timing when demo recording is enabled.</td><td>0.000</td></tr>
+                <tr><th scope="row"><code>obd</code></th><td>Vehicle readings, including available RPM, speed, gear and temperatures.</td><td>0.000</td></tr>
+                <tr><th scope="row"><code>alerts</code></th><td>Recorded warning and critical-alert states.</td><td>0.000</td></tr>
+                <tr><th scope="row"><code>runtime</code></th><td>Lifecycle events such as start/stop. The offset does not move the whole recording or video.</td><td>0.000</td></tr>
+                <tr><th scope="row"><code>demo</code></th><td>Simulated vehicle readings, if recorded in Demo Mode.</td><td>0.000</td></tr>
+                <tr><th scope="row">Imported sources</th><td>Separate CSV / VBO / GPX data. These may need their own alignment.</td><td>Check the imported start time and preview.</td></tr>
+              </tbody>
+            </table></div>
+            <p class="fine-print">One offset corrects a constant timing difference. It does not correct clock drift. If the start aligns but the end does not, check the footage, source timing and recording gaps rather than assuming a single offset can fix everything.</p>
+          </section>
+
+          <section class="guide-section" id="help" aria-labelledby="help-title">
+            <span class="section-tag">Troubleshooting</span><h2 id="help-title">A few quick answers.</h2>
+            <details><summary>RaceBox is connected. Why are the lap values blank?</summary><p>You still need usable GPS, a saved start/finish line, Start Track Session and a valid first crossing. Delta also needs a completed valid reference lap. Check GPS / timing in Racebox Setup.</p></details>
+            <details><summary>Why does Demo Mode show RPM but no RaceBox laps?</summary><p>Vehicle Demo Mode and RaceBox Demo Preview are separate. In Meta HUD Setup or Racebox Setup, start RaceBox Demo Preview as well. Choose the RaceBox layout to see all three timing values.</p></details>
+            <details><summary>Why does the replay show a black screen instead of my video?</summary><p>Turn off HUD Demo / Test and enable Show source video. Confirm a clip is imported and scrub into its time range. With a +30-second Video offset, the clip begins at session time 30 seconds, not zero.</p></details>
+            <details><summary>Will saving a layout or offset overwrite my recording?</summary><p>No. Project edits save layout and alignment separately. Import copies footage, and export creates a new file. Deleting a session is different: after confirmation, it removes that session's local projects and imported clips as well.</p></details>
+            <details><summary>Can I record Meta video and a live in-lens HUD at the same time?</summary><p>This combination has not been verified as a reliable workflow. Test your exact glasses and firmware while parked. Replay Studio can recreate the HUD later from telemetry with independently recorded footage.</p></details>
+            <details><summary>Why is gear missing in a Meta replay?</summary><p>Meta displays measured gear, not an estimated gear presented as measured. If no suitable gear channel was recorded, it remains --. Missing source data cannot be recovered by choosing a different layout.</p></details>
+            <div class="help-footer"><div><h3>Still need a hand?</h3><p>Include your app version, device model, connection status and what you expected to see. Send screenshots only when safe to capture.</p></div><a class="button-link secondary" href="https://pocketaimechanic.com/support/gaugeking/">Contact support</a></div>
+          </section>
+        </div>
+      </div>
+    </main>
+    <footer class="landing-footer"><p>GaugeKing by Pocket AI Mechanic &mdash; &copy; 2026</p><div class="footer-links"><a href="../">Home</a><a href="./">How To</a><a href="../trackresults/">Track Results</a><a href="https://pocketaimechanic.com/privacy/">Privacy</a><a href="https://pocketaimechanic.com/terms/">Terms</a></div></footer>
+  </div>
+</body>
+</html>
