@@ -66,7 +66,7 @@ while parked; registration does not imply a working glasses display session.
 
 A non-technical user can open the Race Control page, enter the shared PIN, paste the live `racing.natsoft.com.au` results URL and press **UPDATE LIVE RESULTS**. The browser calls the small Render-hosted Race Control API, which securely triggers the GitHub Actions workflow with the supplied URL. The GitHub credential is stored only in Render.
 
-The workflow saves the supplied Natsoft URL into `config.yaml`, switches validation mode off, scrapes the results, rebuilds the static page and deploys it. Scheduled runs then keep refreshing that saved URL during the event window.
+The workflow saves the supplied Natsoft URL into `config.yaml`, switches validation mode off, scrapes the results, rebuilds the static page and deploys it. Scheduled runs then keep refreshing that saved URL during the event window. Regular website changes pushed to `main` deploy the checked-in `docs/` directly, independently of the scraper.
 
 ## Render Race Control service
 
