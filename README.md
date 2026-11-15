@@ -20,6 +20,20 @@ on narrow screens, tables scroll horizontally and chapter links wrap.
 Keep instructions aligned with released iPhone functionality, distinguish
 simulated from measured data, and do not claim unverified hardware combinations.
 
+## Dashboard demonstration videos
+
+The homepage's **Layouts & shift lights** section uses local MP4 files and JPEG
+posters in `docs/assets/videos/`. These are streaming-optimised 720p copies;
+the supplied original videos are not modified. Native controls and inline
+playback are enabled, autoplay is off, and `preload="none"` prevents downloading
+the clips until visitors choose to play them. Keep filenames in the homepage's
+video sources and poster attributes aligned when replacing clips.
+
+The homepage's **Skins & custom colours** showcase uses
+`docs/assets/screens/gk-custom-skin-mustang.jpg`, a web-friendly copy of the
+supplied image. Keep the full image visible rather than cropping its dashboard.
+The caption distinguishes phone mirroring from the native CarPlay interface.
+
 ## Meta glasses return link
 
 The static [Meta callback page](docs/meta/index.html) and
